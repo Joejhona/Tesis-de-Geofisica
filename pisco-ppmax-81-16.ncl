@@ -29,10 +29,10 @@ time    = f_pisco->z
 ;----- Pre procesamiento de data Chirp -----;
 year_i  = 1981  ;--->año inicial
 year_f  = 2016  ;--->año final
-mes_i   = 02    ;--->mes inicial
+mes_i   = 01    ;--->mes inicial
 dia_i   = 01    ;--->dia inicial
-mes_f   = 02    ;--->mes final
-dia_f   = 29    ;--->dia final
+mes_f   = 03    ;--->mes final
+dia_f   = 31    ;--->dia final
 n_years = ispan(year_i,year_f,1)
 
 
@@ -60,8 +60,8 @@ ppd_pi_t    = f_pisco->variable(id_t_pi_t,:,:)
 
 
 ;----- ordenando en forma decreciente ppd 1981-2018 en chirp -----;
-id_t_pi_t   := dim_pqsort_n(ppd_pi_t,-2,0)
-id_t_pi_e   := dim_pqsort_n(ppd_pi_e,-2,0)
+id_t_pi_t  := dim_pqsort_n(ppd_pi_t,-2,0)
+id_t_pi_e  := dim_pqsort_n(ppd_pi_e,-2,0)
 
 
 ;----- eliminando los valores mas altos de ppd y menores a 0.1 -----;
