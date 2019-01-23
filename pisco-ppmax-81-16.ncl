@@ -21,7 +21,8 @@ max_lon_p = -68.
 
 ;----- Data Chirp -----;
 ;dir     = "/mnt/j/Tesis/Maestria Geofisica/PISCOpd.nc"
-dir     = "/data/users/jticse/data/PISCOpd.nc"
+;dir     = "/data/users/jticse/data/PISCOpd.nc"
+dir     = "/data/users/jticse/data/PISCOpd21.nc"
 f_pisco = addfile(dir,"r")
 time    = f_pisco->z
 
@@ -129,21 +130,22 @@ printVarSummary(ppd_pi_e_per)
 
 
 ;----- Grabando data ------;
-fout1               = addfile("/data/users/jticse/data/ppd_pi_t_percF2.nc","c")
+fout1               = addfile("/data/users/jticse/data/pisco21ppd_perc_t_EFM.nc","c")
 fout1->ppd_pi_t_per = ppd_pi_t_per
-fout2               = addfile("/data/users/jticse/data/ppd_pi_e_percF2.nc","c")
+fout2               = addfile("/data/users/jticse/data/pisco21ppd_perc_e_EFM.nc","c")
 fout2->ppd_pi_e_per = ppd_pi_e_per
 
 ;----- creando mapa ------;
 type    = "png"
 ;type    = "x11"
-wks = gsn_open_wks(type,"perc-PISCO-F-81-16")
-nrow = 2
-ncol = 4                           
-plot = new(nrow*ncol,graphic)
+titulo  = "PISCOv21-EFM-81-16"
+wks     = gsn_open_wks(type,"perc-"+titulo)
+nrow    = 2
+ncol    = 4                           
+plot    = new(nrow*ncol,graphic)
 ;---Detalles de mapa---;
 res                     = True      ;--> activa los detalles
-res@gsnDraw             = False     ;-- don't draw the plot yet
+res@gsnDraw             = False     ;--> don't draw the plot yet
 res@gsnFrame            = False     ;--> 
 res@gsnMaximize         = True
 res@gsnAddCyclic        = False
@@ -215,7 +217,7 @@ plot(7) = gsn_csm_contour_map(wks,ppd_pi_e_per75,res4)
 ;---- detalles del plot grande ----;
 resP                    = True                ; modify the panel plot
 resP@gsnMaximize        = True
-resP@gsnPanelMainString = "Percentiles con data PISCO F-81-16"
+resP@gsnPanelMainString = "Percentiles "+titulo
 resP@gsnFrame           = False
 resP@gsnPanelLabelBar   = True                ; add common colorbar
 resP@lbOrientation      = "vertical"
