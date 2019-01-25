@@ -159,19 +159,19 @@ do i=0,dia_f-1
     res2@gsnCenterString    = "PERCENTIL-95"
     plot(1) = gsn_csm_contour_map(wks,ppd_pi_t_p95,res2)
     res2@gsnCenterString    = ""
-    plot(5) = gsn_csm_contour_map(wks,ppd_pi_t_p95,res2)
+    plot(5) = gsn_csm_contour_map(wks,ppd_pi_e_p95,res2)
     ;---- plot - percentil90 ----;
     res3                    = res
     res3@gsnCenterString    = "PERCENTIL-90"
     plot(2) = gsn_csm_contour_map(wks,ppd_pi_t_p90,res3)
     res3@gsnCenterString    = ""
-    plot(6) = gsn_csm_contour_map(wks,ppd_pi_t_p90,res3)
+    plot(6) = gsn_csm_contour_map(wks,ppd_pi_e_p90,res3)
     ;---- plot - percentil75 ----;
     res4                    = res
     res4@gsnCenterString    = "PERCENTIL-75"
     plot(3) = gsn_csm_contour_map(wks,ppd_pi_t_p75,res4)
     res4@gsnCenterString    = ""
-    plot(7) = gsn_csm_contour_map(wks,ppd_pi_t_p75,res4)
+    plot(7) = gsn_csm_contour_map(wks,ppd_pi_e_p75,res4)
 
     ;---- detalles del plot grande ----;
     resPP                   = resP                ; modify the panel plot
