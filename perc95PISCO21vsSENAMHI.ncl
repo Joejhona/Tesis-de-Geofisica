@@ -8,6 +8,17 @@ min_lat_p = -19.
 max_lat_p = 0.5
 min_lon_p = -82.
 max_lon_p = -68.
+;----- Colores de la paleta -----;
+levels  = (/0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
+            0.8,0.9,1.,1.5,2.,2.5,3.,3.5,\
+            4.,4.5,5.,6.,7.,8.,\
+            9.,10.,15.,20.,25.,30.,35.,40.,\
+            45.,50.,55.,60.,65.,70.,75.,\
+            80.,85.,90.,95.,100./)
+color_paleta  = "WhBlGrYeRe"
+nlevels_color = dimsizes(levels) ;--> Cantidad de colores 
+colors        = span_color_rgba(color_paleta,nlevels_color+1)
+
 
 ;----- Percentiles y data PISCO -----;
 f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_ENE.nc","r")
@@ -99,16 +110,11 @@ do i=0,dia_f-1
     res@gsnAddCyclic        = False
     res@lbLabelBarOn        = False           ; turn off individual cb's
     res@cnFillOn            = True
-    res@cnFillPalette       = "WhBlGrYeRe"
+    res@cnFillPalette       = color_paleta
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
     res@cnLineLabelsOn      = False
     res@cnLevelSelectionMode    = "ExplicitLevels"  ;---> Solo usa los indicados en levels
-    res@cnLevels                = (/0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
-                                0.8,0.9,1.,1.5,2.,2.5,3.,3.5,\
-                                4.,4.5,5.,6.,7.,8.,\
-                                9.,10.,15.,20.,25.,30.,35.,40.,\
-                                45.,50.,55.,60.,65.,70.,75.,\
-                                80.,85.,90.,95.,100./)
+    res@cnLevels            = levels
 
 
     fecha_i = cd_inv_calendar(year,mes,i+1,00,00,00,"days since 1800-01-01 00:00",0)
@@ -130,8 +136,8 @@ do i=0,dia_f-1
     ppd_pi_e_p95 = where(ppd_pi_e_p95.ge.ppd_pi_e_per95,ppd_pi_e_p95,ppd_pi_e_p95@_FillValue)
 
     ;----- creando mapa ------;
-    ;type    = "png"
-    type    = "x11"
+    type    = "png"
+    ;type    = "x11"
     titulo1 = "perc95PISCOv21-vs-SENAMHI-"
     wks     = gsn_open_wks(type,titulo1+fecha)                
     plot    = new(3,graphic)
@@ -173,15 +179,28 @@ do i=0,dia_f-1
             if (.not.all(ismissing(ppd_s))) then
                 print(tostring(ppd_s))
                 str        := unique_string("poly")
+                coord_x    := tofloat(fc_sen(j,1)) ;--> lat
+                coord_y    := tofloat(fc_sen(j,2)) ;--> lon
+                do k=0,nlevels_color-1
+                    if (k.eq.nlevels_color-1) then
+                        ;--> si: ppd >= max -> ppd = max
+                        ppd_s := where(ppd_s.ge.max(levels),max(levels),ppd_s)   
+                    else if (k.eq.0) then
+                        ;--> si: ppd < min -> ppd = min
+                        ppd_s := where(ppd_s.lt.levels(0),levels(0),ppd_s)       
+                    else 
+                        cond_3:= ppd_s.le.levels(k+1)   ;---> si ppd =< val_2
+                        cond_4:= ppd_s.gt.levels(k)     ;---> si ppd > val_1
+                        ;--> si: val_1 < ppd =< val_2 -> ppd = val_2
+                        ppd_s := where(cond_3.and.cond_4,levels(k),ppd_s)
+                        ;ppd_s := where(ppd_s.ge.levels(m-1).and.ppd_s.lt.levels(m),ppd_s,levels(m))
+                    end if
+                    end if
+                end do
+                color_id               := get1Dindex(levels,ppd_s)
+                pmres@gsMarkerColor    := colors(color_id,:) 
                 map@$str$   = gsn_add_polymarker(wks,map,coord_y,coord_x,pmres)
-            end if
-            ;if (.not.ismissing(ppd_s)).and.(.not.ismissing(ppd_p)) then
-            ;    if (ppd_s.ge.ppd_p) then
-            ;        str        := unique_string("poly")
-            ;        map@$str$   = gsn_add_polymarker(wks,map,coord_y,coord_x,pmres)
-            ;    end if
-            ;end if
-            
+            end if           
         end if
     end do
 
