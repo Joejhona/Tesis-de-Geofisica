@@ -1,4 +1,4 @@
-# Scripts  NCL para Tesis de Geofisica
+# Scripts NCL para Tesis de Geofisica
 
 Para la Tesis de Maestria en Geofisica.
 Conjunto de archivos ncl para elaborar diferentes mapas con el programa NCL.
@@ -99,6 +99,16 @@ Genera un mapa con todas las estaciones del senamhi, diferenciando las estacione
 
 ![estaciones senamhi](https://user-images.githubusercontent.com/22982346/52013922-45785680-24ac-11e9-86fc-9fc98eec59df.png)
 
+## 10. Senamhi-promppd-anom-EFM-17-18 - EN DESARROLLO
+
+Determina la precipitacion promedio y la anomalia de los datos del SENAMHI, esta en desarrollo, no genera el mapa, falla al dibujar la barra de colores.
+
+## 11. web-scraping-senamhi.py - EN DESARROLLO
+
+Scraping para extraer los datos del SENAMHI y convertir en formato csv, falla al momento de descargar algunas estaciones. 
+
+**NOTA** Script elaborado en python, con las librerias BeautifulSoup y Pandas 
+
 ## Autor
 
-Joejhona
+joejhona@gmail.com
