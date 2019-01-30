@@ -1,7 +1,7 @@
 # Scripts  NCL para Tesis de Geofisica
 
 Para la Tesis de Maestria en Geofisica.
-Conjunto de archivos ncl para elaborar difernetes mapas con el programa NCL.
+Conjunto de archivos ncl para elaborar diferentes mapas con el programa NCL.
 Nacar Command Languages
 
 ## Pre requisitos 
@@ -28,7 +28,7 @@ Nacar Command Languages
 
 A continuacion se detalla cada archivo, como funciona y cual es su producto o resultado.
 
-## pisco-ppmax-81-16.ncl
+## 1. pisco-ppmax-81-16.ncl
 
 Usa los datos de piscoV2.0 y V2.1 de 35 años (1981-2016) para determinar los valores minimos de ppd de p99, p95, p90 y p75, de un periodo determinado, de preferencia los meses de enero, febrero y marzo.
 
@@ -40,25 +40,40 @@ Usa los datos de piscoV2.0 y V2.1 de 35 años (1981-2016) para determinar los va
 
 ![perc-piscov21-mar-81-16](https://user-images.githubusercontent.com/22982346/52011043-f67af300-24a4-11e9-8040-2dda58a7b1a4.png)
 
-## chirps-ppmax-81-18.ncl
+## 2. chirps-ppmax-81-18.ncl
 
-Similar a pisco-ppmax-81-16.ncl, usa la data chirps de 38 años (1981-2018) para el analisis, en la segunda fila de mapas excluye ademas el año 2017, las variables del archivo netcdf se denominan **ppd_ch_t_per** y **ppd_ch_e_per**
+Similar a **pisco-ppmax-81-16.ncl**, usa la data chirps de 38 años (1981-2018) para el analisis, en la segunda fila de mapas excluye ademas el año 2017. Las variables del archivo netcdf se denominan **ppd_ch_t_per** y **ppd_ch_e_per**
 
-## pisco-ppmax-81-16-post.ncl
+![perc-chirps-ene-81-16](https://user-images.githubusercontent.com/22982346/52011164-3e9a1580-24a5-11e9-9e1b-a08d44d77038.png)
+
+## 3. pisco-ppmax-81-16-post.ncl
 
 Usa los archivos netcdf creados por **pisco-ppmax-81-16.ncl** para dibujar los mapas de p99, p95, p90 y p75, de las mismas caracteristicas que **pisco-ppmax-81-16.ncl**
 
-## percPISCO21.ncl
+## 4. percPISCO21.ncl
 
 Genera una animación diaria de 8 mapas donde se puede observar en que parte del Perú se ha tenido valores mayores que el p99, p95, p90 y p75, usando la data de piscoV2.1 de 1981 al 2016 y la data diaria de pisco unstable, la primera fila es considerando todos años y la segunda fila excluye los años 1983, 1998.
 
 **ANIMACION** 30 dias consecutivos de un mes seleccionado
 
-## ppd-IMERG-vs-perc-pisco-E-17-18.ncl
+![percPISCO21](https://user-images.githubusercontent.com/22982346/52011071-0561a580-24a5-11e9-92d2-0213fc76f0fb.png)
 
-Similar a percPISCO21.ncl, usa la data diaria de IMERG a cambio de la data diaria de pisco unstable.
 
-## perc95PISCO21vsSENAMHI.ncl
+## 5. percCHIRPS.ncl
+
+Similar a **percPISCO21.ncl**, usa la data de CHIRPS de 1981 al 2018 y la data diaria de CHIRPS
+
+## 6. ppd-IMERG-vs-perc-pisco-E-17-18.ncl
+
+Similar a **percPISCO21.ncl**, usa la data diaria de IMERG a cambio de la data diaria de pisco unstable.
+
+![ppdIMERG-vs-percPISCO](https://user-images.githubusercontent.com/22982346/52011145-3346ea00-24a5-11e9-9327-1272b0ed58e7.png)
+
+## 7. ppd-IMERG-vs-perc-CHIRP-EFM-17-18.ncl
+
+Similar a **percPISCO21.ncl**, usa la data diaria de IMERG a cambio de la data diaria de pisco unstable y la data CHIRPS 1981-2018 a cambio de la data PISCO 1981-2016.
+
+## 8. perc95PISCO21vsSENAMHI.ncl
 
 Genera una animacion diaria de 3 mapas donde se puede observar de derecha a izquierda:
 1. Mapa de p95 de data piscoV2.1 del mes seleccionado, excluyendo los años 1983 y 1998.
