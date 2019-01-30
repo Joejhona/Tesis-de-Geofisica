@@ -11,8 +11,7 @@ Nacar Command Languages
 ## Acronimo
 
 * ppd - lluvia diaria
-* p99, p95, p90, p75 - percentil 99, 95, 90 y 75
-* 
+* p99, p95, p90, p75 - percentil 99, 95, 90 y 75 de lluvia diaria
 
 ## Data Usada
 
