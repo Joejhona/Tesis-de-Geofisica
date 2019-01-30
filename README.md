@@ -16,11 +16,11 @@ Nacar Command Languages
 
 ## Data Usada
 
-* [piscoV2.0-piscoV2.1](ftp://ftp.senamhi.gob.pe/) - Peruvian Interpolated data of the SENAMHI’s Climatological and hydrological Observations
-* [chirpsV2.0](http://chg.geog.ucsb.edu/data/chirps/#_Data) - Climate Hazards Group InfraRed Precipitation with Station data
-* [estaciones senamhi](https://www.senamhi.gob.pe/?&p=estaciones) - Servicio Nacional de Meteorologia e Hidrologia
-* [imergV5.0-opcion1](https://disc.gsfc.nasa.gov/) - Integrated Multi-satelliE Retrievals for GPM
-* [imergV5.0-opcion2](https://disc.gsfc.nasa.gov/SSW/#keywords=) - Integrated Multi-satelliE Retrievals for GPM
+* [piscoV2.0-piscoV2.1](https://www.senamhi.gob.pe/?p=observacion-de-inundaciones) - Peruvian Interpolated data of the SENAMHI’s Climatological and hydrological Observations.
+* [chirpsV2.0](http://chg.geog.ucsb.edu/data/chirps/#_Data) - Climate Hazards Group InfraRed Precipitation with Station data.
+* [estaciones senamhi](https://www.senamhi.gob.pe/?&p=estaciones) - Servicio Nacional de Meteorologia e Hidrologia.
+* [imergV5.0-opcion1](https://disc.gsfc.nasa.gov/) - Integrated Multi-satelliE Retrievals for GPM.
+* [imergV5.0-opcion2](https://disc.gsfc.nasa.gov/SSW/#keywords=) - Integrated Multi-satelliE Retrievals for GPM.
 
     **NOTA** Para descargar datos imerg debes iniciar sesion [aqui](https://urs.earthdata.nasa.gov/home) 
 
@@ -84,7 +84,20 @@ Genera una animacion diaria de 3 mapas donde se puede observar de derecha a izqu
 
 **RESULTADO** Archivo *.csv donde se indica las estaciones del senamhi que tienen valores mayores al p95.
 
+## 8. readTIFFPISCO.ncl
 
+Transforma los datos ascii de piscoV2.1 unstable a un matriz para trabajar en NCL con la data piscpV2.1 stable de 1981-2016
+
+**NOTA** 
+* Los datos piscoV2.1 unstable estan en formato tif y se deben transformar a formato ESRI ascii.
+* Se debe transformar con QGIS o ArcGIS
+* Los datos piscoV2.1 UNSTABLE Y STABLE tienen las mismas dimensiones y el mismo punto de origen, por lo tanto las mimas coordenadas.
+
+## 9. Senamhi.ncl
+
+Genera un mapa con todas las estaciones del senamhi, diferenciando las estaciones automaticas y convencionales
+
+![estaciones senamhi](https://user-images.githubusercontent.com/22982346/52013922-45785680-24ac-11e9-86fc-9fc98eec59df.png)
 
 ## Autor
 
