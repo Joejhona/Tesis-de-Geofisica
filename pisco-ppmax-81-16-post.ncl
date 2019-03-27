@@ -26,19 +26,23 @@ max_lon_p = -68.
 ;f_perc_e        = addfile("/data/users/jticse/data/ppd_pi_e_percE.nc","r")
 ;f_perc_t        = addfile("/data/users/jticse/data/ppd_pi_t_percF.nc","r")
 ;f_perc_e        = addfile("/data/users/jticse/data/ppd_pi_e_percF.nc","r")
-f_perc_t        = addfile("/data/users/jticse/data/ppd_pi_t_percM.nc","r")
-f_perc_e        = addfile("/data/users/jticse/data/ppd_pi_e_percM.nc","r")
-ppd_pi_t_per    = f_perc_t->ppd_pi_t_per
+;f_perc_t        = addfile("/data/users/jticse/data/ppd_pi_t_percM.nc","r")
+;f_perc_e        = addfile("/data/users/jticse/data/ppd_pi_e_percM.nc","r")
+;f_perc_t        = addfile("/data/users/jticse/data/pisco21ppd_perc_t_MAR.nc","r")
+f_perc_e        = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")
+
+;ppd_pi_t_per    = f_perc_t->ppd_pi_t_per
 ppd_pi_e_per    = f_perc_e->ppd_pi_e_per
 
 
 ;----- creando mapa ------;
 type    = "png"
 ;type    = "x11"
-wks = gsn_open_wks(type,"perc-PISCO-M-81-16")
-nrow = 2
-ncol = 4                           
-plot = new(nrow*ncol,graphic)
+titulo  = "Enero-81-16"
+wks     = gsn_open_wks(type,"perc-PISCOv21-"+titulo)
+nrow    = 1  ;2
+ncol    = 4                           
+plot    = new(nrow*ncol,graphic)
 ;---Detalles de mapa---;
 res                     = True      ;--> activa los detalles
 res@gsnDraw             = False     ;-- don't draw the plot yet
@@ -78,61 +82,61 @@ res@tmXBOn                      = False
 
 
 ;---- plot - percentil99 ----;
-ppd_pi_t_per99 = ppd_pi_t_per(0,:,:)
+;ppd_pi_t_per99 = ppd_pi_t_per(0,:,:)
 ppd_pi_e_per99 = ppd_pi_e_per(0,:,:)
 res1                    = res
 res1@gsnCenterString    = "Percentil-99"
-plot(0) = gsn_csm_contour_map(wks,ppd_pi_t_per99,res1)
-res1@gsnCenterString    = ""
-plot(4) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
+plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
+;res1@gsnCenterString    = ""
+;plot(4) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
 ;---- plot - percentil95 ----;
-ppd_pi_t_per95 = ppd_pi_t_per(1,:,:)
+;ppd_pi_t_per95 = ppd_pi_t_per(1,:,:)
 ppd_pi_e_per95 = ppd_pi_e_per(1,:,:)
 res2                    = res
 res2@gsnCenterString    = "Percentil-95"
-plot(1) = gsn_csm_contour_map(wks,ppd_pi_t_per95,res2)
-res2@gsnCenterString    = ""
-plot(5) = gsn_csm_contour_map(wks,ppd_pi_e_per95,res2)
+plot(1) = gsn_csm_contour_map(wks,ppd_pi_e_per95,res2)
+;res2@gsnCenterString    = ""
+;plot(5) = gsn_csm_contour_map(wks,ppd_pi_e_per95,res2)
 ;---- plot - percentil90 ----;
-ppd_pi_t_per90 = ppd_pi_t_per(2,:,:)
+;ppd_pi_t_per90 = ppd_pi_t_per(2,:,:)
 ppd_pi_e_per90 = ppd_pi_e_per(2,:,:)
 res3                    = res
 res3@gsnCenterString    = "Percentil-90"
-plot(2) = gsn_csm_contour_map(wks,ppd_pi_t_per90,res3)
-res3@gsnCenterString    = ""
-plot(6) = gsn_csm_contour_map(wks,ppd_pi_e_per90,res3)
+plot(2) = gsn_csm_contour_map(wks,ppd_pi_e_per90,res3)
+;res3@gsnCenterString    = ""
+;plot(6) = gsn_csm_contour_map(wks,ppd_pi_e_per90,res3)
 ;---- plot - percentil75 ----;
-ppd_pi_t_per75 = ppd_pi_t_per(3,:,:)
+;ppd_pi_t_per75 = ppd_pi_t_per(3,:,:)
 ppd_pi_e_per75 = ppd_pi_e_per(3,:,:)
 res4                    = res
 res4@gsnCenterString    = "Percentil-75"
-plot(3) = gsn_csm_contour_map(wks,ppd_pi_t_per75,res4)
-res4@gsnCenterString    = ""
-plot(7) = gsn_csm_contour_map(wks,ppd_pi_e_per75,res4)
+plot(3) = gsn_csm_contour_map(wks,ppd_pi_e_per75,res4)
+;res4@gsnCenterString    = ""
+;plot(7) = gsn_csm_contour_map(wks,ppd_pi_e_per75,res4)
 
 ;---- detalles del plot grande ----;
 resP                    = True                ; modify the panel plot
 resP@gsnMaximize        = True
-resP@gsnPanelMainString = "Percentiles con data PISCO M-81-16"
-resP@gsnFrame           = False
+resP@gsnPanelMainString = "Percentiles con data PISCOv21"+titulo
+;resP@gsnFrame           = False
 resP@gsnPanelLabelBar   = True                ; add common colorbar
-resP@lbOrientation      = "vertical"
+;resP@lbOrientation      = "vertical"
 resP@vpHeightF          = 0.6
 resP@lbLabelFontHeightF = 0.01               ; make labels smaller
 resP@gsnPanelLeft       = 0.04
 resP@gsnPanelBottom     = 0.08
-resP@gsnPanelSave       = True
+;resP@gsnPanelSave       = True
 
 gsn_panel(wks, plot, (/nrow,ncol/), resP)
 
-pos1 = get_title_position(plot(0))         ; 1st row leftmost plot
-pos2 = get_title_position(plot(4))         ; 2nd row leftmost plot
-txres               = True
-txres@txFontHeightF = 0.012
-txres@txAngleF      = 90.
-gsn_text_ndc(wks, "TOTAL 1981-2016",   pos1(0), pos1(1), txres)
-gsn_text_ndc(wks, "EXCLUYENDO 1983,1998",   pos2(0), pos2(1), txres)
+;pos1 = get_title_position(plot(0))         ; 1st row leftmost plot
+;pos2 = get_title_position(plot(4))         ; 2nd row leftmost plot
+;txres               = True
+;txres@txFontHeightF = 0.012
+;txres@txAngleF      = 90.
+;gsn_text_ndc(wks, "TOTAL 1981-2016",   pos1(0), pos1(1), txres)
+;gsn_text_ndc(wks, "EXCLUYENDO 1983,1998",   pos2(0), pos2(1), txres)
     
-frame(wks)
+;frame(wks)
 
 end
