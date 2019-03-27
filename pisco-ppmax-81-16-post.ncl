@@ -121,10 +121,10 @@ resP@gsnPanelMainString = "Percentiles con data PISCOv21"+titulo
 ;resP@gsnFrame           = False
 resP@gsnPanelLabelBar   = True                ; add common colorbar
 ;resP@lbOrientation      = "vertical"
-resP@vpHeightF          = 0.6
-resP@lbLabelFontHeightF = 0.01               ; make labels smaller
-resP@gsnPanelLeft       = 0.04
-resP@gsnPanelBottom     = 0.08
+;resP@vpHeightF          = 0.6
+;resP@lbLabelFontHeightF = 0.01               ; make labels smaller
+;resP@gsnPanelLeft       = 0.04
+;resP@gsnPanelBottom     = 0.08
 ;resP@gsnPanelSave       = True
 
 gsn_panel(wks, plot, (/nrow,ncol/), resP)
