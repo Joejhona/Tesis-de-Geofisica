@@ -29,11 +29,11 @@ max_lon_p = -68.
 ;f_perc_t        = addfile("/data/users/jticse/data/ppd_pi_t_percM.nc","r")
 ;f_perc_e        = addfile("/data/users/jticse/data/ppd_pi_e_percM.nc","r")
 ;f_perc_t        = addfile("/data/users/jticse/data/pisco21ppd_perc_t_ENE.nc","r")
-f_perc_e        = addfile("/data/users/jticse/data/pisco21ppd_perc_e_ENE.nc","r")
+;f_perc_e        = addfile("/data/users/jticse/data/pisco21ppd_perc_e_ENE.nc","r")
 ;f_perc_t        = addfile("/data/users/jticse/data/pisco21ppd_perc_t_FEB.nc","r")
 ;f_perc_e        = addfile("/data/users/jticse/data/pisco21ppd_perc_e_FEB.nc","r")
 ;f_perc_t        = addfile("/data/users/jticse/data/pisco21ppd_perc_t_MAR.nc","r")
-;f_perc_e        = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")
+f_perc_e        = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")
 
 ;ppd_pi_t_per    = f_perc_t->ppd_pi_t_per
 ppd_pi_e_per    = f_perc_e->ppd_pi_e_per
@@ -42,7 +42,7 @@ ppd_pi_e_per    = f_perc_e->ppd_pi_e_per
 ;----- creando mapa ------;
 type    = "png"
 ;type    = "x11"
-titulo  = "Enero-81-16"
+titulo  = "Marzo-81-16"
 wks     = gsn_open_wks(type,"perc-PISCOv21-"+titulo)
 nrow    = 1  ;2
 ncol    = 4                           
