@@ -61,7 +61,7 @@ do j=1,3
     N1    = dimsizes(precip)
     print("Datos Brutos "+N1)
     N2 = num(.not.ismissing(precip))
-    print("Dias total de lluvia registrada "+N)
+    print("Dias total de lluvia registrada "+N2)
 
     ;----- excluyendo 1983 y 1998 -----;
     time2  := cd_inv_calendar(yyyy1,mm1,dd,hh,mn,sc,units,0)
@@ -79,7 +79,7 @@ do j=1,3
         precip(idate3) = precip@_FillValue
     end if
     N3 = num(.not.ismissing(precip))
-    print("Dias total de lluvia registrada excluyendo 1983 y 1998"+N2)
+    print("Dias total de lluvia registrada excluyendo 1983 y 1998"+N3)
 
     ;----- ordenando en forma decreciente precip -----;
     vector := dim_pqsort_n(precip,-2,0)
@@ -88,7 +88,7 @@ do j=1,3
     precip := precip(1:)
     precip  = where(precip.ge.0.1,precip,precip@_FillValue)
     N4 = num(.not.ismissing(precip))
-    print("Dias lluvia mayores a 0.1 y eliminando el valor mas alto "+N3)
+    print("Dias lluvia mayores a 0.1 y eliminando el valor mas alto "+N4)
 
     ;----- index del percentil 99,95,90,75 -----;
     id_p99  = N3-round(N3*0.99,3)
