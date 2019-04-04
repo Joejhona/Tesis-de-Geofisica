@@ -152,7 +152,7 @@ do i=0, len_est-1
                 x_sen = sen&time
                 y_sen = sen
 
-                wks = gsn_open_wks("png","Estacion "+est+"-"+k+"-"-j)
+                wks = gsn_open_wks("png","/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/Estacion "+est+"-"+k+"-"-j)
                 
                 res             = True                 ; plot mods desired         
                 ;res@gsnFrame    = False
