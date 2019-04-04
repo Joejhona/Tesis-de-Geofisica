@@ -164,8 +164,9 @@ do i=0, len_est-1
                     y_sen := sen
 
                     sal = "x11"
-                    wks = gsn_open_wks(sal,"/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/Estacion "+est+"-"+k+"-"-j)
-                
+                    ;wks = gsn_open_wks(sal,"/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/Estacion "+est+"-"+k+"-"-j)
+                    wks = gsn_open_wks(sal,"Estacion "+est+"-"+k+"-"-j)
+
                     res             = True                 ; plot mods desired         
                     ;res@gsnFrame    = False
                     ;res@gsnDraw     = False
