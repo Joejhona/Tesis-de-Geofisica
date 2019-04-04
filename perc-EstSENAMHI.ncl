@@ -144,7 +144,6 @@ do i=0, len_est-1
                 else
                     sen_1 := s18
                 end if
-                end if
                 sen   := tofloat(sen_1(:,id_pp))
                 sen@_FillValue = -999.0
                 sen    = where(sen.ge.0,sen,sen@_FillValue)
