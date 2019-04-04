@@ -153,8 +153,8 @@ do i=0, len_est-1
                 id_sen := get1Dindex(senamhi&time,id_sen)
                 if (.not.all(ismissing(id_sen))) then
                     id_sen := get_unique_values(id_sen)
-                    sen_1   = senamhi(id_sen,id_pp)
-                    sen     = tofloat(sen_1)
+                    sen_1  := senamhi(id_sen,id_pp)
+                    sen    := tofloat(sen_1)
                     sen@_FillValue = -999.0
                     sen     = where(sen.ge.0,sen,sen@_FillValue)
                     sen    := dim_sum(sen)
@@ -163,7 +163,8 @@ do i=0, len_est-1
                     x_sen := sen&time
                     y_sen := sen
 
-                    type = "x11"
+                    ;type = "x11"
+                    type = "png"
                     ;wks = gsn_open_wks(sal,"/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/Estacion "+est+"-"+k+"-"-j)
                     dir  = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/Estacion"
                     wks  = gsn_open_wks(type,dir+"-"+tostring(est)+"-"+tostring(k)+"-"+tostring(j))
