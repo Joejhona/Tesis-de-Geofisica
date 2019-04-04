@@ -207,7 +207,9 @@ do i=0, len_est-1
                     bres@gsnXYBarChartBarWidth = 0.75            ; Change bar widths
                     bres@gsnXYBarChartColors   = "yellow"        ; Color for bars
                     bres@tmYROn                = False
-                    
+                    bres@tmYLMode   = "Explicit"
+                    bres@tmYLValues = (/p75,p90,p95,p99/)
+                    bres@tmYLLabels = (/"p75","p90","p95","p99"/)
                     ;bres@gsnYRefLine           = 20
                     ;bres@gsnYRefLineColor      = "NavyBlue"
                     ;bres@gsnYRefLineThicknessF = 2.0
