@@ -18,6 +18,8 @@ dir_est = "/data/users/jticse/data/estaciones/"
 est_sen = systemfunc("ls "+dir_est)
 len_est = dimsizes(est_sen)
 
+time_t  = yyyymmdd_time(2017,2018,"integer")
+
 do i=0, len_est-1
     ;----- leendo cada data -----;
     data           := readAsciiTable(dir_est+est_sen(i), 6, "float",0)
@@ -126,56 +128,65 @@ do i=0, len_est-1
             time_s := cd_calendar(time_s,-2)
             senamhi!0 = "time"
             senamhi&time = time_s
-            if j.eq.1 then
-                s17 = senamhi({20170101:20170131},:)
-                s18 = senamhi({20180101:20180131},:)
-            else if j.eq.2 then
-                s17 = senamhi({20170201:20170228},:)
-                s18 = senamhi({20180201:20180228},:)
-            else if j.eq.2 then
-                s17 = senamhi({20170301:20170331},:)
-                s18 = senamhi({20180301:20180331},:)
-            end if
-            end if
-            end if
+            ;if j.eq.1 then
+            ;    s17 = senamhi({20170101:20170131},:)
+            ;    s18 = senamhi({20180101:20180131},:)
+            ;else if j.eq.2 then
+            ;    s17 = senamhi({20170201:20170228},:)
+            ;    s18 = senamhi({20180201:20180228},:)
+            ;else if j.eq.2 then
+            ;    s17 = senamhi({20170301:20170331},:)
+            ;    s18 = senamhi({20180301:20180331},:)
+            ;end if
+            ;end if
+            ;end if
+            ;TIME = yyyymmdd_time(1901, 2001, "integer")
             do k=2017,2018
-                if k.eq.2017 then
-                    sen_1 := s17
+                if j.eq.2 then
+                    dia = "28"
                 else
-                    sen_1 := s18
+                    dia = "31"
                 end if
-                sen   := tofloat(sen_1(:,id_pp))
-                sen@_FillValue = -999.0
-                sen    = where(sen.ge.0,sen,sen@_FillValue)
-                sen   := dim_sum(sen)
-                sen!0  = "time"
-                sen&time = sen_1&time
-                x_sen := sen&time
-                y_sen := sen
+                time_i  = toint(tostring(k)+"0"+tostring(j)+"01")
+                time_f  = toint(tostring(k)+"0"+tostring(j)+dia)
+                id_sen := time_t({time_i:time_f})
+                id_sen := get1Dindex(senamhi&time,id_sen)
+                if (.not.all(ismissing(id_sen))) then
+                    id_sen := get_unique_values(id_sen)
+                    sen_1   = senamhi(id_sen,id_pp)
+                    sen     = tofloat(sen_1)
+                    sen@_FillValue = -999.0
+                    sen     = where(sen.ge.0,sen,sen@_FillValue)
+                    sen    := dim_sum(sen)
+                    sen!0  = "time"
+                    sen&time = sen_1&time
+                    x_sen := sen&time
+                    y_sen := sen
 
-                sal = "x11"
-                wks = gsn_open_wks(sal,"/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/Estacion "+est+"-"+k+"-"-j)
+                    sal = "x11"
+                    wks = gsn_open_wks(sal,"/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/Estacion "+est+"-"+k+"-"-j)
                 
-                res             = True                 ; plot mods desired         
-                ;res@gsnFrame    = False
-                ;res@gsnDraw     = False
+                    res             = True                 ; plot mods desired         
+                    ;res@gsnFrame    = False
+                    ;res@gsnDraw     = False
 
-                bres                       = res
-                bres@gsnXYBarChart         = True            ; Turn on bar chart
-                bres@gsnXYBarChartBarWidth = 0.75            ; Change bar widths
-                bres@gsnXYBarChartColors   = "yellow"        ; Color for bars
-                bres@tmYROn                = False
-                
-                bres@gsnYRefLine           = 20
-                bres@gsnYRefLineColor      = "NavyBlue"
-                bres@gsnYRefLineThicknessF = 2.0
+                    bres                       = res
+                    bres@gsnXYBarChart         = True            ; Turn on bar chart
+                    bres@gsnXYBarChartBarWidth = 0.75            ; Change bar widths
+                    bres@gsnXYBarChartColors   = "yellow"        ; Color for bars
+                    bres@tmYROn                = False
+                    
+                    bres@gsnYRefLine           = 20
+                    bres@gsnYRefLineColor      = "NavyBlue"
+                    bres@gsnYRefLineThicknessF = 2.0
 
-                bres@trYMinF               = 0.              ; Make sure Y axis starts at 0.
+                    bres@trYMinF               = 0.              ; Make sure Y axis starts at 0.
 
-                bres@tiMainString          = "XY curve over a bar chart"
-                bres@tiYAxisString         = "mm"
+                    bres@tiMainString          = "XY curve over a bar chart"
+                    bres@tiYAxisString         = "mm"
 
-                bar_plot = gsn_csm_xy(wks,x_sen,y_sen,bres)
+                    bar_plot = gsn_csm_xy(wks,x_sen,y_sen,bres)
+                end if
             end do
         end if
     end do
