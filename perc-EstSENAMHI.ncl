@@ -230,6 +230,9 @@ do i=0, len_est-1
                     xyres@vpYF      = vpy
                     xyres@vpWidthF  = vpw
                     xyres@vpHeightF = vph
+                    xyres@tmYRValues = (/p99,p95,p90,p75/)
+                    xyres@tmYRLabels = (/"p99","p95","p90","p75"/)
+
 
                     xy_plot  = gsn_csm_xy(wks,x_sen,y_sen,xyres)
                     
