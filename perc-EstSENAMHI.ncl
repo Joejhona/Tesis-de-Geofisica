@@ -168,6 +168,8 @@ do i=0, len_est-1
                     xrange = max(x_sen)-min(x_sen)
                     deltax = xrange/10.
                     y_sen := sen
+                    y2_sen:= y_sen
+                    y2_sen = 0
 
                     ;type = "x11"
                     type = "png"
@@ -183,7 +185,7 @@ do i=0, len_est-1
                     res@trYMinF     = 0.0
 
                     xyres                     = res
-                    xyres@xyLineThicknessF    = 0.               ; default is 1.0
+                    xyres@xyLineThicknessF    = 0.1               ; default is 1.0
                     xyres@xyLineColor         = "NavyBlue"
 
                     xyres@tmXBOn              = False
@@ -196,7 +198,7 @@ do i=0, len_est-1
                     xyres@tiYAxisSide         = "Right"
                     xyres@tiYAxisAngleF       = 270              ; Rotate the Y-axis title 270 degrees
 
-                    xyres@gsnYRefLine           = 20               ; Draw horiz line at y=20
+                    xyres@gsnYRefLine           = (/p99,p95,p90,p75/)               ; Draw horiz line at y=20
                     xyres@gsnYRefLineColor      = "NavyBlue"
                     xyres@gsnYRefLineThicknessF = 2.0
 
@@ -229,7 +231,7 @@ do i=0, len_est-1
                     xyres@vpWidthF  = vpw
                     xyres@vpHeightF = vph
 
-                    xy_plot  = gsn_csm_xy(wks,x_sen,y_sen,xyres)
+                    xy_plot  = gsn_csm_xy(wks,x_sen,y2_sen,xyres)
                     
                     anno_id  = gsn_add_annotation(bar_plot, xy_plot, False)
 
