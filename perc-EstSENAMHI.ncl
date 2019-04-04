@@ -194,10 +194,6 @@ do i=0, len_est-1
                     xyres@tmYROn              = True
                     xyres@tmYRLabelsOn        = True
 
-                    xyres@tmYRMode   = "Explicit"
-                    xyres@tmYRValues = (/p99,p95,p90,p75/)
-                    xyres@tmYRLabels = (/"p99","p95","p90","p75"/)
-
                     xyres@tiYAxisString       = "Percentiles"
                     xyres@tiYAxisSide         = "Right"
                     xyres@tiYAxisAngleF       = 270              ; Rotate the Y-axis title 270 degrees
@@ -234,7 +230,9 @@ do i=0, len_est-1
                     xyres@vpYF      = vpy
                     xyres@vpWidthF  = vpw
                     xyres@vpHeightF = vph
-                    
+                    xyres@tmYRMode   = "Explicit"
+                    xyres@tmYRValues = (/p75,p90,p95,p99/)
+                    xyres@tmYRLabels = (/"p75","p90","p95","p99"/)
 
 
                     xy_plot  = gsn_csm_xy(wks,x_sen,y_sen,xyres)
