@@ -194,7 +194,7 @@ do i=0, len_est-1
                     xyres@tmYROn              = True
                     xyres@tmYRLabelsOn        = True
 
-                    xyres@tiYAxisString       = "Percentiles"
+                    xyres@tiYAxisString       = "lluvia (mm/dia)"
                     xyres@tiYAxisSide         = "Right"
                     xyres@tiYAxisAngleF       = 270              ; Rotate the Y-axis title 270 degrees
 
@@ -210,6 +210,8 @@ do i=0, len_est-1
                     bres@tmYLMode   = "Explicit"
                     bres@tmYLValues = (/p75,p90,p95,p99/)
                     bres@tmYLLabels = (/"p75","p90","p95","p99"/)
+                    bres@tmXBMode   = "Manual"
+                    bres@tmXBTickSpacingF = dimsizes(x_sen)
                     ;bres@gsnYRefLine           = 20
                     ;bres@gsnYRefLineColor      = "NavyBlue"
                     ;bres@gsnYRefLineThicknessF = 2.0
@@ -217,7 +219,7 @@ do i=0, len_est-1
                     bres@trYMinF               = 0.              ; Make sure Y axis starts at 0.
 
                     bres@tiMainString          = "Estacion "+tostring(est)+"-"+tostring(k)+"-"+tostring(j)
-                    bres@tiYAxisString         = "mm"
+                    bres@tiYAxisString         = "Percentiles"
 
                     bar_plot = gsn_csm_xy(wks,x_sen,y_sen,bres)
 
@@ -232,10 +234,6 @@ do i=0, len_est-1
                     xyres@vpYF      = vpy
                     xyres@vpWidthF  = vpw
                     xyres@vpHeightF = vph
-                    xyres@tmYRMode   = "Explicit"
-                    xyres@tmYRValues = (/p75,p90,p95,p99/)
-                    xyres@tmYRLabels = (/"p75","p90","p95","p99"/)
-
 
                     xy_plot  = gsn_csm_xy(wks,x_sen,y_sen,xyres)
                     
