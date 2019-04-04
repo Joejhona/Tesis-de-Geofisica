@@ -183,7 +183,7 @@ do i=0, len_est-1
                     res@trYMinF     = 0.0
 
                     xyres                     = res
-                    xyres@xyLineThicknessF    = 2.0               ; default is 1.0
+                    xyres@xyLineThicknessF    = 0.               ; default is 1.0
                     xyres@xyLineColor         = "NavyBlue"
 
                     xyres@tmXBOn              = False
@@ -206,9 +206,9 @@ do i=0, len_est-1
                     bres@gsnXYBarChartColors   = "yellow"        ; Color for bars
                     bres@tmYROn                = False
                     
-                    bres@gsnYRefLine           = 20
-                    bres@gsnYRefLineColor      = "NavyBlue"
-                    bres@gsnYRefLineThicknessF = 2.0
+                    ;bres@gsnYRefLine           = 20
+                    ;bres@gsnYRefLineColor      = "NavyBlue"
+                    ;bres@gsnYRefLineThicknessF = 2.0
 
                     bres@trYMinF               = 0.              ; Make sure Y axis starts at 0.
 
@@ -229,14 +229,14 @@ do i=0, len_est-1
                     xyres@vpWidthF  = vpw
                     xyres@vpHeightF = vph
 
-                    xy_plot  = gsn_csm_xy (wks,x_sen,0,xyres)
+                    xy_plot  = gsn_csm_xy(wks,x_sen,y_sen,xyres)
                     
                     anno_id  = gsn_add_annotation(bar_plot, xy_plot, False)
 
                     pres             = True
                     pres@gsnMaximize = True
                     maximize_output(wks,pres)
-                    
+
                 end if
             end do
         end if
