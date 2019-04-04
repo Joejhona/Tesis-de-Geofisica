@@ -149,8 +149,8 @@ do i=0, len_est-1
                 end if
                 time_i  = toint(tostring(k)+"0"+tostring(j)+"01")
                 time_f  = toint(tostring(k)+"0"+tostring(j)+dia)
-                print("Empezando leer")
                 id_sen := time_t({time_i:time_f})
+                print(tostring(time_i)+"-"+tostring(time_f))
                 id_sen := get1Dindex(senamhi&time,id_sen)
                 if (.not.all(ismissing(id_sen))) then
                     print("Paso 2")
