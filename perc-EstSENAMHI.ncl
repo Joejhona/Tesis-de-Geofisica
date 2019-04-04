@@ -180,8 +180,8 @@ do i=0, len_est-1
                     res             = True                 ; plot mods desired         
                     res@gsnFrame    = False
                     res@gsnDraw     = False
-                    res@trXMinF     = min(x_sen)-deltax
-                    res@trXMaxF     = max(x_sen)+deltax
+                    ;res@trXMinF     = min(x_sen)-deltax
+                    ;res@trXMaxF     = max(x_sen)+deltax
                     res@trYMinF     = 0.0
 
                     xyres                     = res
@@ -204,7 +204,7 @@ do i=0, len_est-1
 
                     bres                       = res
                     bres@gsnXYBarChart         = True            ; Turn on bar chart
-                    bres@gsnXYBarChartBarWidth = 0.75            ; Change bar widths
+                    ;bres@gsnXYBarChartBarWidth = 0.75            ; Change bar widths
                     bres@gsnXYBarChartColors   = "yellow"        ; Color for bars
                     bres@tmYROn                = False
                     bres@tmYLMode   = "Explicit"
