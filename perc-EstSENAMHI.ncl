@@ -199,8 +199,8 @@ do i=0, len_est-1
                     xyres@tiYAxisAngleF       = 270              ; Rotate the Y-axis title 270 degrees
 
                     xyres@gsnYRefLine           = (/p99,p95,p90,p75/)               ; Draw horiz line at y=20
-                    xyres@gsnYRefLineColor      = "NavyBlue"
-                    xyres@gsnYRefLineThicknessF = 2.0
+                    xyres@gsnYRefLineColors     = "NavyBlue"
+                    xyres@gsnYRefLineThicknesses = 2.0
 
                     bres                       = res
                     bres@gsnXYBarChart         = True            ; Turn on bar chart
@@ -214,7 +214,7 @@ do i=0, len_est-1
 
                     bres@trYMinF               = 0.              ; Make sure Y axis starts at 0.
 
-                    bres@tiMainString          = "XY curve over a bar chart"
+                    bres@tiMainString          = "Estacion "+tostring(est)+"-"+tostring(k)+"-"+tostring(j)
                     bres@tiYAxisString         = "mm"
 
                     bar_plot = gsn_csm_xy(wks,x_sen,y_sen,bres)
