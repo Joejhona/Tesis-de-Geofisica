@@ -137,11 +137,13 @@ do i=0, len_est-1
                 s18 = senamhi({20180301:20180331},:)
             end if
             end if
+            end if
             do k=2017,2018
                 if k.eq.2017 then
                     sen_1 := s17
                 else
                     sen_1 := s18
+                end if
                 end if
                 sen   := tofloat(sen_1(:,id_pp))
                 sen@_FillValue = -999.0
