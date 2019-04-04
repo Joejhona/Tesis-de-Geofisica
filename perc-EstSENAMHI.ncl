@@ -119,6 +119,8 @@ do i=0, len_est-1
             senamhi = str_sub_str(senamhi,"feb","02")
             senamhi = str_sub_str(senamhi,"Mar","03")
             senamhi = str_sub_str(senamhi,"mar","03")
+            senamhi = str_sub_str(senamhi,"-2017","-17")
+            senamhi = str_sub_str(senamhi,"-2018","-18")
             senamhi:= str_split_csv(senamhi,",",0)
             id_pp  := str_match_ind(senamhi(0,:),"mm")
             senamhi:= senamhi(1:,:)
@@ -153,7 +155,6 @@ do i=0, len_est-1
                 print(tostring(time_i)+"-"+tostring(time_f))
                 id_sen := get1Dindex(senamhi&time,id_sen)
                 if (.not.all(ismissing(id_sen))) then
-                    print("Paso 2")
                     id_sen := get_unique_values(id_sen)
                     sen_1  := senamhi(id_sen,id_pp)
                     sen    := tofloat(sen_1)
@@ -163,6 +164,9 @@ do i=0, len_est-1
                     sen!0  = "time"
                     sen&time = sen_1&time
                     x_sen := sen&time
+                    x_sen := ispan(1,dimsizes(x_sen),1)
+                    xrange = max(x_sen)-min(x_sen)
+                    deltax = xrange/10.
                     y_sen := sen
 
                     ;type = "x11"
@@ -172,8 +176,29 @@ do i=0, len_est-1
                     wks  = gsn_open_wks(type,dir+"-"+tostring(est)+"-"+tostring(k)+"-"+tostring(j))
 
                     res             = True                 ; plot mods desired         
-                    ;res@gsnFrame    = False
-                    ;res@gsnDraw     = False
+                    res@gsnFrame    = False
+                    res@gsnDraw     = False
+                    res@trXMinF     = min(x_sen)-deltax
+                    res@trXMaxF     = max(x_sen)+deltax
+                    res@trYMinF     = 0.0
+
+                    xyres                     = res
+                    xyres@xyLineThicknessF    = 2.0               ; default is 1.0
+                    xyres@xyLineColor         = "NavyBlue"
+
+                    xyres@tmXBOn              = False
+                    xyres@tmXTOn              = False
+                    xyres@tmYLOn              = False
+                    xyres@tmYROn              = True
+                    xyres@tmYRLabelsOn        = True
+
+                    xyres@tiYAxisString       = "Percentiles"
+                    xyres@tiYAxisSide         = "Right"
+                    xyres@tiYAxisAngleF       = 270              ; Rotate the Y-axis title 270 degrees
+
+                    xyres@gsnYRefLine           = 20               ; Draw horiz line at y=20
+                    xyres@gsnYRefLineColor      = "NavyBlue"
+                    xyres@gsnYRefLineThicknessF = 2.0
 
                     bres                       = res
                     bres@gsnXYBarChart         = True            ; Turn on bar chart
@@ -191,6 +216,27 @@ do i=0, len_est-1
                     bres@tiYAxisString         = "mm"
 
                     bar_plot = gsn_csm_xy(wks,x_sen,y_sen,bres)
+
+                    getvalues bar_plot
+                        "vpXF"      : vpx
+                        "vpYF"      : vpy
+                        "vpWidthF"  : vpw
+                        "vpHeightF" : vph
+                    end getvalues
+
+                    xyres@vpXF      = vpx
+                    xyres@vpYF      = vpy
+                    xyres@vpWidthF  = vpw
+                    xyres@vpHeightF = vph
+
+                    xy_plot  = gsn_csm_xy (wks,x_sen,0,xyres)
+                    
+                    anno_id  = gsn_add_annotation(bar_plot, xy_plot, False)
+
+                    pres             = True
+                    pres@gsnMaximize = True
+                    maximize_output(wks,pres)
+                    
                 end if
             end do
         end if
