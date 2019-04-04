@@ -143,14 +143,14 @@ do i=0, len_est-1
                 else
                     sen_1 := s18
                 end if
-                sen  := tofloat(sen_1(:,id_pp))
+                sen   := tofloat(sen_1(:,id_pp))
                 sen@_FillValue = -999.0
-                sen   = where(sen.ge.0,sen,sen@_FillValue)
-                sen  := dim_sum(sen)
-                sen!0 = "time"
+                sen    = where(sen.ge.0,sen,sen@_FillValue)
+                sen   := dim_sum(sen)
+                sen!0  = "time"
                 sen&time = sen_1&time
-                x_sen = sen&time
-                y_sen = sen
+                x_sen := sen&time
+                y_sen := sen
 
                 wks = gsn_open_wks("png","/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/Estacion "+est+"-"+k+"-"-j)
                 
