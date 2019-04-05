@@ -240,7 +240,7 @@ do i=0, len_est-1
                     txres               = True             
                     txres@txFont        = "helvetica-bold" 
                     txres@txFontHeightF = 0.01
-                    txid = gsn_add_text (wks,xy_plot,"Global Annual Means", 10.0, -2.3 ,txres)
+                    txid = gsn_add_text(wks,bar_plot,"Global Annual Means", 10.0, -2.3 ,txres)
 
                     anno_id  = gsn_add_annotation(bar_plot, xy_plot, False)
 
