@@ -156,7 +156,7 @@ do i=0, len_est-1
                     xrange   = max(x_sen)-min(x_sen)
                     deltax   = xrange/50.
                     y_sen   := sen
-                    ppd_max  = where(y_sen.ge.p75,y_sen,y_sen@_FillValue)
+                    ;ppd_max  = where(y_sen.ge.p75,y_sen,y_sen@_FillValue)
                     do m=0,dimsizes(y_sen)-1
                         if sen(m).ge.p75 then
                             ppd     = sen(m)
