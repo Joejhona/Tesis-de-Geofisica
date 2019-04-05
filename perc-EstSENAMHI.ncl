@@ -239,20 +239,21 @@ do i=0, len_est-1
 
                     anno_id  = gsn_add_annotation(bar_plot, xy_plot, False)
 
-                    txres               = True             
-                    txres@txFont        = "helvetica-bold" 
-                    txres@txFontHeightF = 0.01
-                    txid = gsn_add_text(wks,bar_plot,"Global Annual Means", 10.0, -2.3 ,txres)
+                    txres                = True
+                    txid   = gsn_create_text(wks, "default text settings", txres)
+                    amres = True
+                    annoid = gsn_add_annotation(bar_plot, txid, amres)
+                    ;txres               = True             
+                    ;txres@txFont        = "helvetica-bold" 
+                    ;txres@txFontHeightF = 0.01
+                    ;txid = gsn_add_text(wks,bar_plot,"Global Annual Means", 10.0, -2.3 ,txres)
 
-                    draw(bar_plot)
-                    frame(wks)
+                    ;draw(bar_plot)
+                    ;frame(wks)
 
-                    ;pres             = True
-                    ;pres@gsnMaximize = True
-                    ;maximize_output(wks,pres)
-
-                
-                
+                    pres             = True
+                    pres@gsnMaximize = True
+                    maximize_output(wks,pres)              
                 end if
             end do
         end if
