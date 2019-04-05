@@ -211,7 +211,7 @@ do i=0, len_est-1
                     bres@tmYROn                = False
                     bres@tmYLMode              = "Explicit"
                     bres@tmYLValues            = (/p75,p90,p95,p99/)
-                    bres@tmYLLabels            = (/"p75","p90","p95","p99"/)
+                    bres@tmYLLabels            = (/"p75="+p75,"p90="+p90,"p95="+p95,"p99="+p99/)
                     bres@tmXBMode              = "Manual"
                     bres@tmXBTickSpacingF      = 4
                     bres@tmXBMinorPerMajor     = 3
@@ -241,11 +241,11 @@ do i=0, len_est-1
 
                     txres                = True
                     txres@txFontHeightF  = 0.03
-                    txid   = gsn_create_text(wks, "default text settings", txres)
+                    txid   = gsn_create_text(wks, "Data valida analizada = "+N4+" dias", txres)
                     amres = True
                     amres@amParallelPosF   =  0.0    ; This is the center of the plot.
-                    amres@amOrthogonalPosF =  0.5    ; This is the top edge of the plot.
-                    amres@amJust           = "CenterLeft"
+                    amres@amOrthogonalPosF =  -0.5    ; This is the top edge of the plot.
+                    amres@amJust           = "TopRight"
                     annoid = gsn_add_annotation(bar_plot, txid, amres)
                     ;txres               = True             
                     ;txres@txFont        = "helvetica-bold" 
