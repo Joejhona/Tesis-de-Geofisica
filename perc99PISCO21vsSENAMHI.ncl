@@ -22,15 +22,15 @@ colors        = span_color_rgba(color_paleta,nlevels_color+1)
 
 ;----- Pre procesamiento de data Chirp -----;
 year    = 2017  ;--->año final
-mes     = 03    ;--->mes inicial
+mes     = 01    ;--->mes inicial
 dia_i   = 01    ;--->dia inicial
 dia_f   = 31    ;--->dia final
 
 
 ;----- Percentiles y data PISCO -----;
-;f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_ENE.nc","r")
+f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_ENE.nc","r")
 ;f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_FEB.nc","r")
-f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")
+;f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")
 dir_pi    = "/data/users/jticse/data/piscopd-17-18/"
 
 ;----- Estaciones SENAMHI -----;
@@ -263,6 +263,6 @@ end do
     orden1  = "convert -delay "
     tiempo  = "200"             ;---> 100 = 1 seg
     fecha  := str_get_cols(fecha,0,6)
-    cmd     = orden1+tiempo+" "+dir+titulo1+fecha+"*.png "+dir"anim-"+titulo1+fecha+".gif"
+    cmd     = orden1+tiempo+" "+dir+titulo1+fecha+"*.png "+dir+"anim-"+titulo1+fecha+".gif"
     system(cmd)
 end
