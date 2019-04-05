@@ -168,9 +168,6 @@ do i=0, len_est-1
                             write_table(csv_filename,"a",alist,format)
                         end if
                     end do
-                    do l=0,dimsizes(ppd_max)-1
-                        if 
-                    end do
                     ;y2_sen:= y_sen
                     ;y2_sen = 0
 
