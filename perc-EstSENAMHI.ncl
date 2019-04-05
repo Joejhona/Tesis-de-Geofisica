@@ -161,7 +161,7 @@ do i=0, len_est-1
                         if .not.ismissing(sen(m)) then
                             if sen(m).ge.p75 then
                                 ppd     = sen(m)
-                                fecha  := ppd&time
+                                fecha  := sen&time(m)
                                 ;format2 = "%y-%N-%D"
                                 ;fecha  := cd_string(fecha,format2)
                                 fecha  := tostring(fecha)
