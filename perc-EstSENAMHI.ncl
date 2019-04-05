@@ -218,8 +218,8 @@ do i=0, len_est-1
                     bres@tmYROn                = False
                     bres@tmYLMode              = "Explicit"
                     bres@tmYLValues            = (/p75,p90,p95,p99/)
-                    bres@tmYLLabels            = (/"p75 ="+sprintf("%3.1f",p75),"p90 ="+sprintf("%3.1f",p90),\
-                                                    "p95 ="+sprintf("%3.1f",p95),"p99 ="+sprintf("%3.1f",p99)/)
+                    bres@tmYLLabels            = (/"p75="+p75,"p90="+p90,\
+                                                    "p95="+p95,"p99="+p99/)
                     bres@tmXBMode              = "Manual"
                     bres@tmXBTickSpacingF      = 4
                     bres@tmXBMinorPerMajor     = 3
@@ -227,7 +227,7 @@ do i=0, len_est-1
                     ;bres@trYMinF        = 0.              ; Make sure Y axis starts at 0.
 
                     bres@tiMainString   = "Estacion "+tostring(est)+"-"+mes+"-"+tostring(k)
-                    bres@tiYAxisString  = "Percentiles"
+                    ;bres@tiYAxisString  = "Percentiles"
                     bres@tiXAxisString  = "dias"
                     bres@gsnLeftString  = "Data valida analizada = "+N4+" dias"
 
