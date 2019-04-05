@@ -263,6 +263,6 @@ end do
     orden1  = "convert -delay "
     tiempo  = "200"             ;---> 100 = 1 seg
     fecha  := str_get_cols(fecha,0,6)
-    cmd     = orden1+tiempo+" "+dir+titulo1+fecha+"*.png anim-"+titulo1+fecha+".gif"
+    cmd     = orden1+tiempo+" "+dir+titulo1+fecha+"*.png "+dir"anim-"+titulo1+fecha+".gif"
     system(cmd)
 end
