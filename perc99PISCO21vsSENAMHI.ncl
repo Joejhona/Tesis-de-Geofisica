@@ -219,8 +219,8 @@ do i=0,dia_f-1
                     coord_y    := tofloat(fc_sen(j,2)) ;--> lon
                     verif_x     = ppd_pi_se&latitude(j)
                     verif_y     = ppd_pi_se&longitude(j)
-                    print(coord_x+"--"+verif_x)
-                    print(coord_y+"--"+verif_y)
+                    print(coord_x+"//"+verif_x)
+                    print(coord_y+"//"+verif_y)
                     alist      := [/cod_est,fecha_s,ppd_s,ppd_p/]
                     format      = "%s,%s,%7.2f,%7.2f"
                     write_table(f_csv,"a",alist,format)
@@ -263,6 +263,6 @@ end do
     orden1  = "convert -delay "
     tiempo  = "200"             ;---> 100 = 1 seg
     fecha  := str_get_cols(fecha,0,6)
-    cmd     = orden1+tiempo+" "+titulo1+fecha+"*.png anim-"+titulo1+fecha+".gif"
+    cmd     = orden1+tiempo+" "+dir+titulo1+fecha+"*.png anim-"+titulo1+fecha+".gif"
     system(cmd)
 end
