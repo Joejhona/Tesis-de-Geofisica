@@ -51,7 +51,8 @@ shpres@gsLineThicknessF = 0.9       ;--> grosor de linea
 
 ;----- Excel de est-sen -----;
 ;f_csv     = "/data/users/jticse/data/est-sen-perc95.csv"
-f_csv     = "est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
+dir     = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/"
+f_csv     = dir+"est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
 system("rm -rf " + f_csv)
 fields    = (/"COD-EST","FECHA","PPD-SEN","PPD-PIS"/)
 header    = [/str_join(fields,",")/]
@@ -59,7 +60,7 @@ write_table(f_csv,"w",header,"%s")
 
 ;----- Excel de errores -----;
 ;f_csv     = "/data/users/jticse/data/est-sen-perc95.csv"
-f_err     = "error-est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
+f_err     = dir+"error-est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
 system("rm -rf " + f_err)
 fields_err=[/"Por alguna razon a veces no encuentra el id"/]
 write_table(f_err,"w",fields_err,"%s")
@@ -169,7 +170,6 @@ do i=0,dia_f-1
     ;----- creando mapa ------;
     type    = "png"
     ;type    = "x11"
-    dir     = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/"
     titulo1 = "perc99PISCOv21-vs-SENAMHI-"
     wks     = gsn_open_wks(type,dir+titulo1+fecha)                
     plot    = new(3,graphic)
