@@ -237,12 +237,12 @@ do i=0, len_est-1
 
                     xy_plot  = gsn_csm_xy(wks,x_sen,y_sen,xyres)
 
+                    anno_id  = gsn_add_annotation(bar_plot, xy_plot, False)
+
                     txres               = True             
                     txres@txFont        = "helvetica-bold" 
                     txres@txFontHeightF = 0.01
-                    txid = gsn_add_text(wks,bar_plot,"Global Annual Means", 10.0, -2.3 ,txres)
-
-                    anno_id  = gsn_add_annotation(bar_plot, xy_plot, False)
+                    txid = gsn_add_text(wks,anno_id,"Global Annual Means", 10.0, -2.3 ,txres)
 
                     pres             = True
                     pres@gsnMaximize = True
