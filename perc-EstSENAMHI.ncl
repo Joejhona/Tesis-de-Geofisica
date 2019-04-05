@@ -243,6 +243,11 @@ do i=0, len_est-1
                     pres@gsnMaximize = True
                     maximize_output(wks,pres)
 
+                    txres               = True             
+                    txres@txFont        = "helvetica-bold" 
+                    txres@txFontHeightF = 0.01
+                    txid = gsn_add_text (wks,xy_plot,"Global Annual Means" 10.0, -2.3 ,txres)
+                
                 end if
             end do
         end if
