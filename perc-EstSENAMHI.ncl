@@ -107,9 +107,9 @@ do i=0, len_est-1
         p75     = precip(id_p75)
 
         ;----- Escribiendo en la tabla -----;
-        alist  = [/est,j,N1,N2,N3,N4,p99,p95,p90,p75/]
-        format = "%s,%1d,%4d,%4d,%4d,%4d,%4.2f,%4.2f,%4.2f,%4.2f"
-        write_table(csv_filename, "a", alist, format)
+        ;alist  = [/est,j,N1,N2,N3,N4,p99,p95,p90,p75/]
+        ;format = "%s,%1d,%4d,%4d,%4d,%4d,%4.2f,%4.2f,%4.2f,%4.2f"
+        ;write_table(csv_filename, "a", alist, format)
 
         senamhi:= str_match(s17_18,est)
         if (.not.all(ismissing(senamhi))) then
