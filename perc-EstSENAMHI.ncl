@@ -240,8 +240,12 @@ do i=0, len_est-1
                     anno_id  = gsn_add_annotation(bar_plot, xy_plot, False)
 
                     txres                = True
+                    txres@txFontHeightF  = 0.03
                     txid   = gsn_create_text(wks, "default text settings", txres)
                     amres = True
+                    amres@amParallelPosF   =  0.0    ; This is the center of the plot.
+                    amres@amOrthogonalPosF =  0.5    ; This is the top edge of the plot.
+                    amres@amJust           = "CenterLeft"
                     annoid = gsn_add_annotation(bar_plot, txid, amres)
                     ;txres               = True             
                     ;txres@txFont        = "helvetica-bold" 
