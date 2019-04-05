@@ -169,8 +169,9 @@ do i=0,dia_f-1
     ;----- creando mapa ------;
     type    = "png"
     ;type    = "x11"
+    dir     = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/"
     titulo1 = "perc99PISCOv21-vs-SENAMHI-"
-    wks     = gsn_open_wks(type,titulo1+fecha)                
+    wks     = gsn_open_wks(type,dir+titulo1+fecha)                
     plot    = new(3,graphic)
 
     ;---- plot - percentil95 ----;
@@ -207,6 +208,7 @@ do i=0,dia_f-1
                 ppd_s  := tofloat(fe_sen(id_dia,id_pp))
                 ppd_s@_FillValue = -999.0  
                 ppd_s  := where(ppd_s.ge.0,ppd_s,ppd_s@_FillValue)
+                ppd_s  := where(ppd_s.ge.200,ppd_s@_FillValue,ppd_s)
                 ppd_s  := dim_sum(ppd_s)
                 ppd_p  := ppd_pi_se(j,j)
                 ppd_s  := where(ppd_s.ge.ppd_p,ppd_s,ppd_s@_FillValue)
@@ -215,6 +217,10 @@ do i=0,dia_f-1
                     str        := unique_string("poly")
                     coord_x    := tofloat(fc_sen(j,1)) ;--> lat
                     coord_y    := tofloat(fc_sen(j,2)) ;--> lon
+                    verif_x     = ppd_pi_se&latitude(j)
+                    verif_y     = ppd_pi_se&longitude(j)
+                    print(coord_x+"--"+verif_x)
+                    print(coord_y+"--"+verif_y)
                     alist      := [/cod_est,fecha_s,ppd_s,ppd_p/]
                     format      = "%s,%s,%7.2f,%7.2f"
                     write_table(f_csv,"a",alist,format)
