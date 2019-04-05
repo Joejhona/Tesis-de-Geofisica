@@ -242,11 +242,14 @@ do i=0, len_est-1
                     txres               = True             
                     txres@txFont        = "helvetica-bold" 
                     txres@txFontHeightF = 0.01
-                    txid = gsn_add_text(wks,anno_id,"Global Annual Means", 10.0, -2.3 ,txres)
+                    txid = gsn_add_text(wks,bar_plot,"Global Annual Means", 10.0, -2.3 ,txres)
 
-                    pres             = True
-                    pres@gsnMaximize = True
-                    maximize_output(wks,pres)
+                    draw(bar_plot)
+                    frame(wks)
+
+                    ;pres             = True
+                    ;pres@gsnMaximize = True
+                    ;maximize_output(wks,pres)
 
                 
                 
