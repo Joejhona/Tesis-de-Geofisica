@@ -158,9 +158,9 @@ do i=0, len_est-1
                     y_sen   := sen
                     ppd_max  = where(y_sen.ge.p75,y_sen,y_sen@_FillValue)
                     do m=0,dimsizes(y_sen)-1
-                        if y_sen(m).ge.p75 then
-                            ppd     = y_sen(m)
-                            fecha   = ppd&time
+                        if sen(m).ge.p75 then
+                            ppd     = sen(m)
+                            fecha  := sen&time
                             format2 = "%y-%N-%D"
                             fecha  := cd_string(fecha,format2)
                             alist   = [/est,j,N1,N2,N3,N4,p99,p95,p90,p75,fecha,ppd/]
