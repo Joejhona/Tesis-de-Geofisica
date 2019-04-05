@@ -216,10 +216,12 @@ do i=0, len_est-1
                     bres@tmXBTickSpacingF      = 4
                     bres@tmXBMinorPerMajor     = 3
 
-                    bres@trYMinF        = 0.              ; Make sure Y axis starts at 0.
+                    ;bres@trYMinF        = 0.              ; Make sure Y axis starts at 0.
 
                     bres@tiMainString   = "Estacion "+tostring(est)+"-"+tostring(k)+"-"+tostring(j)
                     bres@tiYAxisString  = "Percentiles"
+                    bres@tiXAxisString  = "dias"
+                    bres@gsnLeftString  = "Data valida analizada = "+N4+" dias"
 
                     bar_plot = gsn_csm_xy(wks,x_sen,y_sen,bres)
 
@@ -239,14 +241,14 @@ do i=0, len_est-1
 
                     anno_id  = gsn_add_annotation(bar_plot, xy_plot, False)
 
-                    txres                = True
-                    txres@txFontHeightF  = 0.03
-                    txid   = gsn_create_text(wks, "Data valida analizada = "+N4+" dias", txres)
-                    amres = True
-                    amres@amParallelPosF   =  0.0    ; This is the center of the plot.
-                    amres@amOrthogonalPosF =  -0.5    ; This is the top edge of the plot.
-                    amres@amJust           = "TopRight"
-                    annoid = gsn_add_annotation(bar_plot, txid, amres)
+                    ;txres                = True
+                    ;txres@txFontHeightF  = 0.02
+                    ;txid   = gsn_create_text(wks, "Data valida analizada = "+N4+" dias", txres)
+                    ;amres = True
+                    ;amres@amParallelPosF   =  0.0    ; This is the center of the plot.
+                    ;amres@amOrthogonalPosF =  -0.5    ; This is the top edge of the plot.
+                    ;amres@amJust           = "TopCenter"
+                    ;annoid = gsn_add_annotation(bar_plot, txid, amres)
                     ;txres               = True             
                     ;txres@txFont        = "helvetica-bold" 
                     ;txres@txFontHeightF = 0.01
