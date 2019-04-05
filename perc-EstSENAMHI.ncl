@@ -1,17 +1,19 @@
 load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_inv_string.ncl"
+load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_string.ncl"
 
 begin
 
-csv_filename = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/percentiles.csv"
+dir = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/"
+csv_filename = dir+"salidas/percentiles.csv"
 dq = str_get_dq()
 
-fields = (/"Estacion","Mes","Data","Tot-ppd","Ex-83-98","Ex->0.1","p99","p95","p90","p75"/)
+fields = (/"Estacion","Mes","Data","Tot-ppd","Ex-83-98","Ex->0.1","p99","p95","p90","p75","fecha","ppd"/)
 fields = dq + fields + dq
 header = [/str_join(fields,",")/]
 system("rm -rf " + csv_filename)
 write_table(csv_filename, "w", header, "%s")
 
-s17_18 = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/estaciones-17-18/*.csv"
+s17_18 = dir+"estaciones-17-18/*.csv"
 s17_18:= systemfunc("ls "+s17_18)
 
 dir_est = "/data/users/jticse/data/estaciones/"
@@ -45,7 +47,6 @@ do i=0, len_est-1
     yyyy1   = 1983
     yyyy2  := yyyy
     yyyy2   = 1998
-
 
     units   = "days since 1900-01-01 00:00:00"
     time   := cd_inv_calendar(yyyy,mm,dd,hh,mn,sc,units,0)
@@ -130,19 +131,6 @@ do i=0, len_est-1
             time_s := cd_calendar(time_s,-2)
             senamhi!0 = "time"
             senamhi&time = time_s
-            ;if j.eq.1 then
-            ;    s17 = senamhi({20170101:20170131},:)
-            ;    s18 = senamhi({20180101:20180131},:)
-            ;else if j.eq.2 then
-            ;    s17 = senamhi({20170201:20170228},:)
-            ;    s18 = senamhi({20180201:20180228},:)
-            ;else if j.eq.2 then
-            ;    s17 = senamhi({20170301:20170331},:)
-            ;    s18 = senamhi({20180301:20180331},:)
-            ;end if
-            ;end if
-            ;end if
-            ;TIME = yyyymmdd_time(1901, 2001, "integer")
             do k=2017,2018
                 if j.eq.2 then
                     dia = "28"
@@ -155,27 +143,40 @@ do i=0, len_est-1
                 print(tostring(time_i)+"-"+tostring(time_f))
                 id_sen := get1Dindex(senamhi&time,id_sen)
                 if (.not.all(ismissing(id_sen))) then
-                    id_sen := get_unique_values(id_sen)
-                    sen_1  := senamhi(id_sen,id_pp)
-                    sen    := tofloat(sen_1)
+                    id_sen  := get_unique_values(id_sen)
+                    sen_1   := senamhi(id_sen,id_pp)
+                    sen     := tofloat(sen_1)
                     sen@_FillValue = -999.0
-                    sen     = where(sen.ge.0,sen,sen@_FillValue)
-                    sen    := dim_sum(sen)
-                    sen!0  = "time"
+                    sen      = where(sen.ge.0,sen,sen@_FillValue)
+                    sen     := dim_sum(sen)
+                    sen!0    = "time"
                     sen&time = sen_1&time
-                    x_sen := sen&time
-                    x_sen := ispan(1,dimsizes(x_sen),1)
-                    xrange = max(x_sen)-min(x_sen)
-                    deltax = xrange/50.
-                    y_sen := sen
+                    x_sen   := sen&time
+                    x_sen   := ispan(1,dimsizes(x_sen),1)
+                    xrange   = max(x_sen)-min(x_sen)
+                    deltax   = xrange/50.
+                    y_sen   := sen
+                    ppd_max  = where(y_sen.ge.p75,y_sen,y_sen@_FillValue)
+                    do m=0,dimsizes(y_sen)-1
+                        if y_sen(m).ge.p75 then
+                            ppd     = y_sen(m)
+                            fecha   = ppd&time
+                            format2 = "%y-%N-%D"
+                            fecha  := cd_string(fecha,format2)
+                            alist   = [/est,j,N1,N2,N3,N4,p99,p95,p90,p75,fecha,ppd/]
+                            format  = "%s,%1d,%4d,%4d,%4d,%4d,%4.2f,%4.2f,%4.2f,%4.2f,%s,%4.2f"
+                            write_table(csv_filename,"a",alist,format)
+                        end if
+                    end do
+                    do l=0,dimsizes(ppd_max)-1
+                        if 
+                    end do
                     ;y2_sen:= y_sen
                     ;y2_sen = 0
 
                     ;type = "x11"
                     type = "png"
-                    ;wks = gsn_open_wks(sal,"/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/Estacion "+est+"-"+k+"-"-j)
-                    dir  = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/Estacion"
-                    wks  = gsn_open_wks(type,dir+"-"+tostring(est)+"-"+tostring(k)+"-"+tostring(j))
+                    wks  = gsn_open_wks(type,dir+"/salidas/Estacion-"+tostring(est)+"-"+tostring(k)+"-"+tostring(j))
 
                     res             = True                 ; plot mods desired         
                     res@gsnFrame    = False
@@ -198,8 +199,8 @@ do i=0, len_est-1
                     xyres@tiYAxisSide         = "Right"
                     xyres@tiYAxisAngleF       = 270              ; Rotate the Y-axis title 270 degrees
 
-                    xyres@gsnYRefLine           = (/p99,p95,p90,p75/)               ; Draw horiz line at y=20
-                    xyres@gsnYRefLineColors     = "NavyBlue"
+                    xyres@gsnYRefLine            = (/p99,p95,p90,p75/)               ; Draw horiz line at y=20
+                    xyres@gsnYRefLineColors      = "NavyBlue"
                     xyres@gsnYRefLineThicknesses = 2.0
 
                     bres                       = res
@@ -207,22 +208,17 @@ do i=0, len_est-1
                     ;bres@gsnXYBarChartBarWidth = 0.75            ; Change bar widths
                     bres@gsnXYBarChartColors   = "red"        ; Color for bars
                     bres@tmYROn                = False
-                    bres@tmYLMode   = "Explicit"
-                    bres@tmYLValues = (/p75,p90,p95,p99/)
-                    bres@tmYLLabels = (/"p75","p90","p95","p99"/)
-                    bres@tmXBMode   = "Manual"
-                    bres@tmXBTickSpacingF  = 4
-                    bres@tmXBMinorPerMajor = 3
-                    ;bres@trXMinF = min(x_sen)
-                    ;bres@trXMaxF = max(x_sen)
-                    ;bres@gsnYRefLine           = 20
-                    ;bres@gsnYRefLineColor      = "NavyBlue"
-                    ;bres@gsnYRefLineThicknessF = 2.0
+                    bres@tmYLMode              = "Explicit"
+                    bres@tmYLValues            = (/p75,p90,p95,p99/)
+                    bres@tmYLLabels            = (/"p75","p90","p95","p99"/)
+                    bres@tmXBMode              = "Manual"
+                    bres@tmXBTickSpacingF      = 4
+                    bres@tmXBMinorPerMajor     = 3
 
-                    bres@trYMinF               = 0.              ; Make sure Y axis starts at 0.
+                    bres@trYMinF        = 0.              ; Make sure Y axis starts at 0.
 
-                    bres@tiMainString          = "Estacion "+tostring(est)+"-"+tostring(k)+"-"+tostring(j)
-                    bres@tiYAxisString         = "Percentiles"
+                    bres@tiMainString   = "Estacion "+tostring(est)+"-"+tostring(k)+"-"+tostring(j)
+                    bres@tiYAxisString  = "Percentiles"
 
                     bar_plot = gsn_csm_xy(wks,x_sen,y_sen,bres)
 
