@@ -132,10 +132,17 @@ do i=0, len_est-1
             senamhi!0 = "time"
             senamhi&time = time_s
             do k=2017,2018
-                if j.eq.2 then
-                    dia = "28"
-                else
+                if j.eq.1 then
+                    mes = "Enero"
                     dia = "31"
+                else if j.eq.2 then
+                    mes = "Febrero"
+                    dia = "28"
+                else if j.eq.3 then
+                    mes = "Marzo"
+                    dia = "31"
+                end if
+                end if
                 end if
                 time_i  = toint(tostring(k)+"0"+tostring(j)+"01")
                 time_f  = toint(tostring(k)+"0"+tostring(j)+dia)
@@ -211,14 +218,15 @@ do i=0, len_est-1
                     bres@tmYROn                = False
                     bres@tmYLMode              = "Explicit"
                     bres@tmYLValues            = (/p75,p90,p95,p99/)
-                    bres@tmYLLabels            = (/"p75="+p75,"p90="+p90,"p95="+p95,"p99="+p99/)
+                    bres@tmYLLabels            = (/"p75 ="+sprintf("%3.1f",p75),"p90 ="+sprintf("%3.1f",p90),\
+                                                    "p95 ="+sprintf("%3.1f",p95),"p99 ="+sprintf("%3.1f",p99)/)
                     bres@tmXBMode              = "Manual"
                     bres@tmXBTickSpacingF      = 4
                     bres@tmXBMinorPerMajor     = 3
 
                     ;bres@trYMinF        = 0.              ; Make sure Y axis starts at 0.
 
-                    bres@tiMainString   = "Estacion "+tostring(est)+"-"+tostring(k)+"-"+tostring(j)
+                    bres@tiMainString   = "Estacion "+tostring(est)+"-"+mes+"-"+tostring(k)
                     bres@tiYAxisString  = "Percentiles"
                     bres@tiXAxisString  = "dias"
                     bres@gsnLeftString  = "Data valida analizada = "+N4+" dias"
@@ -240,22 +248,6 @@ do i=0, len_est-1
                     xy_plot  = gsn_csm_xy(wks,x_sen,y_sen,xyres)
 
                     anno_id  = gsn_add_annotation(bar_plot, xy_plot, False)
-
-                    ;txres                = True
-                    ;txres@txFontHeightF  = 0.02
-                    ;txid   = gsn_create_text(wks, "Data valida analizada = "+N4+" dias", txres)
-                    ;amres = True
-                    ;amres@amParallelPosF   =  0.0    ; This is the center of the plot.
-                    ;amres@amOrthogonalPosF =  -0.5    ; This is the top edge of the plot.
-                    ;amres@amJust           = "TopCenter"
-                    ;annoid = gsn_add_annotation(bar_plot, txid, amres)
-                    ;txres               = True             
-                    ;txres@txFont        = "helvetica-bold" 
-                    ;txres@txFontHeightF = 0.01
-                    ;txid = gsn_add_text(wks,bar_plot,"Global Annual Means", 10.0, -2.3 ,txres)
-
-                    ;draw(bar_plot)
-                    ;frame(wks)
 
                     pres             = True
                     pres@gsnMaximize = True
