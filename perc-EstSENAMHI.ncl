@@ -165,9 +165,11 @@ do i=0, len_est-1
                                 ;format2 = "%y-%N-%D"
                                 ;fecha  := cd_string(fecha,format2)
                                 fecha  := tostring(fecha)
-                                alist   = [/est,j,N1,N2,N3,N4,p99,p95,p90,p75,fecha,ppd/]
-                                format  = "%s,%1d,%4d,%4d,%4d,%4d,%4.2f,%4.2f,%4.2f,%4.2f,%s,%4.2f"
-                                write_table(csv_filename,"a",alist,format)
+                                print(ppd+" --> lluvia max")
+                                print(fecha+" --> fecha")
+                                ;alist   = [/est,j,N1,N2,N3,N4,p99,p95,p90,p75,fecha,ppd/]
+                                ;format  = "%s,%1d,%4d,%4d,%4d,%4d,%4.2f,%4.2f,%4.2f,%4.2f,%s,%4.2f"
+                                ;write_table(csv_filename,"a",alist,format)
                             end if
                         end if
                     end do
