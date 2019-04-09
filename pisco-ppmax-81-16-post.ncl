@@ -29,11 +29,11 @@ max_lon_p = -68.
 ;f_perc_t        = addfile("/data/users/jticse/data/ppd_pi_t_percM.nc","r")
 ;f_perc_e        = addfile("/data/users/jticse/data/ppd_pi_e_percM.nc","r")
 ;f_perc_t        = addfile("/data/users/jticse/data/pisco21ppd_perc_t_ENE.nc","r")
-;f_perc_e        = addfile("/data/users/jticse/data/pisco21ppd_perc_e_ENE.nc","r")
+f_perc_e        = addfile("/data/users/jticse/data/pisco21ppd_perc_e_ENE.nc","r")
 ;f_perc_t        = addfile("/data/users/jticse/data/pisco21ppd_perc_t_FEB.nc","r")
 ;f_perc_e        = addfile("/data/users/jticse/data/pisco21ppd_perc_e_FEB.nc","r")
 ;f_perc_t        = addfile("/data/users/jticse/data/pisco21ppd_perc_t_MAR.nc","r")
-f_perc_e        = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")
+;f_perc_e        = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")
 
 ;ppd_pi_t_per    = f_perc_t->ppd_pi_t_per
 ppd_pi_e_per    = f_perc_e->ppd_pi_e_per
@@ -42,8 +42,9 @@ ppd_pi_e_per    = f_perc_e->ppd_pi_e_per
 ;----- creando mapa ------;
 type    = "png"
 ;type    = "x11"
-titulo  = "Marzo-81-16"
-wks     = gsn_open_wks(type,"perc-PISCOv21-"+titulo)
+titulo  = "Enero-81-16"
+dir     = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas"
+wks     = gsn_open_wks(type,dir+"/perc-PISCOv21-"+titulo)
 nrow    = 1  ;2
 ncol    = 4                           
 plot    = new(nrow*ncol,graphic)
@@ -73,6 +74,7 @@ res@cnLevels                = (/0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
                             9.,10.,15.,20.,25.,30.,35.,40.,\
                             45.,50.,55.,60.,65.,70.,75.,\
                             80.,85.,90.,95.,100./)
+
 ;---Limites Nacionales---;
 res@mpOutlineBoundarySets       = "National"    ;---> Limite de Paises
 res@mpNationalLineThicknessF    = 2             ;---> Grosor de linea nacional
@@ -124,12 +126,15 @@ resP@gsnMaximize        = True
 resP@gsnPanelMainString = "Percentiles con data PISCOv21"+titulo
 ;resP@gsnFrame           = False
 resP@gsnPanelLabelBar   = True                ; add common colorbar
+resP@lbBoxEndCapStyle   = "TriangleHighEnd"
 ;resP@lbOrientation      = "vertical"
-;resP@vpHeightF          = 0.6
-;resP@lbLabelFontHeightF = 0.01               ; make labels smaller
+resP@vpHeightF          = 0.1
+resP@vpWidthF 		= 0.95
+resP@lbLabelFontHeightF = 0.012               ; make labels smaller
 ;resP@gsnPanelLeft       = 0.04
-;resP@gsnPanelBottom     = 0.08
+resP@gsnPanelBottom     = 0.08
 ;resP@gsnPanelSave       = True
+
 
 gsn_panel(wks, plot, (/nrow,ncol/), resP)
 

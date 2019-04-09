@@ -22,15 +22,15 @@ colors        = span_color_rgba(color_paleta,nlevels_color+1)
 
 ;----- Pre procesamiento de data Chirp -----;
 year    = 2017  ;--->año final
-mes     = 03    ;--->mes inicial
+mes     = 02    ;--->mes inicial
 dia_i   = 01    ;--->dia inicial
-dia_f   = 31    ;--->dia final
+dia_f   = 28    ;--->dia final
 
 
 ;----- Percentiles y data PISCO -----;
 ;f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_ENE.nc","r")
-;f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_FEB.nc","r")
-f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")
+f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_FEB.nc","r")
+;f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")
 dir_pi    = "/data/users/jticse/data/piscopd-17-18/"
 
 ;----- Estaciones SENAMHI -----;
@@ -51,7 +51,8 @@ shpres@gsLineThicknessF = 0.9       ;--> grosor de linea
 
 ;----- Excel de est-sen -----;
 ;f_csv     = "/data/users/jticse/data/est-sen-perc95.csv"
-f_csv     = "est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
+dir     = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/"
+f_csv     = dir+"est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
 system("rm -rf " + f_csv)
 fields    = (/"COD-EST","FECHA","PPD-SEN","PPD-PIS"/)
 header    = [/str_join(fields,",")/]
@@ -59,7 +60,7 @@ write_table(f_csv,"w",header,"%s")
 
 ;----- Excel de errores -----;
 ;f_csv     = "/data/users/jticse/data/est-sen-perc95.csv"
-f_err     = "error-est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
+f_err     = dir+"error-est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
 system("rm -rf " + f_err)
 fields_err=[/"Por alguna razon a veces no encuentra el id"/]
 write_table(f_err,"w",fields_err,"%s")
@@ -170,7 +171,7 @@ do i=0,dia_f-1
     type    = "png"
     ;type    = "x11"
     titulo1 = "perc99PISCOv21-vs-SENAMHI-"
-    wks     = gsn_open_wks(type,titulo1+fecha)                
+    wks     = gsn_open_wks(type,dir+titulo1+fecha)                
     plot    = new(3,graphic)
 
     ;---- plot - percentil95 ----;
@@ -207,6 +208,7 @@ do i=0,dia_f-1
                 ppd_s  := tofloat(fe_sen(id_dia,id_pp))
                 ppd_s@_FillValue = -999.0  
                 ppd_s  := where(ppd_s.ge.0,ppd_s,ppd_s@_FillValue)
+                ppd_s  := where(ppd_s.ge.200,ppd_s@_FillValue,ppd_s)
                 ppd_s  := dim_sum(ppd_s)
                 ppd_p  := ppd_pi_se(j,j)
                 ppd_s  := where(ppd_s.ge.ppd_p,ppd_s,ppd_s@_FillValue)
@@ -215,6 +217,10 @@ do i=0,dia_f-1
                     str        := unique_string("poly")
                     coord_x    := tofloat(fc_sen(j,1)) ;--> lat
                     coord_y    := tofloat(fc_sen(j,2)) ;--> lon
+                    verif_x     = ppd_pi_se&latitude(j)
+                    verif_y     = ppd_pi_se&longitude(j)
+                    print(coord_x+"//"+verif_x)
+                    print(coord_y+"//"+verif_y)
                     alist      := [/cod_est,fecha_s,ppd_s,ppd_p/]
                     format      = "%s,%s,%7.2f,%7.2f"
                     write_table(f_csv,"a",alist,format)
@@ -257,6 +263,6 @@ end do
     orden1  = "convert -delay "
     tiempo  = "200"             ;---> 100 = 1 seg
     fecha  := str_get_cols(fecha,0,6)
-    cmd     = orden1+tiempo+" "+titulo1+fecha+"*.png anim-"+titulo1+fecha+".gif"
+    cmd     = orden1+tiempo+" "+dir+titulo1+fecha+"*.png "+dir+"anim-"+titulo1+fecha+".gif"
     system(cmd)
 end
