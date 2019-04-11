@@ -52,7 +52,8 @@ shpres@gsLineThicknessF = 0.9       ;--> grosor de linea
 ;----- Excel de est-sen -----;
 ;f_csv     = "/data/users/jticse/data/est-sen-perc95.csv"
 dir     = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/salidas/"
-f_csv     = dir+"est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
+;f_csv     = dir+"est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
+f_csv     = dir+"est-sen-perc95-"+tostring(year)+"-"+tostring(mes)+".csv"
 system("rm -rf " + f_csv)
 fields    = (/"COD-EST","FECHA","PPD-SEN","PPD-PIS"/)
 header    = [/str_join(fields,",")/]
@@ -60,15 +61,16 @@ write_table(f_csv,"w",header,"%s")
 
 ;----- Excel de errores -----;
 ;f_csv     = "/data/users/jticse/data/est-sen-perc95.csv"
-f_err     = dir+"error-est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
+;f_err     = dir+"error-est-sen-perc99-"+tostring(year)+"-"+tostring(mes)+".csv"
+f_err     = dir+"error-est-sen-perc95-"+tostring(year)+"-"+tostring(mes)+".csv"
 system("rm -rf " + f_err)
 fields_err=[/"Por alguna razon a veces no encuentra el id"/]
 write_table(f_err,"w",fields_err,"%s")
 
 
 ppd_pi_e_per    = f_perc_e->ppd_pi_e_per
-ppd_pi_e_per99  = ppd_pi_e_per(0,:,:)
-;ppd_pi_e_per95  = ppd_pi_e_per(1,:,:)
+;ppd_pi_e_per99  = ppd_pi_e_per(0,:,:)
+ppd_pi_e_per95  = ppd_pi_e_per(1,:,:)
 ;ppd_pi_e_per90  = ppd_pi_e_per(2,:,:)
 ;ppd_pi_e_per75  = ppd_pi_e_per(3,:,:)
 
@@ -76,8 +78,8 @@ coord_x     = tofloat(fc_sen(:,1)) ;--> lat
 coord_y     = tofloat(fc_sen(:,2)) ;--> lon
 id_lat      = ind_nearest_coord(coord_x,ppd_pi_e_per&latitude,0)
 id_lon      = ind_nearest_coord(coord_y,ppd_pi_e_per&longitude,0)
-ppd_pi_se   = ppd_pi_e_per99(id_lat,id_lon)
-;ppd_pi_se   = ppd_pi_e_per95(id_lat,id_lon)
+;ppd_pi_se   = ppd_pi_e_per99(id_lat,id_lon)
+ppd_pi_se   = ppd_pi_e_per95(id_lat,id_lon)
 ;ppd_pi_se   = ppd_pi_e_per90(id_lat,id_lon)
 ;ppd_pi_se   = ppd_pi_e_per75(id_lat,id_lon)
 
@@ -158,30 +160,33 @@ do i=0,dia_f-1
     ppd_pi_d!1               = "longitude"
     ppd_pi_d&longitude       = ppd_pi_e_per&longitude
     ppd_pi_d&longitude@units = ppd_pi_e_per&longitude@units
-    ppd_pi_e_p99 = ppd_pi_d
-    ;ppd_pi_e_p95 = ppd_pi_d
+    ;ppd_pi_e_p99 = ppd_pi_d
+    ppd_pi_e_p95 = ppd_pi_d
     ;ppd_pi_e_p90 = ppd_pi_d
     ;ppd_pi_e_p75 = ppd_pi_d
-    ppd_pi_e_p99 = where(ppd_pi_e_p99.ge.ppd_pi_e_per99,ppd_pi_e_p99,ppd_pi_e_p99@_FillValue)
-    ;ppd_pi_e_p95 = where(ppd_pi_e_p95.ge.ppd_pi_e_per95,ppd_pi_e_p95,ppd_pi_e_p95@_FillValue)
+    ;ppd_pi_e_p99 = where(ppd_pi_e_p99.ge.ppd_pi_e_per99,ppd_pi_e_p99,ppd_pi_e_p99@_FillValue)
+    ppd_pi_e_p95 = where(ppd_pi_e_p95.ge.ppd_pi_e_per95,ppd_pi_e_p95,ppd_pi_e_p95@_FillValue)
     ;ppd_pi_e_p90 = where(ppd_pi_e_p90.ge.ppd_pi_e_per90,ppd_pi_e_p90,ppd_pi_e_p90@_FillValue)
     ;ppd_pi_e_p75 = where(ppd_pi_e_p75.ge.ppd_pi_e_per75,ppd_pi_e_p75,ppd_pi_e_p75@_FillValue)
 
     ;----- creando mapa ------;
     type    = "png"
     ;type    = "x11"
-    titulo1 = "perc99PISCOv21-vs-SENAMHI-"
+    ;titulo1 = "perc99PISCOv21-vs-SENAMHI-"
+    titulo1 = "perc95PISCOv21-vs-SENAMHI-"
     wks     = gsn_open_wks(type,dir+titulo1+fecha)                
     plot    = new(3,graphic)
 
     ;---- plot - percentil95 ----;
     res1                    = res
     res1@gsnCenterString    = "PISCOv21-ST-1981-2016"
-    plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
+    ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
+    plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per95,res1)
     ;---- plot - percentil95 ----;
     res2                    = res
     res2@gsnCenterString    = "PISCOv21-UN"
-    plot(1) = gsn_csm_contour_map(wks,ppd_pi_e_p99,res2)
+    ;plot(1) = gsn_csm_contour_map(wks,ppd_pi_e_p99,res2)
+    plot(1) = gsn_csm_contour_map(wks,ppd_pi_e_p95,res2)
     ;---- plot - percentil90 ----;
     delete([/res@cnLevels,res@cnFillOn,res@gsnAddCyclic,res@cnLineLabelsOn,\
                 res@cnLevelSelectionMode,res@lbLabelBarOn,res@cnLinesOn,\
@@ -254,7 +259,8 @@ do i=0,dia_f-1
 
     ;---- detalles del plot grande ----;
     resPP                   = resP                ; modify the panel plot
-    resPP@gsnPanelMainString= "Percentil 99 "+fecha
+    ;resPP@gsnPanelMainString= "Percentil 99 "+fecha
+    resPP@gsnPanelMainString= "Percentil 95 "+fecha
 
     agregando_shapefile2    = gsn_add_shapefile_polylines(wks,plot,f_shape,shpres)
     gsn_panel(wks,plot,(/1,3/),resPP)
