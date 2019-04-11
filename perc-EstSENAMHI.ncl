@@ -189,8 +189,10 @@ do i=0, len_est-1
                     res             = True                 ; plot mods desired         
                     res@gsnFrame    = False
                     res@gsnDraw     = False
-                    res@trXMinF     = min(x_sen)-0.5
-                    res@trXMaxF     = max(x_sen)+0.5
+                    ;res@trXMinF     = min(x_sen)-1
+                    ;res@trXMaxF     = max(x_sen)+1
+                    res@tmXBMode    = "Explicit"
+                    res@tmXBValues  = x_sen
                     res@trYMinF     = 0.0
 
                     xyres                     = res
@@ -220,9 +222,9 @@ do i=0, len_est-1
                     bres@tmYLValues            = (/p75,p90,p95,p99/)
                     bres@tmYLLabels            = (/"p75="+p75,"p90="+p90,\
                                                     "p95="+p95,"p99="+p99/)
-                    bres@tmXBMode              = "Manual"
-                    bres@tmXBTickSpacingF      = 4
-                    bres@tmXBMinorPerMajor     = 3
+                    ;bres@tmXBMode              = "Manual"
+                    ;bres@tmXBTickSpacingF      = 4
+                    ;bres@tmXBMinorPerMajor     = 3
 
                     ;bres@trYMinF        = 0.              ; Make sure Y axis starts at 0.
 
