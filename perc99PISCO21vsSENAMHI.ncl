@@ -168,7 +168,7 @@ do i=0,dia_f-1
     ppd_pi_e_p95 = where(ppd_pi_e_p95.ge.ppd_pi_e_per95,ppd_pi_e_p95,ppd_pi_e_p95@_FillValue)
     ;ppd_pi_e_p90 = where(ppd_pi_e_p90.ge.ppd_pi_e_per90,ppd_pi_e_p90,ppd_pi_e_p90@_FillValue)
     ;ppd_pi_e_p75 = where(ppd_pi_e_p75.ge.ppd_pi_e_per75,ppd_pi_e_p75,ppd_pi_e_p75@_FillValue)
-    ppd_pi_d    := ppd_pi_d(id_lat,id_lon)
+    ppd_pi_d_un  = ppd_pi_d(id_lat,id_lon)
 
     ;----- creando mapa ------;
     type    = "png"
@@ -225,9 +225,9 @@ do i=0,dia_f-1
                     coord_y    := tofloat(fc_sen(j,2)) ;--> lon
                     verif_x     = ppd_pi_se&latitude(j)
                     verif_y     = ppd_pi_se&longitude(j)
-                    ppd_p21     = ppd_pi_d(j,j)
-                    verif2_x    = ppd_p21&latitude(j)
-                    verif2_y    = ppd_p21&longitude(j)
+                    ppd_p21     = ppd_pi_d_un(j,j)
+                    verif2_x    = ppd_p21&latitude
+                    verif2_y    = ppd_p21&longitude
                     print(coord_x+"//"+verif_x+"//"+verif2_x)
                     print(coord_y+"//"+verif_y+"//"+verif2_x)
                     alist      := [/cod_est,fecha_s,ppd_s,ppd_p,ppd_p21/]
