@@ -189,8 +189,8 @@ do i=0, len_est-1
                     res             = True                 ; plot mods desired         
                     res@gsnFrame    = False
                     res@gsnDraw     = False
-                    res@trXMinF     = min(x_sen)-1
-                    res@trXMaxF     = max(x_sen)+1
+                    res@trXMinF     = min(x_sen)-0.5
+                    res@trXMaxF     = max(x_sen)+0.5
                     res@trYMinF     = 0.0
 
                     xyres                     = res
