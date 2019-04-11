@@ -192,7 +192,7 @@ do i=0, len_est-1
                     ;res@trXMinF     = min(x_sen)-1
                     ;res@trXMaxF     = max(x_sen)+1
                     res@tmXBMode    = "Explicit"
-                    res@tmXBValues  = x_sen
+                    res@tmXBValues  = [/x_sen/]
                     res@trYMinF     = 0.0
 
                     xyres                     = res
