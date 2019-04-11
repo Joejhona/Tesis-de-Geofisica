@@ -226,10 +226,10 @@ do i=0,dia_f-1
                     verif_x     = ppd_pi_se&latitude(j)
                     verif_y     = ppd_pi_se&longitude(j)
                     ppd_p21     = ppd_pi_d_un(j,j)
-                    verif2_x    = ppd_p21&latitude
-                    verif2_y    = ppd_p21&longitude
-                    print(coord_x+"//"+verif_x+"//"+verif2_x)
-                    print(coord_y+"//"+verif_y+"//"+verif2_x)
+                    ;verif2_x    = ppd_p21&latitude
+                    ;verif2_y    = ppd_p21&longitude
+                    print(coord_x+"//"+verif_x);+"//"+verif2_x)
+                    print(coord_y+"//"+verif_y);+"//"+verif2_x)
                     alist      := [/cod_est,fecha_s,ppd_s,ppd_p,ppd_p21/]
                     format      = "%s,%s,%7.2f,%7.2f,%7.2f"
                     write_table(f_csv,"a",alist,format)
