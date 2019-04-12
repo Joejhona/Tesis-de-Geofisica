@@ -15,8 +15,8 @@ path4 = "&CBOFiltro="   #--> enlace con fecha
 path5 = "&t_e="         #--> enlace con t_e
 ruta  = "/home/usuario/Documentos/ticse/Tesis/Data/senamhi/"
 #base    = pd.read_csv("/home/usuario/Documentos/ticse/senamhi/ppython/senamhi-17-18.csv")
-base    = pd.read_csv("/home/usuario/Documentos/ticse/senamhi/ppython/senamhi-17-182.csv")
-base    = base.loc[:,["codigo","t_e","tipo"]]
+base  = pd.read_csv("/home/usuario/Documentos/ticse/senamhi/ppython/senamhi-17-182.csv")
+base  = base.loc[:,["codigo","t_e","tipo"]]
 
 dates   = []
 for x in range(2006,2017):
