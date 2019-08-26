@@ -21,16 +21,16 @@ colors        = span_color_rgba(color_paleta,nlevels_color+1)
 
 
 ;----- Pre procesamiento de data Chirp -----;
-year    = 2017  ;--->año final
-mes     = 02    ;--->mes inicial
+year    = 2018  ;--->año final
+mes     = 03    ;--->mes inicial
 dia_i   = 01    ;--->dia inicial
-dia_f   = 28    ;--->dia final
+dia_f   = 31    ;--->dia final
 
 
 ;----- Percentiles y data PISCO -----;
 ;f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_ENE.nc","r")
-f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_FEB.nc","r")
-;f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")
+;f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_FEB.nc","r")
+f_perc_e  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")
 dir_pi    = "/data/users/jticse/data/piscopd-17-18/"
 
 ;----- Estaciones SENAMHI -----;
