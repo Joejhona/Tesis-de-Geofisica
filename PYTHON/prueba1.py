@@ -28,11 +28,11 @@ fig = plt.figure(figsize=(12,6))    #==> Creando una figura
 
 ax = plt.axes(projection=cart_proj) #==> Set the GeoAxes to the projection used by WRF
 
-states = NaturalEarthFeature(category="cultural", scale="50m",
-                             facecolor="none",
-                             name="admin_1_states_provinces_shp")   #==> Descargando y adicionando los estados y costas
-ax.add_feature(states, linewidth=.5, edgecolor="black")
-ax.coastlines('50m', linewidth=0.8)
+#states = NaturalEarthFeature(category="cultural", scale="50m",
+#                             facecolor="none",
+#                             name="admin_1_states_provinces_shp")   #==> Descargando y adicionando los estados y costas
+#ax.add_feature(states, linewidth=.5, edgecolor="black")
+#ax.coastlines('50m', linewidth=0.8)
 
 plt.contour(to_np(lons), to_np(lats), to_np(rainc_f), 10, colors="black",
             transform=crs.PlateCarree())
