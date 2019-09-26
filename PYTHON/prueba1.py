@@ -1,8 +1,13 @@
+#from netCDF4 import Dataset
+#import matplotlib.pyplot as plt
+#from matplotlib.cm import get_cmap
+#import cartopy.crs as crs
+#from cartopy.feature import NaturalEarthFeature
+
 from netCDF4 import Dataset
 import matplotlib.pyplot as plt
 from matplotlib.cm import get_cmap
-import cartopy.crs as crs
-from cartopy.feature import NaturalEarthFeature
+from mpl_toolkits.basemap import Basemap
 
 from wrf import (to_np, getvar, smooth2d, get_cartopy, cartopy_xlim,
                  cartopy_ylim, latlon_coords)
