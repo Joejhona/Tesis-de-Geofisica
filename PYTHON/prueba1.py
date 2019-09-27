@@ -27,8 +27,8 @@ rain_f      = rainc_f+rainnc_f
 
 lats, lons  = latlon_coords(rainc)   #==> Llamando lat y lon
 
-#cart_proj = get_cartopy(rainc)      #==> llamando al objeto de mapeo
-cart_proj   = get_cartopy(rain_f)
+cart_proj = get_cartopy(rainc)      #==> llamando al objeto de mapeo
+#cart_proj   = get_cartopy(rain_f)
 
 fig         = plt.figure(figsize=(24,12),dpi=300)    #==> Creando una figura
 
@@ -40,15 +40,15 @@ ax          = plt.axes(projection=cart_proj) #==> Set the GeoAxes to the project
 #ax.add_feature(states, linewidth=.5, edgecolor="black")
 #ax.coastlines('50m', linewidth=0.8)
 
-states_provinces = cfeature.NaturalEarthFeature(
-    category='cultural',
-    name='admin_1_states_provinces_lines',
-    scale='50m',
-    facecolor='none')
+#states_provinces = cfeature.NaturalEarthFeature(
+#    category='cultural',
+#    name='admin_1_states_provinces_lines',
+#    scale='50m',
+#    facecolor='none')
 
 ax.add_feature(cfeature.LAND)
 ax.add_feature(cfeature.COASTLINE)
-ax.add_feature(states_provinces, edgecolor='gray')
+#ax.add_feature(states_provinces, edgecolor='gray')
 
 plt.contour(to_np(lons), to_np(lats), to_np(rainc_f), 10, colors="black",
             transform=crs.PlateCarree())
