@@ -9,6 +9,11 @@ import cartopy.feature as cfeature
 from wrf import (to_np, getvar, smooth2d, get_cartopy, cartopy_xlim,
                  cartopy_ylim, latlon_coords, extract_times, ALL_TIMES)
 
+from cartopy.io.shapereader import Reader
+from cartopy.feature import ShapelyFeature
+import cartopy.crs as ccrs
+
+
 path        = "/data/users/jticse/WRFV4/wrfout/periodos/wrfout_d02_2018-02-17_00:00:00"
 wrfnc       = Dataset(path)
 rainc       = getvar(wrfnc,"RAINC",timeidx=ALL_TIMES)     #==> Lluvia convectiva
@@ -46,9 +51,17 @@ ax          = plt.axes(projection=cart_proj) #==> Set the GeoAxes to the project
 #    scale='50m',
 #    facecolor='none')
 
-ax.add_feature(cfeature.LAND)
-ax.add_feature(cfeature.COASTLINE)
+#ax.add_feature(cfeature.LAND)
+#ax.add_feature(cfeature.COASTLINE)
 #ax.add_feature(states_provinces, edgecolor='gray')
+
+fname = '/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/shapes/Peru/Peru.shp'
+
+#ax = plt.axes(projection=ccrs.Robinson())
+shape_feature = ShapelyFeature(Reader(fname).geometries(),
+                                ccrs.PlateCarree(), facecolor='none')
+ax.add_feature(shape_feature)
+#plt.show()
 
 plt.contour(to_np(lons), to_np(lats), to_np(rainc_f), 10, colors="black",
             transform=crs.PlateCarree())
@@ -67,6 +80,6 @@ ax.gridlines(color="black", linestyle="dotted")
 
 plt.title("Prueba 2")
 
-plt.savefig('/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/foo2.png')
+plt.savefig('/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/foo3.png')
 
 print('todo bien /data/users/jticse/WRFV4/wrfout/periodos ===> wrfout_d02_2018-02-17_00:00:00')
