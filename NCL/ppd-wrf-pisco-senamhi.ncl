@@ -58,5 +58,11 @@ begin
     dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
     f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
     t_wrf   = wrf_user_list_times(f_wrf)
-    print(t_wrf)
+    format  = "%Y-%N-%D_%H:%M:%S"
+    t_wrf  := cd_inv_string(t_wrf, format)
+    un_wrf  = t_wrf@units  
+    rcv     = wrf_user_getvar(f_wrf,"RAINC",-1)
+    rncv    = wrf_user_getvar(f_wrf,"RAINNC",-1)
+    printVarSummary(rcv)
+    printVarSummary(rncv)
 end
