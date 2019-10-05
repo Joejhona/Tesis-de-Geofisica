@@ -65,4 +65,6 @@ begin
     rncv    = wrf_user_getvar(f_wrf,"RAINNC",-1)
     printVarSummary(rcv)
     printVarSummary(rncv)
+    printVarSummary(t_wrf)
+
 end
