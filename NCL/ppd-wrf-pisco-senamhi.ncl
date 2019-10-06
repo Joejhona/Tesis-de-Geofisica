@@ -104,7 +104,7 @@ begin
     fc_sen   := str_split_csv(fc_sen(1:),",",0)
     dim_fc    = dimsizes(fc_sen(:,0))
     fecha_s   = cd_string(it_wrf,"%D-%N-%Y")   
-    print("Fecha Senamhi "fecha_s) 
+    print("Fecha Senamhi "+fecha_s) 
     do j=0,dim_fc-1
         cod_est    := fc_sen(j,0)
         id_est     := str_match_ind(f_est_se,cod_est)
@@ -150,4 +150,5 @@ begin
                 end if
             end if
         end if
+    end do
 end
