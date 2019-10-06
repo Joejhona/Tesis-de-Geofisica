@@ -47,6 +47,9 @@ begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;---periodo
     periodo = "2017-01-14"
+    year    = stringtoint(str_get_cols(periodo,0,3))
+    mes     = stringtoint(str_get_cols(periodo,5,6))
+    dia     = stringtoint(str_get_cols(periodo,8,9))
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----dimension lat y lon
     lat_max = max_lat_p
@@ -63,8 +66,15 @@ begin
     un_wrf  = t_wrf@units  
     rcv     = wrf_user_getvar(f_wrf,"RAINC",-1)
     rncv    = wrf_user_getvar(f_wrf,"RAINNC",-1)
+    it_wrf  = cd_inv_calendar(year,mes,dia,5,0,0,un_wrf,0)
+    ft_wrf  = cd_inv_calendar(year,mes,dia+1,5,0,0,un_wrf,0)
+    id_tiw  = get1Dindex(t_wrf,it_wrf)
+    id_tfw  = get1Dindex(t_wrf,ft_wrf)
     printVarSummary(rcv)
     printVarSummary(rncv)
     printVarSummary(t_wrf)
-
+    rcvi    = rcv(id_tiw,:,:)
+    rcvf    = rcv(id_tiw,:,:)
+    printVarSummary(rcvi)
+    printVarSummary(rcvf) 
 end
