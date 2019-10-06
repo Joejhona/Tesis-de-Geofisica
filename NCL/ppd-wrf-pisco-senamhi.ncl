@@ -57,7 +57,7 @@ begin
     lon_max = max_lon_p
     lon_min = min_lon_p
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-    ;-----Extraendo datos wrf
+    ;-----Extraendo y procesando datos wrf
     dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
     f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
     t_wrf   = wrf_user_list_times(f_wrf)
@@ -75,6 +75,23 @@ begin
     rncvi   = rncv(id_tiw,:,:)
     rncvf   = rncv(id_tfw,:,:)
     pd_wrf  = (rcvf-rcvi)+(rncvf-rncvi)  
-    print(it_wrf+"==="+id_tiw)
+    ;print(it_wrf+"==="+id_tiw)
     printVarSummary(pd_wrf)
+    ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
+    ;-----Extraendo y procesando datos pisco
+    dirPI   = "/data/users/jticse/data/piscopd-17-18/"  
+    fnc_pi  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")  
+    nc_pi   = fnc_pi->ppd_pi_e_per
+    x1      = asciiread(dirPI+periodo+".asc",-1,"float")
+    nlon    = toint(x1(0))
+    nlat    = toint(x1(1))
+    pd_pi  := onedtond(x1(6:),(/nlat,nlon/))
+    pd_pi   = where(pd_pi.ge.0,pd_pi,pd_pi@_FillValue)
+    pd_pi!0               = "latitude"
+    pd_pi&latitude        = nc_pi&latitude
+    pd_pi&latitude@units  = nc_pi&latitude@units
+    pd_pi!1               = "longitude"
+    pd_pi&longitude       = nc_pi&longitude
+    pd_pi&longitude@units = nc_pi&longitude@units
+    printVarSummary(pd_pi)
 end
