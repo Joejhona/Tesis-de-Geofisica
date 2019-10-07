@@ -90,7 +90,16 @@ begin
     res@tmXTOn                      = False
     res@tmXBOn                      = False
     
-      
+    res@gsnAddCyclic        = False
+    res@lbLabelBarOn        = False             ;---> turn off individual cb's
+    res@cnFillOn            = True
+    res@cnFillPalette       = color_paleta
+    res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
+    res@cnLineLabelsOn      = False
+    res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
+    res@cnLevels            = levels
+
+
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo y procesando datos wrf
     dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
@@ -215,7 +224,7 @@ begin
     resP                    = True                ; modify the panel plot
     resP@gsnMaximize        = True
     ;resP@gsnFrame           = False
-    ;resP@gsnPanelLabelBar   = True                ; add common colorbar
+    resP@gsnPanelLabelBar   = True                ; add common colorbar
     ;resP@lbOrientation      = "vertical"
     ;resP@vpHeightF          = 0.6
     resP@lbLabelFontHeightF = 0.01               ; make labels smaller
