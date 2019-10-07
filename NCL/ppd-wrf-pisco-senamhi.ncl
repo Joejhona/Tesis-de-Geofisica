@@ -215,7 +215,7 @@ begin
     resP                    = True                ; modify the panel plot
     resP@gsnMaximize        = True
     ;resP@gsnFrame           = False
-    resP@gsnPanelLabelBar   = True                ; add common colorbar
+    ;resP@gsnPanelLabelBar   = True                ; add common colorbar
     ;resP@lbOrientation      = "vertical"
     ;resP@vpHeightF          = 0.6
     resP@lbLabelFontHeightF = 0.01               ; make labels smaller
@@ -233,3 +233,4 @@ begin
     agregando_shapefile2    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     gsn_panel(wks,plot,(/3,3,3/),resP)
 end
+
