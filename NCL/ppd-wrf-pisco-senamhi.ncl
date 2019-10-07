@@ -166,6 +166,7 @@ begin
     pmres@gsMarkerSizeF     = 0.015       ;-- set size of marker
     pmres@gsLineThicknessF  = 3.          ;-- marker line thickness
     pmres@gsMarkerIndex     = 1
+    pmres@gsMarkerColor     = "blue"
     do m=0,2
         res3        = res
         ;res3@gsnCenterString    = "SENAMHI"
