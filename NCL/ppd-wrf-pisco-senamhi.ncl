@@ -160,8 +160,8 @@ begin
     fc_sen   := asciiread(f_data_se,-1,"string")
     fc_sen   := str_split_csv(fc_sen(1:),",",0)
     dim_fc    = dimsizes(fc_sen(:,0))
-    fecha_s   = cd_string(it_wrf,"%D-%N-%Y")   
-    print("Fecha Senamhi "+fecha_s) 
+    ;fecha_s   = cd_string(it_wrf,"%D-%N-%Y")   
+    ;print("Fecha Senamhi "+fecha_s) 
     pmres                   = True
     pmres@gsMarkerSizeF     = 0.015       ;-- set size of marker
     pmres@gsLineThicknessF  = 3.          ;-- marker line thickness
@@ -172,6 +172,8 @@ begin
         ;res3@gsnCenterString    = "SENAMHI"
         plot(m+6)   = gsn_csm_map(wks,res3)
         map        := plot(m+6)
+        t_se        = cd_inv_calendar(year,mes,dia+m,0,0,0,"days since 1971-1-1",0)
+        fecha_s     = cd_string(t_se,"%D-%N-%Y")   
         do j=0,dim_fc-1
             cod_est    := fc_sen(j,0)
             id_est     := str_match_ind(f_est_se,cod_est)
@@ -215,6 +217,18 @@ begin
                         color_id               := get1Dindex(levels,ppd_s)
                         pmres@gsMarkerColor    := colors(color_id,:) 
                         map@$str$   = gsn_add_polymarker(wks,map,coord_y,coord_x,pmres)
+                        if (m.eq.0) then
+                            ;map1 = map
+                            map1       := plot(m+6)
+                            map1@$str$  = gsn_add_polymarker(wks,map1,coord_y,coord_x,pmres)
+                        else if (m.eq.1) then
+                            map2       := plot(m+6)
+                            map2@$str$  = gsn_add_polymarker(wks,map2,coord_y,coord_x,pmres)
+                        else
+                            map3       := plot(m+6)
+                            map3@$str$  = gsn_add_polymarker(wks,map3,coord_y,coord_x,pmres)
+                        end if
+                        end if
                     end if
                 end if
             end if
