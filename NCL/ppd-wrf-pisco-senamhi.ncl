@@ -6,7 +6,7 @@ shp1    = dirP+shp1     ;--> shape Vertiente Pacifico
 shpres                  = True
 ;shpres@gsLineColor      = "red" ;--> color de linea
 shpres@gsLineColor      = "black" ;--> color de linea
-shpres@gsLineThicknessF = 1.5     ;3.0   ;--> grosor de linea
+shpres@gsLineThicknessF = 1.     ;3.0   ;--> grosor de linea
 
 ;============== %%%% LIMITES %%%% ==============
 ;---activar corners---;
@@ -55,7 +55,9 @@ begin
     type    = "png"
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-    wks     = gsn_open_wks(type,dirS+periodo)                
+    wks     = gsn_open_wks(type,dirS+periodo)   
+    wks@wkWidth     = 2700
+    wks@wkHeight    = 2700             
     plot    = new(9,graphic)
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;----- agregando detalles al mapa -----;
@@ -251,10 +253,10 @@ begin
     resP@gsnPanelLeft       = 0.04
     resP@gsnPanelBottom     = 0.08
     resP@gsnPanelSave       = True
-    ;resP@lbTitleOn          = True                  ; turn on title
+    resP@lbTitleOn          = True                  ; turn on title
     ;resP@lbTitlePosition    = "Bottom"
-    ;resP@lbTitleString      = "mm/dia"
-    ;resP@lbBoxEndCapStyle   = "TriangleHighEnd"
+    resP@lbTitleString      = "mm/dia"
+    resP@lbBoxEndCapStyle   = "TriangleHighEnd"
     ;resP@lbTitleFontHeightF = 0.015
     ;resP@pmLabelBarWidthF   = 0.9
     resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
