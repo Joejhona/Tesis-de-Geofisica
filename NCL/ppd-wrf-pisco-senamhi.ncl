@@ -95,7 +95,12 @@ begin
     res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
     res@cnLevels            = levels
 
-
+    res@gsnMajorLatSpacing  = 2 ;-- change major lat tickmark spacing
+    res@gsnMinorLatSpacing  = 0.5
+    res@tmYLLabelStride     = 2
+    res@gsnMajorLonSpacing  = 2 ;-- change major lon tickmark spacing
+    res@gsnMinorLonSpacing  = 0.5 
+    res@tmXBLabelStride     = 2
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo y procesando datos wrf
     dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
@@ -121,6 +126,13 @@ begin
         res1                   := res
         res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
         ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
+        if (i.eq.2) then
+            res@tiYAxisString       = "WRF-AWR"
+            res@tiYAxisFontHeightF  = 0.02
+            ;res@tiYAxisFontColor    = "navy"
+            res@tiYAxisSide         = "right"
+            res@tiYAxisAngleF       = 270
+        end if
         plot(i) = gsn_csm_contour_map(wks,pd_wrf,res1)
     end do
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -128,6 +140,10 @@ begin
     dirPI   = "/data/users/jticse/data/piscopd-17-18/"  
     fnc_pi  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")  
     nc_pi   = fnc_pi->ppd_pi_e_per
+    delete(res@tiYAxisString)
+    delete(res@tiYAxisFontHeightF)
+    delete(res@tiYAxisSide)
+    delete(res@tiYAxisAngleF)
     do l=0,2
         t_pi    = cd_inv_calendar(year,mes,dia+l,0,0,0,"days since 1971-1-1",0)
         x1     := asciiread(dirPI+cd_string(t_pi,"%Y-%N-%D")+".asc",-1,"float")
@@ -145,8 +161,19 @@ begin
         res2                 := res
         ;res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
         ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
+        if (l.eq.2) then
+            res@tiYAxisString       = "PISCO"
+            res@tiYAxisFontHeightF  = 0.02
+            ;res@tiYAxisFontColor    = "navy"
+            res@tiYAxisSide         = "right"
+            res@tiYAxisAngleF       = 270
+        end if
         plot(l+3) = gsn_csm_contour_map(wks,pd_pi,res2)
     end do
+    delete(res@tiYAxisString)
+    delete(res@tiYAxisFontHeightF)
+    delete(res@tiYAxisSide)
+    delete(res@tiYAxisAngleF)
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo y procesando datos senamhi
     f_est_se  = "/data/users/jticse/data/estaciones_senamhi/*.csv"
@@ -259,6 +286,7 @@ begin
     resP@lbBoxEndCapStyle   = "TriangleHighEnd"
     ;resP@lbTitleFontHeightF = 0.015
     ;resP@pmLabelBarWidthF   = 0.9
+    res@pmLabelBarHeightF   = 0.9
     resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
     resP@gsnPanelRowSpec    = True
     agregando_shapefile2    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
