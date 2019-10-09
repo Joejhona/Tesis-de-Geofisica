@@ -209,7 +209,7 @@ begin
                         print("lluvia nueva "+tostring(ppd_s))
                         color_id               := get1Dindex(levels,ppd_s)
                         pmres@gsMarkerColor    := colors(color_id,:) 
-                        map@$str$   = gsn_add_polymarker(wks,map,coord_y,coord_x,pmres)
+                        ;map@$str$   = gsn_add_polymarker(wks,map,coord_y,coord_x,pmres)
                         if (m.eq.0) then
                             ;map1 = map
                             map1       := plot(m+6)
