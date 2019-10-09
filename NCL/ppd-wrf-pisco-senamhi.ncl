@@ -85,7 +85,7 @@ begin
     res@tmXBOn                      = False
     
     res@gsnAddCyclic        = False
-    ;res@lbLabelBarOn        = False             ;---> turn off individual cb's
+    res@lbLabelBarOn        = False             ;---> turn off individual cb's
     res@cnFillOn            = True
     res@cnFillPalette       = color_paleta
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
@@ -165,7 +165,6 @@ begin
         res3        = res
         ;res3@gsnCenterString    = "SENAMHI"
         plot(m+6)   = gsn_csm_map(wks,res3)
-        map        := plot(m+6)
         t_se        = cd_inv_calendar(year,mes,dia+m,0,0,0,"days since 1971-1-1",0)
         fecha_s     = cd_string(t_se,"%D-%N-%Y")   
         do j=0,dim_fc-1
