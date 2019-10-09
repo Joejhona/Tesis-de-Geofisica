@@ -77,7 +77,7 @@ begin
     res@mpLeftCornerLonF    = min_lon_p
     res@mpRightCornerLonF   = max_lon_p
     ;res@tiMainString        = "Prueba"
-    ;res@lbOrientation       = "Vertical"
+    res@lbOrientation       = "Vertical"
 
     ;---Limites Nacionales---;
     res@mpOutlineBoundarySets       = "National"    ;---> Limite de Paises
@@ -91,7 +91,7 @@ begin
     res@tmXBOn                      = False
     
     res@gsnAddCyclic        = False
-    res@lbLabelBarOn        = False             ;---> turn off individual cb's
+    ;res@lbLabelBarOn        = False             ;---> turn off individual cb's
     res@cnFillOn            = True
     res@cnFillPalette       = color_paleta
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
@@ -239,18 +239,18 @@ begin
     resP                    = True                ; modify the panel plot
     resP@gsnMaximize        = True
     ;resP@gsnFrame           = False
-    resP@gsnPanelLabelBar   = True                ; add common colorbar
-    resP@lbOrientation      = "vertical"
+    ;resP@gsnPanelLabelBar   = True                ; add common colorbar
+    ;resP@lbOrientation      = "vertical"
     resP@vpHeightF          = 0.6
     resP@lbLabelFontHeightF = 0.01               ; make labels smaller
     resP@gsnPanelLeft       = 0.04
     resP@gsnPanelBottom     = 0.08
     resP@gsnPanelSave       = True
-    resP@lbTitleOn          = True                  ; turn on title
-    resP@lbTitlePosition    = "Bottom"
-    resP@lbTitleString      = "mm/dia"
-    resP@lbBoxEndCapStyle   = "TriangleHighEnd"
-    resP@lbTitleFontHeightF = 0.015
+    ;resP@lbTitleOn          = True                  ; turn on title
+    ;resP@lbTitlePosition    = "Bottom"
+    ;resP@lbTitleString      = "mm/dia"
+    ;resP@lbBoxEndCapStyle   = "TriangleHighEnd"
+    ;resP@lbTitleFontHeightF = 0.015
     ;resP@pmLabelBarWidthF   = 0.9
     resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
     resP@gsnPanelRowSpec    = True
