@@ -128,7 +128,7 @@ begin
         ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
         if (i.eq.2) then
             res1@tiYAxisString       = "WRF-AWR"
-            res1@tiYAxisFontHeightF  = 0.02
+            res1@tiYAxisFontHeightF  = 0.04
             ;res@tiYAxisFontColor    = "navy"
             res1@tiYAxisSide         = "right"
             res1@tiYAxisAngleF       = 270
@@ -163,7 +163,7 @@ begin
         ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
         if (l.eq.2) then
             res2@tiYAxisString       = "PISCO"
-            res2@tiYAxisFontHeightF  = 0.02
+            res2@tiYAxisFontHeightF  = 0.04
             ;res@tiYAxisFontColor    = "navy"
             res2@tiYAxisSide         = "right"
             res2@tiYAxisAngleF       = 270
@@ -193,17 +193,24 @@ begin
     do m=0,2
         res3        = res
         ;res3@gsnCenterString    = "SENAMHI"
-        plot(m+6)   = gsn_csm_map(wks,res3)
         t_se        = cd_inv_calendar(year,mes,dia+m,0,0,0,"days since 1971-1-1",0)
         fecha_s     = cd_string(t_se,"%D-%N-%Y")   
         if (m.eq.0) then
             ;map1 = map
+            plot(m+6)   = gsn_csm_map(wks,res3)
             map1        = plot(m+6)
             ;map1@$str$  = gsn_add_polymarker(wks,map1,coord_y,coord_x,pmres)
         else if (m.eq.1) then
+            plot(m+6)   = gsn_csm_map(wks,res3)
             map2        = plot(m+6)
             ;map2@$str$  = gsn_add_polymarker(wks,map2,coord_y,coord_x,pmres)
         else
+            res3@tiYAxisString       = "SENAMHI"
+            res3@tiYAxisFontHeightF  = 0.04
+            ;res@tiYAxisFontColor    = "navy"
+            res3@tiYAxisSide         = "right"
+            res3@tiYAxisAngleF       = 270
+            plot(m+6)   = gsn_csm_map(wks,res3)
             map3        = plot(m+6)
             ;map3@$str$  = gsn_add_polymarker(wks,map3,coord_y,coord_x,pmres)
         end if
