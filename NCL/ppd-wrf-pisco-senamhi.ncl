@@ -212,13 +212,13 @@ begin
                         ;map@$str$   = gsn_add_polymarker(wks,map,coord_y,coord_x,pmres)
                         if (m.eq.0) then
                             ;map1 = map
-                            map1       := plot(m+6)
+                            map1        = plot(m+6)
                             map1@$str$  = gsn_add_polymarker(wks,map1,coord_y,coord_x,pmres)
                         else if (m.eq.1) then
-                            map2       := plot(m+6)
+                            map2        = plot(m+6)
                             map2@$str$  = gsn_add_polymarker(wks,map2,coord_y,coord_x,pmres)
                         else
-                            map3       := plot(m+6)
+                            map3        = plot(m+6)
                             map3@$str$  = gsn_add_polymarker(wks,map3,coord_y,coord_x,pmres)
                         end if
                         end if
