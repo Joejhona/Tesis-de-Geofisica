@@ -46,7 +46,24 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_string.ncl"       ;---> para f
 begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;---periodo
-    periodo = "2017-01-14"
+    ;periodo = "2017-01-14"
+    periodo = "2017-01-21"
+    ;periodo = "2017-01-24"
+    ;periodo = "2017-01-30"
+    ;periodo = "2017-02-02"
+    ;periodo = "2017-02-25"
+    ;periodo = "2017-03-08"
+    ;periodo = "2017-03-13"
+    ;periodo = "2017-03-21"
+    ;periodo = "2017-03-25"
+    ;periodo = "2018-01-10"
+    ;periodo = "2018-01-16"
+    ;periodo = "2018-01-21"
+    ;periodo = "2018-02-14"
+    ;periodo = "2018-02-17"
+    ;periodo = "2018-03-05"
+    ;periodo = "2018-03-17"
+    ;periodo = "2018-03-22"
     year    = stringtoint(str_get_cols(periodo,0,3))
     mes     = stringtoint(str_get_cols(periodo,5,6))
     dia     = stringtoint(str_get_cols(periodo,8,9))
