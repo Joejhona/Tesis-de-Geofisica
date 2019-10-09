@@ -77,12 +77,12 @@ begin
     res@mpOutlineBoundarySets       = "National"    ;---> Limite de Paises
     res@mpNationalLineThicknessF    = 1.5           ;---> Grosor de linea nacional
     res@mpGeophysicalLineThicknessF = 1.5           ;---> Grosor de linea continental
-    res@tmYLLabelsOn                = False         ; turn off lat labels
-    res@tmXBLabelsOn                = False         ; turn off lon labels
-    res@tmYROn                      = False
-    res@tmYLOn                      = False
-    res@tmXTOn                      = False
-    res@tmXBOn                      = False
+    ;res@tmYLLabelsOn                = False         ; turn off lat labels
+    ;res@tmXBLabelsOn                = False         ; turn off lon labels
+    ;res@tmYROn                      = False
+    ;res@tmYLOn                      = False
+    ;res@tmXTOn                      = False
+    ;res@tmXBOn                      = False
     
     res@gsnAddCyclic        = False
     res@lbLabelBarOn        = False             ;---> turn off individual cb's
@@ -167,6 +167,18 @@ begin
         plot(m+6)   = gsn_csm_map(wks,res3)
         t_se        = cd_inv_calendar(year,mes,dia+m,0,0,0,"days since 1971-1-1",0)
         fecha_s     = cd_string(t_se,"%D-%N-%Y")   
+        if (m.eq.0) then
+            ;map1 = map
+            map1        = plot(m+6)
+            ;map1@$str$  = gsn_add_polymarker(wks,map1,coord_y,coord_x,pmres)
+        else if (m.eq.1) then
+            map2        = plot(m+6)
+            ;map2@$str$  = gsn_add_polymarker(wks,map2,coord_y,coord_x,pmres)
+        else
+            map3        = plot(m+6)
+            ;map3@$str$  = gsn_add_polymarker(wks,map3,coord_y,coord_x,pmres)
+        end if
+        end if
         do j=0,dim_fc-1
             cod_est    := fc_sen(j,0)
             id_est     := str_match_ind(f_est_se,cod_est)
@@ -212,13 +224,13 @@ begin
                         ;map@$str$   = gsn_add_polymarker(wks,map,coord_y,coord_x,pmres)
                         if (m.eq.0) then
                             ;map1 = map
-                            map1        = plot(m+6)
+                            ;map1        = plot(m+6)
                             map1@$str$  = gsn_add_polymarker(wks,map1,coord_y,coord_x,pmres)
                         else if (m.eq.1) then
-                            map2        = plot(m+6)
+                            ;map2        = plot(m+6)
                             map2@$str$  = gsn_add_polymarker(wks,map2,coord_y,coord_x,pmres)
                         else
-                            map3        = plot(m+6)
+                            ;map3        = plot(m+6)
                             map3@$str$  = gsn_add_polymarker(wks,map3,coord_y,coord_x,pmres)
                         end if
                         end if
