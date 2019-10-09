@@ -46,8 +46,8 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_string.ncl"       ;---> para f
 begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;---periodo
-    ;periodo = "2017-01-14"
-    periodo = "2017-01-21"
+    periodo = "2017-01-14"
+    ;periodo = "2017-01-21"
     ;periodo = "2017-01-24"
     ;periodo = "2017-01-30"
     ;periodo = "2017-02-02"
@@ -121,7 +121,8 @@ begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo y procesando datos wrf
     dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
-    f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
+    ;f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
+    f_wrf   = addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
     lat_w   = wrf_user_getvar(f_wrf,"XLAT",0)
     lon_w   = wrf_user_getvar(f_wrf,"XLONG",0)
     t_wrf   = wrf_user_list_times(f_wrf)
