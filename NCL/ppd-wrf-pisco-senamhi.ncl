@@ -127,11 +127,11 @@ begin
         res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
         ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
         if (i.eq.2) then
-            res@tiYAxisString       = "WRF-AWR"
-            res@tiYAxisFontHeightF  = 0.02
+            res1@tiYAxisString       = "WRF-AWR"
+            res1@tiYAxisFontHeightF  = 0.02
             ;res@tiYAxisFontColor    = "navy"
-            res@tiYAxisSide         = "right"
-            res@tiYAxisAngleF       = 270
+            res1@tiYAxisSide         = "right"
+            res1@tiYAxisAngleF       = 270
         end if
         plot(i) = gsn_csm_contour_map(wks,pd_wrf,res1)
     end do
@@ -140,10 +140,10 @@ begin
     dirPI   = "/data/users/jticse/data/piscopd-17-18/"  
     fnc_pi  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")  
     nc_pi   = fnc_pi->ppd_pi_e_per
-    delete(res@tiYAxisString)
-    delete(res@tiYAxisFontHeightF)
-    delete(res@tiYAxisSide)
-    delete(res@tiYAxisAngleF)
+    ;delete(res@tiYAxisString)
+    ;delete(res@tiYAxisFontHeightF)
+    ;delete(res@tiYAxisSide)
+    ;delete(res@tiYAxisAngleF)
     do l=0,2
         t_pi    = cd_inv_calendar(year,mes,dia+l,0,0,0,"days since 1971-1-1",0)
         x1     := asciiread(dirPI+cd_string(t_pi,"%Y-%N-%D")+".asc",-1,"float")
@@ -162,18 +162,18 @@ begin
         ;res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
         ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
         if (l.eq.2) then
-            res@tiYAxisString       = "PISCO"
-            res@tiYAxisFontHeightF  = 0.02
+            res2@tiYAxisString       = "PISCO"
+            res2@tiYAxisFontHeightF  = 0.02
             ;res@tiYAxisFontColor    = "navy"
-            res@tiYAxisSide         = "right"
-            res@tiYAxisAngleF       = 270
+            res2@tiYAxisSide         = "right"
+            res2@tiYAxisAngleF       = 270
         end if
         plot(l+3) = gsn_csm_contour_map(wks,pd_pi,res2)
     end do
-    delete(res@tiYAxisString)
-    delete(res@tiYAxisFontHeightF)
-    delete(res@tiYAxisSide)
-    delete(res@tiYAxisAngleF)
+    ;delete(res@tiYAxisString)
+    ;delete(res@tiYAxisFontHeightF)
+    ;delete(res@tiYAxisSide)
+    ;delete(res@tiYAxisAngleF)
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo y procesando datos senamhi
     f_est_se  = "/data/users/jticse/data/estaciones_senamhi/*.csv"
