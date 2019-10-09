@@ -166,7 +166,7 @@ begin
     pmres@gsMarkerSizeF     = 0.015       ;-- set size of marker
     pmres@gsLineThicknessF  = 3.          ;-- marker line thickness
     pmres@gsMarkerIndex     = 1
-    pmres@gsMarkerColor     = "blue"
+    ;pmres@gsMarkerColor     = "blue"
     do m=0,2
         res3        = res
         ;res3@gsnCenterString    = "SENAMHI"
@@ -240,7 +240,7 @@ begin
     resP@gsnMaximize        = True
     ;resP@gsnFrame           = False
     resP@gsnPanelLabelBar   = True                ; add common colorbar
-    ;resP@lbOrientation      = "vertical"
+    resP@lbOrientation      = "vertical"
     ;resP@vpHeightF          = 0.6
     resP@lbLabelFontHeightF = 0.01               ; make labels smaller
     ;resP@gsnPanelLeft       = 0.04
