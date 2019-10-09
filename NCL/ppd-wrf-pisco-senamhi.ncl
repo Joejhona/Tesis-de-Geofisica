@@ -51,12 +51,6 @@ begin
     mes     = stringtoint(str_get_cols(periodo,5,6))
     dia     = stringtoint(str_get_cols(periodo,8,9))
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-    ;-----dimension lat y lon
-    lat_max = max_lat_p
-    lat_min = min_lat_p
-    lon_max = max_lon_p
-    lon_min = min_lon_p
-    ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;----- creando mapa ------;
     type    = "png"
     ;type    = "x11"
@@ -72,12 +66,12 @@ begin
     ;res@gsnLeftString       = "mm/dia"
     res@gsnLeftString      = ""
     res@mpLimitMode         = "Corners" ;--> Activa limites modo corners
-    res@mpLeftCornerLatF    = min_lat_p ;--> limites.ncl r=rimac p=Perú   
-    res@mpRightCornerLatF   = max_lat_p ;--> n=Norte
-    res@mpLeftCornerLonF    = min_lon_p
-    res@mpRightCornerLonF   = max_lon_p
+    res@mpLeftCornerLatF    = min_lat_n ;--> limites.ncl r=rimac p=Perú   
+    res@mpRightCornerLatF   = max_lat_n ;--> n=Norte
+    res@mpLeftCornerLonF    = min_lon_n
+    res@mpRightCornerLonF   = max_lon_n
     ;res@tiMainString        = "Prueba"
-    res@lbOrientation       = "Vertical"
+    ;res@lbOrientation       = "Vertical"
 
     ;---Limites Nacionales---;
     res@mpOutlineBoundarySets       = "National"    ;---> Limite de Paises
@@ -239,8 +233,8 @@ begin
     resP                    = True                ; modify the panel plot
     resP@gsnMaximize        = True
     ;resP@gsnFrame           = False
-    ;resP@gsnPanelLabelBar   = True                ; add common colorbar
-    ;resP@lbOrientation      = "vertical"
+    resP@gsnPanelLabelBar   = True                ; add common colorbar
+    resP@lbOrientation      = "vertical"
     resP@vpHeightF          = 0.6
     resP@lbLabelFontHeightF = 0.01               ; make labels smaller
     resP@gsnPanelLeft       = 0.04
