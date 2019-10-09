@@ -132,8 +132,10 @@ begin
     rcv     = wrf_user_getvar(f_wrf,"RAINC",-1)
     rncv    = wrf_user_getvar(f_wrf,"RAINNC",-1)
     do i=0,2
-        it_wrf := cd_inv_calendar(year,mes,dia+i,5,0,0,un_wrf,0)
-        ft_wrf := cd_inv_calendar(year,mes,dia+1+i,5,0,0,un_wrf,0)
+        ;it_wrf := cd_inv_calendar(year,mes,dia+i,5,0,0,un_wrf,0)
+        ;ft_wrf := cd_inv_calendar(year,mes,dia+1+i,5,0,0,un_wrf,0)
+        it_wrf := cd_inv_calendar(year,mes,dia+i,6,0,0,un_wrf,0)
+        ft_wrf := cd_inv_calendar(year,mes,dia+1+i,6,0,0,un_wrf,0)
         id_tiw := get1Dindex(t_wrf,it_wrf)
         id_tfw := get1Dindex(t_wrf,ft_wrf)
         rcvi   := rcv(id_tiw,:,:)
