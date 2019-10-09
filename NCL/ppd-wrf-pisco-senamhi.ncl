@@ -122,6 +122,8 @@ begin
     ;-----Extraendo y procesando datos wrf
     dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
     f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
+    lat_w   = wrf_user_getvar(f_wrf,"XLAT",0)
+    lon_w   = wrf_user_getvar(f_wrf,"XLONG",0)
     t_wrf   = wrf_user_list_times(f_wrf)
     format  = "%Y-%N-%D_%H:%M:%S"
     t_wrf  := cd_inv_string(t_wrf, format)
@@ -137,7 +139,9 @@ begin
         rcvf   := rcv(id_tfw,:,:)
         rncvi  := rncv(id_tiw,:,:)
         rncvf  := rncv(id_tfw,:,:)
-        pd_wrf := (rcvf-rcvi)+(rncvf-rncvi)  
+        pd_wrf := (rcvf-rcvi)+(rncvf-rncvi)
+        pd_wrf@lat2d := lat_w
+        pd_wrf@lon2d := lon_w  
         ;print(it_wrf+"==="+id_tiw)
         printVarSummary(pd_wrf)
         res1                   := res
