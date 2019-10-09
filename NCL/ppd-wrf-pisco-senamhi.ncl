@@ -149,6 +149,7 @@ begin
         printVarSummary(pd_wrf)
         res1                   := res
         res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
+        res1@gsnCenterStringFontHeightF = 0.04
         ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
         if (i.eq.2) then
             res1@tiYAxisString       = "WRF-AWR"
