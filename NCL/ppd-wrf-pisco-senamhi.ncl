@@ -72,9 +72,9 @@ begin
     type    = "png"
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-    wks     = gsn_open_wks(type,dirS+periodo)   
     wks@wkWidth     = 2700
     wks@wkHeight    = 2700             
+    wks     = gsn_open_wks(type,dirS+periodo)   
     plot    = new(9,graphic)
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;----- agregando detalles al mapa -----;
@@ -318,7 +318,7 @@ begin
     resP@lbBoxEndCapStyle   = "TriangleHighEnd"
     ;resP@lbTitleFontHeightF = 0.015
     ;resP@pmLabelBarWidthF   = 0.9
-    res@pmLabelBarHeightF   = 0.9
+    resP@pmLabelBarHeightF   = 0.9
     resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
     resP@gsnPanelRowSpec    = True
     agregando_shapefile2    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
