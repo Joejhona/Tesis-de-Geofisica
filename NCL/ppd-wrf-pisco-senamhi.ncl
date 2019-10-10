@@ -72,8 +72,8 @@ begin
     type    = "png"
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-    wks@wkWidth     = 2700
-    wks@wkHeight    = 2700             
+    type@wkWidth     = 7000
+    type@wkHeight    = 7000             
     wks     = gsn_open_wks(type,dirS+periodo)   
     plot    = new(9,graphic)
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
