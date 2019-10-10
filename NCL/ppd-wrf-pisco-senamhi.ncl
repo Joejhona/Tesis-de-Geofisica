@@ -324,7 +324,7 @@ begin
     ;resP@lbTitlePosition    = "Bottom"
     resP@lbTitleString      = "mm/dia"
     resP@lbBoxEndCapStyle   = "TriangleHighEnd"
-    resP@lbTitleFontHeightF = 0.03
+    resP@lbTitleFontHeightF = 0.02
     ;resP@pmLabelBarWidthF   = 0.9
     resP@pmLabelBarHeightF   = 0.9
     resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
