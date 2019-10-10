@@ -6,7 +6,7 @@ shp1    = dirP+shp1     ;--> shape Vertiente Pacifico
 shpres                  = True
 ;shpres@gsLineColor      = "red" ;--> color de linea
 shpres@gsLineColor      = "black" ;--> color de linea
-shpres@gsLineThicknessF = 2.     ;3.0   ;--> grosor de linea
+shpres@gsLineThicknessF = 3.     ;3.0   ;--> grosor de linea
 
 ;============== %%%% LIMITES %%%% ==============
 ;---activar corners---;
@@ -94,8 +94,8 @@ begin
 
     ;---Limites Nacionales---;
     res@mpOutlineBoundarySets       = "National"    ;---> Limite de Paises
-    res@mpNationalLineThicknessF    = 3           ;---> Grosor de linea nacional
-    res@mpGeophysicalLineThicknessF = 3           ;---> Grosor de linea continental
+    res@mpNationalLineThicknessF    = 4           ;---> Grosor de linea nacional
+    res@mpGeophysicalLineThicknessF = 5           ;---> Grosor de linea continental
     res@tmYLLabelsOn                = False         ; turn off lat labels
     res@tmXBLabelsOn                = False         ; turn off lon labels
     ;res@tmYROn                      = False
@@ -324,7 +324,7 @@ begin
     ;resP@lbTitlePosition    = "Bottom"
     resP@lbTitleString      = "mm/dia"
     resP@lbBoxEndCapStyle   = "TriangleHighEnd"
-    ;resP@lbTitleFontHeightF = 0.015
+    resP@lbTitleFontHeightF = 0.03
     ;resP@pmLabelBarWidthF   = 0.9
     resP@pmLabelBarHeightF   = 0.9
     resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
