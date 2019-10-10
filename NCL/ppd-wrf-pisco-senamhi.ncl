@@ -6,7 +6,7 @@ shp1    = dirP+shp1     ;--> shape Vertiente Pacifico
 shpres                  = True
 ;shpres@gsLineColor      = "red" ;--> color de linea
 shpres@gsLineColor      = "black" ;--> color de linea
-shpres@gsLineThicknessF = 1.     ;3.0   ;--> grosor de linea
+shpres@gsLineThicknessF = 2.     ;3.0   ;--> grosor de linea
 
 ;============== %%%% LIMITES %%%% ==============
 ;---activar corners---;
@@ -94,10 +94,10 @@ begin
 
     ;---Limites Nacionales---;
     res@mpOutlineBoundarySets       = "National"    ;---> Limite de Paises
-    res@mpNationalLineThicknessF    = 1.5           ;---> Grosor de linea nacional
-    res@mpGeophysicalLineThicknessF = 1.5           ;---> Grosor de linea continental
-    ;res@tmYLLabelsOn                = False         ; turn off lat labels
-    ;res@tmXBLabelsOn                = False         ; turn off lon labels
+    res@mpNationalLineThicknessF    = 3           ;---> Grosor de linea nacional
+    res@mpGeophysicalLineThicknessF = 3           ;---> Grosor de linea continental
+    res@tmYLLabelsOn                = False         ; turn off lat labels
+    res@tmXBLabelsOn                = False         ; turn off lon labels
     ;res@tmYROn                      = False
     ;res@tmYLOn                      = False
     ;res@tmXTOn                      = False
@@ -112,12 +112,12 @@ begin
     res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
     res@cnLevels            = levels
 
-    ;res@gsnMajorLatSpacing  = 2 ;-- change major lat tickmark spacing
-    ;res@gsnMinorLatSpacing  = 0.5
-    ;res@tmYLLabelStride     = 2
-    ;res@gsnMajorLonSpacing  = 2 ;-- change major lon tickmark spacing
-    ;res@gsnMinorLonSpacing  = 0.5 
-    ;res@tmXBLabelStride     = 2
+    res@gsnMajorLatSpacing  = 2 ;-- change major lat tickmark spacing
+    res@gsnMinorLatSpacing  = 0.5
+    res@tmYLLabelStride     = 2
+    res@gsnMajorLonSpacing  = 2 ;-- change major lon tickmark spacing
+    res@gsnMinorLonSpacing  = 0.5 
+    res@tmXBLabelStride     = 2
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo y procesando datos wrf
     dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
@@ -151,12 +151,15 @@ begin
         res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
         res1@gsnCenterStringFontHeightF = 0.04
         ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
-        if (i.eq.2) then
+        if (i.eq.0) then
+            res1@tmYLLabelsOn        = True         ; turn off lat labels
+        else if (i.eq.2) then
             res1@tiYAxisString       = "WRF-AWR"
             res1@tiYAxisFontHeightF  = 0.04
             ;res@tiYAxisFontColor    = "navy"
             res1@tiYAxisSide         = "right"
             res1@tiYAxisAngleF       = 270
+        end if
         end if
         plot(i) = gsn_csm_contour_map(wks,pd_wrf,res1)
     end do
@@ -186,12 +189,15 @@ begin
         res2                 := res
         ;res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
         ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
-        if (l.eq.2) then
+        if (l.eq.0) then
+            res2@tmYLLabelsOn        = True         ; turn off lat labels
+        else if (l.eq.2) then
             res2@tiYAxisString       = "PISCO"
             res2@tiYAxisFontHeightF  = 0.04
             ;res@tiYAxisFontColor    = "navy"
             res2@tiYAxisSide         = "right"
             res2@tiYAxisAngleF       = 270
+        end if
         end if
         plot(l+3) = gsn_csm_contour_map(wks,pd_pi,res2)
     end do
@@ -217,11 +223,13 @@ begin
     ;pmres@gsMarkerColor     = "blue"
     do m=0,2
         res3        = res
+        res3@tmXBLabelsOn = True
         ;res3@gsnCenterString    = "SENAMHI"
         t_se        = cd_inv_calendar(year,mes,dia+m,0,0,0,"days since 1971-1-1",0)
         fecha_s     = cd_string(t_se,"%D-%N-%Y")   
         if (m.eq.0) then
             ;map1 = map
+            res3@tmYLLabelsOn   = True         ; turn off lat labels
             plot(m+6)   = gsn_csm_map(wks,res3)
             map1        = plot(m+6)
             ;map1@$str$  = gsn_add_polymarker(wks,map1,coord_y,coord_x,pmres)
