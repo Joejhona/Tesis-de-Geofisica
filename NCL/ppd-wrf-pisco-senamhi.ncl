@@ -112,12 +112,12 @@ begin
     res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
     res@cnLevels            = levels
 
-    res@gsnMajorLatSpacing  = 2 ;-- change major lat tickmark spacing
-    res@gsnMinorLatSpacing  = 0.5
-    res@tmYLLabelStride     = 2
-    res@gsnMajorLonSpacing  = 2 ;-- change major lon tickmark spacing
-    res@gsnMinorLonSpacing  = 0.5 
-    res@tmXBLabelStride     = 2
+    ;res@gsnMajorLatSpacing  = 2 ;-- change major lat tickmark spacing
+    ;res@gsnMinorLatSpacing  = 0.5
+    ;res@tmYLLabelStride     = 2
+    ;res@gsnMajorLonSpacing  = 2 ;-- change major lon tickmark spacing
+    ;res@gsnMinorLonSpacing  = 0.5 
+    ;res@tmXBLabelStride     = 2
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo y procesando datos wrf
     dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
