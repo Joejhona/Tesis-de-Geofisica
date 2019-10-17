@@ -6,7 +6,7 @@ shp1    = dirP+shp1     ;--> shape Vertiente Pacifico
 shpres                  = True
 ;shpres@gsLineColor      = "red" ;--> color de linea
 shpres@gsLineColor      = "black" ;--> color de linea
-shpres@gsLineThicknessF = 1.5     ;3.0   ;--> grosor de linea
+shpres@gsLineThicknessF = 3.     ;3.0   ;--> grosor de linea
 
 ;============== %%%% LIMITES %%%% ==============
 ;---activar corners---;
@@ -46,22 +46,35 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_string.ncl"       ;---> para f
 begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;---periodo
-    periodo = "2017-01-14"
+    ;periodo = "2017-01-14"
+    ;periodo = "2017-01-21"
+    ;periodo = "2017-01-24"
+    ;periodo = "2017-01-30"
+    ;periodo = "2017-02-02"
+    ;periodo = "2017-02-25"
+    ;periodo = "2017-03-08"
+    ;periodo = "2017-03-13"
+    ;periodo = "2017-03-21"
+    ;periodo = "2017-03-25"
+    ;periodo = "2018-01-10"
+    ;periodo = "2018-01-16"
+    ;periodo = "2018-01-21"
+    ;periodo = "2018-02-14"
+    ;periodo = "2018-02-17"
+    ;periodo = "2018-03-05"
+    ;periodo = "2018-03-17"
+    periodo = "2018-03-22"
     year    = stringtoint(str_get_cols(periodo,0,3))
     mes     = stringtoint(str_get_cols(periodo,5,6))
     dia     = stringtoint(str_get_cols(periodo,8,9))
-    ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-    ;-----dimension lat y lon
-    lat_max = max_lat_p
-    lat_min = min_lat_p
-    lon_max = max_lon_p
-    lon_min = min_lon_p
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;----- creando mapa ------;
     type    = "png"
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-    wks     = gsn_open_wks(type,dirS+periodo)                
+    type@wkWidth     = 7000
+    type@wkHeight    = 7000             
+    wks     = gsn_open_wks(type,dirS+periodo+"-d02")   
     plot    = new(9,graphic)
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;----- agregando detalles al mapa -----;
@@ -72,23 +85,23 @@ begin
     ;res@gsnLeftString       = "mm/dia"
     res@gsnLeftString      = ""
     res@mpLimitMode         = "Corners" ;--> Activa limites modo corners
-    res@mpLeftCornerLatF    = min_lat_p ;--> limites.ncl r=rimac p=Perú   
-    res@mpRightCornerLatF   = max_lat_p ;--> n=Norte
-    res@mpLeftCornerLonF    = min_lon_p
-    res@mpRightCornerLonF   = max_lon_p
+    res@mpLeftCornerLatF    = min_lat_n ;--> limites.ncl r=rimac p=Perú   
+    res@mpRightCornerLatF   = max_lat_n ;--> n=Norte
+    res@mpLeftCornerLonF    = min_lon_n
+    res@mpRightCornerLonF   = max_lon_n
     ;res@tiMainString        = "Prueba"
     ;res@lbOrientation       = "Vertical"
 
     ;---Limites Nacionales---;
     res@mpOutlineBoundarySets       = "National"    ;---> Limite de Paises
-    res@mpNationalLineThicknessF    = 1.5           ;---> Grosor de linea nacional
-    res@mpGeophysicalLineThicknessF = 1.5           ;---> Grosor de linea continental
+    res@mpNationalLineThicknessF    = 4           ;---> Grosor de linea nacional
+    res@mpGeophysicalLineThicknessF = 5           ;---> Grosor de linea continental
     res@tmYLLabelsOn                = False         ; turn off lat labels
     res@tmXBLabelsOn                = False         ; turn off lon labels
-    res@tmYROn                      = False
-    res@tmYLOn                      = False
-    res@tmXTOn                      = False
-    res@tmXBOn                      = False
+    ;res@tmYROn                      = False
+    ;res@tmYLOn                      = False
+    ;res@tmXTOn                      = False
+    ;res@tmXBOn                      = False
     
     res@gsnAddCyclic        = False
     res@lbLabelBarOn        = False             ;---> turn off individual cb's
@@ -99,11 +112,19 @@ begin
     res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
     res@cnLevels            = levels
 
-
+    ;res@gsnMajorLatSpacing  = 2 ;-- change major lat tickmark spacing
+    ;res@gsnMinorLatSpacing  = 0.5
+    ;res@tmYLLabelStride     = 2
+    ;res@gsnMajorLonSpacing  = 2 ;-- change major lon tickmark spacing
+    ;res@gsnMinorLonSpacing  = 0.5 
+    ;res@tmXBLabelStride     = 2
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo y procesando datos wrf
     dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
     f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
+    ;f_wrf   = addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
+    lat_w   = wrf_user_getvar(f_wrf,"XLAT",0)
+    lon_w   = wrf_user_getvar(f_wrf,"XLONG",0)
     t_wrf   = wrf_user_list_times(f_wrf)
     format  = "%Y-%N-%D_%H:%M:%S"
     t_wrf  := cd_inv_string(t_wrf, format)
@@ -111,20 +132,35 @@ begin
     rcv     = wrf_user_getvar(f_wrf,"RAINC",-1)
     rncv    = wrf_user_getvar(f_wrf,"RAINNC",-1)
     do i=0,2
-        it_wrf := cd_inv_calendar(year,mes,dia+i,5,0,0,un_wrf,0)
-        ft_wrf := cd_inv_calendar(year,mes,dia+1+i,5,0,0,un_wrf,0)
+        ;it_wrf := cd_inv_calendar(year,mes,dia+i,5,0,0,un_wrf,0)
+        ;ft_wrf := cd_inv_calendar(year,mes,dia+1+i,5,0,0,un_wrf,0)
+        it_wrf := cd_inv_calendar(year,mes,dia+i,6,0,0,un_wrf,0)
+        ft_wrf := cd_inv_calendar(year,mes,dia+1+i,6,0,0,un_wrf,0)
         id_tiw := get1Dindex(t_wrf,it_wrf)
         id_tfw := get1Dindex(t_wrf,ft_wrf)
         rcvi   := rcv(id_tiw,:,:)
         rcvf   := rcv(id_tfw,:,:)
         rncvi  := rncv(id_tiw,:,:)
         rncvf  := rncv(id_tfw,:,:)
-        pd_wrf := (rcvf-rcvi)+(rncvf-rncvi)  
+        pd_wrf := (rcvf-rcvi)+(rncvf-rncvi)
+        pd_wrf@lat2d := lat_w
+        pd_wrf@lon2d := lon_w  
         ;print(it_wrf+"==="+id_tiw)
         printVarSummary(pd_wrf)
         res1                   := res
         res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
+        res1@gsnCenterStringFontHeightF = 0.04
         ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
+        if (i.eq.0) then
+            res1@tmYLLabelsOn        = True         ; turn off lat labels
+        else if (i.eq.2) then
+            res1@tiYAxisString       = "WRF-AWR-d02"
+            res1@tiYAxisFontHeightF  = 0.04
+            ;res@tiYAxisFontColor    = "navy"
+            res1@tiYAxisSide         = "right"
+            res1@tiYAxisAngleF       = 270
+        end if
+        end if
         plot(i) = gsn_csm_contour_map(wks,pd_wrf,res1)
     end do
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -132,6 +168,10 @@ begin
     dirPI   = "/data/users/jticse/data/piscopd-17-18/"  
     fnc_pi  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")  
     nc_pi   = fnc_pi->ppd_pi_e_per
+    ;delete(res@tiYAxisString)
+    ;delete(res@tiYAxisFontHeightF)
+    ;delete(res@tiYAxisSide)
+    ;delete(res@tiYAxisAngleF)
     do l=0,2
         t_pi    = cd_inv_calendar(year,mes,dia+l,0,0,0,"days since 1971-1-1",0)
         x1     := asciiread(dirPI+cd_string(t_pi,"%Y-%N-%D")+".asc",-1,"float")
@@ -149,8 +189,22 @@ begin
         res2                 := res
         ;res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
         ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
+        if (l.eq.0) then
+            res2@tmYLLabelsOn        = True         ; turn off lat labels
+        else if (l.eq.2) then
+            res2@tiYAxisString       = "PISCO"
+            res2@tiYAxisFontHeightF  = 0.04
+            ;res@tiYAxisFontColor    = "navy"
+            res2@tiYAxisSide         = "right"
+            res2@tiYAxisAngleF       = 270
+        end if
+        end if
         plot(l+3) = gsn_csm_contour_map(wks,pd_pi,res2)
     end do
+    ;delete(res@tiYAxisString)
+    ;delete(res@tiYAxisFontHeightF)
+    ;delete(res@tiYAxisSide)
+    ;delete(res@tiYAxisAngleF)
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo y procesando datos senamhi
     f_est_se  = "/data/users/jticse/data/estaciones_senamhi/*.csv"
@@ -160,18 +214,40 @@ begin
     fc_sen   := asciiread(f_data_se,-1,"string")
     fc_sen   := str_split_csv(fc_sen(1:),",",0)
     dim_fc    = dimsizes(fc_sen(:,0))
-    fecha_s   = cd_string(it_wrf,"%D-%N-%Y")   
-    print("Fecha Senamhi "+fecha_s) 
+    ;fecha_s   = cd_string(it_wrf,"%D-%N-%Y")   
+    ;print("Fecha Senamhi "+fecha_s) 
     pmres                   = True
     pmres@gsMarkerSizeF     = 0.015       ;-- set size of marker
     pmres@gsLineThicknessF  = 3.          ;-- marker line thickness
     pmres@gsMarkerIndex     = 1
-    pmres@gsMarkerColor     = "blue"
+    ;pmres@gsMarkerColor     = "blue"
     do m=0,2
         res3        = res
+        res3@tmXBLabelsOn = True
         ;res3@gsnCenterString    = "SENAMHI"
-        plot(m+6)   = gsn_csm_map(wks,res3)
-        map        := plot(m+6)
+        t_se        = cd_inv_calendar(year,mes,dia+m,0,0,0,"days since 1971-1-1",0)
+        fecha_s     = cd_string(t_se,"%D-%N-%Y")   
+        if (m.eq.0) then
+            ;map1 = map
+            res3@tmYLLabelsOn   = True         ; turn off lat labels
+            plot(m+6)   = gsn_csm_map(wks,res3)
+            map1        = plot(m+6)
+            ;map1@$str$  = gsn_add_polymarker(wks,map1,coord_y,coord_x,pmres)
+        else if (m.eq.1) then
+            plot(m+6)   = gsn_csm_map(wks,res3)
+            map2        = plot(m+6)
+            ;map2@$str$  = gsn_add_polymarker(wks,map2,coord_y,coord_x,pmres)
+        else
+            res3@tiYAxisString       = "SENAMHI"
+            res3@tiYAxisFontHeightF  = 0.04
+            ;res@tiYAxisFontColor    = "navy"
+            res3@tiYAxisSide         = "right"
+            res3@tiYAxisAngleF       = 270
+            plot(m+6)   = gsn_csm_map(wks,res3)
+            map3        = plot(m+6)
+            ;map3@$str$  = gsn_add_polymarker(wks,map3,coord_y,coord_x,pmres)
+        end if
+        end if
         do j=0,dim_fc-1
             cod_est    := fc_sen(j,0)
             id_est     := str_match_ind(f_est_se,cod_est)
@@ -214,7 +290,19 @@ begin
                         print("lluvia nueva "+tostring(ppd_s))
                         color_id               := get1Dindex(levels,ppd_s)
                         pmres@gsMarkerColor    := colors(color_id,:) 
-                        map@$str$   = gsn_add_polymarker(wks,map,coord_y,coord_x,pmres)
+                        ;map@$str$   = gsn_add_polymarker(wks,map,coord_y,coord_x,pmres)
+                        if (m.eq.0) then
+                            ;map1 = map
+                            ;map1        = plot(m+6)
+                            map1@$str$  = gsn_add_polymarker(wks,map1,coord_y,coord_x,pmres)
+                        else if (m.eq.1) then
+                            ;map2        = plot(m+6)
+                            map2@$str$  = gsn_add_polymarker(wks,map2,coord_y,coord_x,pmres)
+                        else
+                            ;map3        = plot(m+6)
+                            map3@$str$  = gsn_add_polymarker(wks,map3,coord_y,coord_x,pmres)
+                        end if
+                        end if
                     end if
                 end if
             end if
@@ -226,18 +314,19 @@ begin
     resP@gsnMaximize        = True
     ;resP@gsnFrame           = False
     resP@gsnPanelLabelBar   = True                ; add common colorbar
-    ;resP@lbOrientation      = "vertical"
-    ;resP@vpHeightF          = 0.6
+    resP@lbOrientation      = "vertical"
+    resP@vpHeightF          = 0.6
     resP@lbLabelFontHeightF = 0.01               ; make labels smaller
-    ;resP@gsnPanelLeft       = 0.04
-    ;resP@gsnPanelBottom     = 0.08
-    ;resP@gsnPanelSave       = True
+    resP@gsnPanelLeft       = 0.04
+    resP@gsnPanelBottom     = 0.08
+    resP@gsnPanelSave       = True
     resP@lbTitleOn          = True                  ; turn on title
-    resP@lbTitlePosition    = "Bottom"
+    ;resP@lbTitlePosition    = "Bottom"
     resP@lbTitleString      = "mm/dia"
     resP@lbBoxEndCapStyle   = "TriangleHighEnd"
-    resP@lbTitleFontHeightF = 0.015
-    resP@pmLabelBarWidthF   = 0.9
+    resP@lbTitleFontHeightF = 0.02
+    ;resP@pmLabelBarWidthF   = 0.9
+    resP@pmLabelBarHeightF   = 0.9
     resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
     resP@gsnPanelRowSpec    = True
     agregando_shapefile2    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
