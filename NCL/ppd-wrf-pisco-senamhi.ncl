@@ -46,7 +46,7 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_string.ncl"       ;---> para f
 begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;---periodo
-    periodo = "2017-01-14"
+    ;periodo = "2017-01-14"
     ;periodo = "2017-01-21"
     ;periodo = "2017-01-24"
     ;periodo = "2017-01-30"
@@ -63,7 +63,7 @@ begin
     ;periodo = "2018-02-17"
     ;periodo = "2018-03-05"
     ;periodo = "2018-03-17"
-    ;periodo = "2018-03-22"
+    periodo = "2018-03-22"
     year    = stringtoint(str_get_cols(periodo,0,3))
     mes     = stringtoint(str_get_cols(periodo,5,6))
     dia     = stringtoint(str_get_cols(periodo,8,9))
@@ -74,7 +74,7 @@ begin
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 7000
     type@wkHeight    = 7000             
-    wks     = gsn_open_wks(type,dirS+periodo)   
+    wks     = gsn_open_wks(type,dirS+periodo+"-d02")   
     plot    = new(9,graphic)
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;----- agregando detalles al mapa -----;
@@ -121,8 +121,8 @@ begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo y procesando datos wrf
     dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
-    ;f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
-    f_wrf   = addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
+    f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
+    ;f_wrf   = addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
     lat_w   = wrf_user_getvar(f_wrf,"XLAT",0)
     lon_w   = wrf_user_getvar(f_wrf,"XLONG",0)
     t_wrf   = wrf_user_list_times(f_wrf)
@@ -154,7 +154,7 @@ begin
         if (i.eq.0) then
             res1@tmYLLabelsOn        = True         ; turn off lat labels
         else if (i.eq.2) then
-            res1@tiYAxisString       = "WRF-AWR"
+            res1@tiYAxisString       = "WRF-AWR-d02"
             res1@tiYAxisFontHeightF  = 0.04
             ;res@tiYAxisFontColor    = "navy"
             res1@tiYAxisSide         = "right"
