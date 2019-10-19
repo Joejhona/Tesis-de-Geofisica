@@ -247,11 +247,37 @@ begin
     dims2 = (/1,3/)
 
     pres1 = True
+    ;resP                    = True                ; modify the panel plot
+    pres1@gsnMaximize        = True
+    pres1@gsnPanelLabelBar   = True                ; add common colorbar
+    pres1@lbOrientation      = "vertical"
+    pres1@vpHeightF          = 0.6
+    pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
+    pres1@gsnPanelLeft       = 0.04
+    pres1@gsnPanelBottom     = 0.08
+    pres1@gsnPanelSave       = True
+    pres1@lbTitleOn          = True                  ; turn on title
+    pres1@lbTitleString      = "mm/dia"
+    pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
+    pres1@lbTitleFontHeightF = 0.02
+    pres1@pmLabelBarHeightF   = 0.9
     pres2 = True
+    pres2@gsnMaximize        = True
+    pres2@gsnPanelLabelBar   = True                ; add common colorbar
+    pres2@lbOrientation      = "vertical"
+    pres2@vpHeightF          = 0.6
+    pres2@lbLabelFontHeightF = 0.01               ; make labels smaller
+    pres2@gsnPanelLeft       = 0.04
+    pres2@gsnPanelBottom     = 0.08
+    pres2@gsnPanelSave       = True
+    pres2@lbTitleOn          = True                  ; turn on title
+    pres2@lbTitleString      = "mm/dia"
+    pres2@lbBoxEndCapStyle   = "TriangleHighEnd"
+    pres2@lbTitleFontHeightF = 0.02
+    pres2@pmLabelBarHeightF   = 0.9
     pres  = True
-
-    pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
-    pres2@lbLabelFontHeightF = 0.01
-    pres1@gsnPanelMainString = "Analisis de lluvia WRF - PISCO"
+    ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
+    ;pres2@lbLabelFontHeightF = 0.01
+    ;pres1@gsnPanelMainString = "Analisis de lluvia WRF - PISCO"
     panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)
 end
