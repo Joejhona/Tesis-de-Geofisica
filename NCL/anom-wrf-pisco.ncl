@@ -1,3 +1,5 @@
+load "./panel_two_sets.ncl"
+
 ;============== %%%% SHAPES %%%% ==============
 dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
 shp1    = "shapes/cuencas/VertientePacificoCentroNorte.shp" 
