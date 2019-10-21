@@ -43,6 +43,9 @@ colors        = span_color_rgba(color_paleta,nlevels_color+1)
 levels2 = (/-1.,-0.5,-0.25,-0.15,\
         -0.1,-0.05,0,0.05,0.1,\
         0.15,0.25,0.5,1./) 
+levels2 = (/-5.,-0.5,-0.25,-0.15,\
+        -0.1,-0.05,0,0.05,0.1,\
+        0.15,0.25,0.5,1./) 
 ;color_paleta2 = "precip_diff_12lev";--> paleta 12 colores
 color_paleta2 = "WhBlReWh"
 nlevels_color2= dimsizes(levels2) ;--> Cantidad de colores 
@@ -168,7 +171,7 @@ begin
         if (i.eq.0) then
             res1@tmYLLabelsOn        = True         ; turn off lat labels
         else if (i.eq.2) then
-            res1@tiYAxisString       = "WRF-AWR-d02"
+            res1@tiYAxisString       = "WRF-AWR-d01"
             res1@tiYAxisFontHeightF  = 0.04
             ;res@tiYAxisFontColor    = "navy"
             res1@tiYAxisSide         = "right"
@@ -240,8 +243,8 @@ begin
         res3@cnLevelSelectionMode= "ManualLevels"   ; manual set levels
         res3@cnFillPalette   := color_paleta2
         res3@cnMinLevelValF   = -5.			; set the minimum contour level
-        res3@cnMaxLevelValF   = +5.			; set the maximum contour level
-        res3@cnLevelSpacingF  = 0.05
+        res3@cnMaxLevelValF   = 5.			; set the maximum contour level
+        res3@cnLevelSpacingF  = 0.1
         ;res3@cnLevels      := levels2
         if (i.eq.0) then
             res3@tmYLLabelsOn        = True         ; turn off lat labels
@@ -287,8 +290,8 @@ begin
     pres2@gsnPanelBottom     = 0.08
     pres2@gsnPanelSave       = True
     pres2@lbTitleOn          = True                  ; turn on title
-    pres2@lbTitleString      = "mm/dia"
-    pres2@lbBoxEndCapStyle   = "TriangleHighEnd"
+    ;pres2@lbTitleString      = "mm/dia"
+    pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
     pres2@lbTitleFontHeightF = 0.01
     pres2@pmLabelBarHeightF   = 0.35
     pres  = True
