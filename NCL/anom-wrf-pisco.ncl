@@ -83,7 +83,7 @@ begin
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 7000
     type@wkHeight    = 7000             
-    wks     = gsn_open_wks(type,dirS+periodo+"-d02")   
+    wks     = gsn_open_wks(type,dirS+"anom-wrf-pisco"+periodo+"-d01")   
     plot    = new(6,graphic)
     plot2   = new(3,graphic)
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -132,8 +132,8 @@ begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo y procesando datos wrf
     dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
-    f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
-    ;f_wrf   = addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
+    ;f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
+    f_wrf   = addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
     lat_w   = wrf_user_getvar(f_wrf,"XLAT",0)
     ;lat_w  := lat_w(:,0)
     lon_w   = wrf_user_getvar(f_wrf,"XLONG",0)
