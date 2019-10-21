@@ -134,9 +134,9 @@ begin
     f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
     ;f_wrf   = addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
     lat_w   = wrf_user_getvar(f_wrf,"XLAT",0)
-    lat_w  := lat_w(:,0)
+    ;lat_w  := lat_w(:,0)
     lon_w   = wrf_user_getvar(f_wrf,"XLONG",0)
-    lon_w  := lon_w(0,:)
+    ;lon_w  := lon_w(0,:)
     t_wrf   = wrf_user_list_times(f_wrf)
     format  = "%Y-%N-%D_%H:%M:%S"
     t_wrf  := cd_inv_string(t_wrf, format)
@@ -215,12 +215,12 @@ begin
         plot(i+3) = gsn_csm_contour_map(wks,pd_pi,res2)
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----procesando la anomalia
-        ;pd_pi_ip = linint2(pd_pi&longitude,pd_pi&latitude,pd_pi,False,lon_w(0,:),lat_w(:,0),0)
-        pd_pi_ip  := linint2(pd_pi&longitude,pd_pi&latitude,pd_pi,False,lon_w,lat_w,0)
+        pd_pi_ip = linint2(pd_pi&longitude,pd_pi&latitude,pd_pi,False,lon_w(0,:),lat_w(:,0),0)
+        ;pd_pi_ip  := linint2(pd_pi&longitude,pd_pi&latitude,pd_pi,False,lon_w,lat_w,0)
         pd_pi_ip!0                = "latitude"        ;--->rotulo lat
         pd_pi_ip!1                = "longitude"       ;--->rotulo lon 
-        pd_pi_ip&latitude         = lat_w            
-        pd_pi_ip&longitude        = lon_w
+        pd_pi_ip&latitude         = lat_w(:,0)            
+        pd_pi_ip&longitude        = lon_w(0,:)
         pd_pi_ip&latitude@units   = "degrees_north"   ;--->und lat
         pd_pi_ip&longitude@units  = "degrees_east"    ;--->und lon
         printVarSummary(pd_wrf)
@@ -228,8 +228,8 @@ begin
         anom  := pd_wrf-pd_pi_ip
         anom!0                = "latitude"        ;--->rotulo lat
         anom!1                = "longitude"       ;--->rotulo lon 
-        anom&latitude         = lat_w            
-        anom&longitude        = lon_w
+        anom&latitude         = lat_w(:,0)            
+        anom&longitude        = lon_w(0,:)
         anom&latitude@units   = "degrees_north"   ;--->und lat
         anom&longitude@units  = "degrees_east"    ;--->und lon
         printVarSummary(anom)
