@@ -40,9 +40,9 @@ color_paleta = "WhBlGrYeRe"
 nlevels_color = dimsizes(levels) ;--> Cantidad de colores 
 colors        = span_color_rgba(color_paleta,nlevels_color+1)
 
-levels2 = (/-2.,-1.5,-1.,-0.75,\
-        -0.5,-0.25,0,0.25,0.5,\
-        0.75,1.,1.5,2./) 
+levels2 = (/-1.,-0.5,-0.25,-0.15,\
+        -0.1,-0.05,0,0.05,0.1,\
+        0.15,0.25,0.5,1./) 
 color_paleta2 = "precip_diff_12lev";--> paleta 12 colores
 nlevels_color2= dimsizes(levels2) ;--> Cantidad de colores 
 colors2       = span_color_rgba(color_paleta2,nlevels_color2+1)
@@ -234,10 +234,21 @@ begin
         anom&latitude@units   = "degrees_north"   ;--->und lat
         anom&longitude@units  = "degrees_east"    ;--->und lon
         printVarSummary(anom)
-        res3                 := res
+        res3               := res
+        res3@tmXBLabelsOn   = True
         ;res2@cnLevelSelectionMode= "ExplicitLevels"   ; manual set levels
-        res3@cnFillPalette      := color_paleta2
-        res3@cnLevels           := levels2
+        res3@cnFillPalette := color_paleta2
+        res3@cnLevels      := levels2
+        if (i.eq.0) then
+            res3@tmYLLabelsOn        = True         ; turn off lat labels
+        else if (i.eq.2) then
+            res3@tiYAxisString       = "ANOM"
+            res3@tiYAxisFontHeightF  = 0.04
+            ;res@tiYAxisFontColor    = "navy"
+            res3@tiYAxisSide         = "right"
+            res3@tiYAxisAngleF       = 270
+        end if
+        end if
         plot2(i) = gsn_csm_contour_map(wks,anom,res3)
     end do
     ;delete(res@tiYAxisString)
@@ -261,7 +272,7 @@ begin
     pres1@lbTitleString      = "mm/dia"
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.02
-    pres1@pmLabelBarHeightF   = 0.5
+    pres1@pmLabelBarHeightF   = 0.6
     pres2 = True
     pres2@gsnMaximize        = True
     pres2@gsnPanelLabelBar   = True                ; add common colorbar
@@ -275,7 +286,7 @@ begin
     pres2@lbTitleString      = "mm/dia"
     pres2@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres2@lbTitleFontHeightF = 0.02
-    pres2@pmLabelBarHeightF   = 0.5
+    pres2@pmLabelBarHeightF   = 0.4
     pres  = True
     ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
     ;pres2@lbLabelFontHeightF = 0.01
