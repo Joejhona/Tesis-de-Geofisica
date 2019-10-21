@@ -58,25 +58,6 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_string.ncl"       ;---> para f
 ;============== %%%% CODIGO %%%% ==============
 begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-    ;---periodo
-    ;periodo = "2017-01-14"
-    ;periodo = "2017-01-21"
-    ;periodo = "2017-01-24"
-    ;periodo = "2017-01-30"
-    ;periodo = "2017-02-02"
-    ;periodo = "2017-02-25"
-    ;periodo = "2017-03-08"
-    ;periodo = "2017-03-13"
-    ;periodo = "2017-03-21"
-    ;periodo = "2017-03-25"
-    ;periodo = "2018-01-10"
-    ;periodo = "2018-01-16"
-    ;periodo = "2018-01-21"
-    ;periodo = "2018-02-14"
-    ;periodo = "2018-02-17"
-    ;periodo = "2018-03-05"
-    ;periodo = "2018-03-17"
-    ;periodo = "2018-03-22"
     periodos = (/"2017-01-14","2017-01-21","2017-01-24","2017-01-30","2017-02-02",\
         "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
@@ -93,7 +74,7 @@ begin
         dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
         type@wkWidth     = 7000
         type@wkHeight    = 8000             
-        wks     = gsn_open_wks(type,dirS+"anom-WRF-PI-"+periodo+"-d01")   
+        wks     = gsn_open_wks(type,dirS+"anom-WRF-PI-"+periodo+"-d02")   
         plot    = new(6,graphic)
         plot2   = new(3,graphic)
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -142,8 +123,8 @@ begin
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----Extraendo y procesando datos wrf
         dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
-        ;f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
-        f_wrf  := addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
+        f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
+        ;f_wrf  := addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
         lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
         ;lat_w  := lat_w(:,0)
         lon_w  := wrf_user_getvar(f_wrf,"XLONG",0)
@@ -179,7 +160,7 @@ begin
                 res1@tiYAxisSide,res1@tiYAxisAngleF/])                
                 res1@tmYLLabelsOn        = True         ; turn off lat labels
             else if (i.eq.2) then
-                res1@tiYAxisString       = "WRF-AWR-d01"
+                res1@tiYAxisString       = "WRF-AWR-d02"
                 res1@tiYAxisFontHeightF  = 0.04
                 ;res@tiYAxisFontColor    = "navy"
                 res1@tiYAxisSide         = "right"
@@ -189,7 +170,7 @@ begin
             plot(i) = gsn_csm_contour_map(wks,pd_wrf,res1)
             ;end do
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-            ;-----Extraendo y procesando datos pisco
+            ;-----Extraendo y procesando  datos pisco
             dirPI   = "/data/users/jticse/data/piscopd-17-18/"  
             fnc_pi  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")  
             nc_pi   = fnc_pi->ppd_pi_e_per
@@ -276,7 +257,6 @@ begin
         ;delete(res@tiYAxisAngleF)
         dims1 = (/2,3/)
         dims2 = (/1,3/)
-        delete([/panel_two_sets/])
         pres1 = True
         ;resP                    = True                ; modify the panel plot
         pres1@gsnMaximize        = True
