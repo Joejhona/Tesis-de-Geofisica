@@ -91,6 +91,7 @@ begin
     res                     = True      ;--> activa los detalles
     res@gsnDraw             = False     ;--> don't draw the plot yet
     res@gsnFrame            = False     ;--> 
+    res@mpFillOn            = False
     ;res@gsnMaximize         = True
     ;res@gsnLeftString       = "mm/dia"
     res@gsnLeftString      = ""
@@ -115,7 +116,7 @@ begin
     
     res@gsnAddCyclic        = False
     res@lbLabelBarOn        = False             ;---> turn off individual cb's
-    res@cnFillOn            = False ;True
+    res@cnFillOn            = True
     res@cnFillPalette       = color_paleta
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
     res@cnLineLabelsOn      = False
