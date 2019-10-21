@@ -82,7 +82,7 @@ begin
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 7000
-    type@wkHeight    = 7000             
+    type@wkHeight    = 8000             
     wks     = gsn_open_wks(type,dirS+"anom-wrf-pisco"+periodo+"-d01")   
     plot    = new(6,graphic)
     plot2   = new(3,graphic)
@@ -261,7 +261,7 @@ begin
     pres1@lbTitleString      = "mm/dia"
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.02
-    pres1@pmLabelBarHeightF   = 0.9
+    pres1@pmLabelBarHeightF   = 0.5
     pres2 = True
     pres2@gsnMaximize        = True
     pres2@gsnPanelLabelBar   = True                ; add common colorbar
@@ -275,7 +275,7 @@ begin
     pres2@lbTitleString      = "mm/dia"
     pres2@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres2@lbTitleFontHeightF = 0.02
-    pres2@pmLabelBarHeightF   = 0.9
+    pres2@pmLabelBarHeightF   = 0.5
     pres  = True
     ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
     ;pres2@lbLabelFontHeightF = 0.01
