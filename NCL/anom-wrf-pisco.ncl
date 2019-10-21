@@ -91,7 +91,7 @@ begin
     res                     = True      ;--> activa los detalles
     res@gsnDraw             = False     ;--> don't draw the plot yet
     res@gsnFrame            = False     ;--> 
-    res@gsnMaximize         = True
+    ;res@gsnMaximize         = True
     ;res@gsnLeftString       = "mm/dia"
     res@gsnLeftString      = ""
     res@mpLimitMode         = "Corners" ;--> Activa limites modo corners
