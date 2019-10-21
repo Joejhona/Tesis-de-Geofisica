@@ -289,11 +289,11 @@ begin
     pres2@gsnPanelLeft       = 0.04
     pres2@gsnPanelBottom     = 0.08
     pres2@gsnPanelSave       = True
-    pres2@lbTitleOn          = True                  ; turn on title
+    ;pres2@lbTitleOn          = True                  ; turn on title
     ;pres2@lbTitleString      = "mm/dia"
     pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
     pres2@lbTitleFontHeightF = 0.01
-    pres2@pmLabelBarHeightF   = 0.35
+    pres2@pmLabelBarHeightF   = 0.3
     pres  = True
     ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
     ;pres2@lbLabelFontHeightF = 0.01
