@@ -62,8 +62,8 @@ begin
         "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
-    do j=0,dimsizes(periodos)-1
-        periodo = periodos(j)
+    do l=0,dimsizes(periodos)-1
+        periodo = periodos(l)
         year    = stringtoint(str_get_cols(periodo,0,3))
         mes     = stringtoint(str_get_cols(periodo,5,6))
         dia     = stringtoint(str_get_cols(periodo,8,9))
@@ -123,8 +123,8 @@ begin
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----Extraendo datos wrf
         dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
-        f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
-        ;f_wrf  := addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
+        ;f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
+        f_wrf  := addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
         lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
         ;lat_w  := lat_w(:,0)
         lon_w  := wrf_user_getvar(f_wrf,"XLONG",0)
@@ -226,7 +226,7 @@ begin
             do j=0,dim_fc-1
                 cod_est    := fc_sen(j,0)
                 id_est     := str_match_ind(f_est_se,cod_est)
-                print("Fecha "+periodo+" Estacion "+cod_est+" Id "+tostring(id_est))
+                ;print("Fecha "+periodo+" Estacion "+cod_est+" Id "+tostring(id_est))
                 if (.not.all(ismissing(id_est))) then
                     fe_sen     := asciiread(f_est_se(id_est),-1,"string")
                     fe_sen     := str_sub_str(fe_sen,"Ene","01")
@@ -246,14 +246,13 @@ begin
                             str        := unique_string("poly")
                             coord_x    := tofloat(fc_sen(j,1)) ;--> lat
                             coord_y    := tofloat(fc_sen(j,2)) ;--> lon
-                            cond_1      = max(pd_se&latitude).le.
                             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
                             ;----- guardando lluvia para anomalia
-                            cond_1      = (max(lat_w(:,0)).le.coord_x).and.(coord_x.ge.(min(lat_w(:,0))))
-                            cond_2      = (max(lon_w(:,0)).le.coord_y).and.(coord_y.ge.(min(lon_w(:,0))))
-                            ;dentro      = cond_1.and.cond_2
+                            cond_1      = coord_x.le.max(lat_w(:,0)).and.coord_x.ge.min(lat_w(:,0))
+                            cond_2      = coord_y.le.max(lon_w(0,:)).and.coord_y.ge.min(lon_w(0,:))
                             if cond_1.and.cond_2 then
-                                if all(ismissing(pd_se(:,{coord_x},{coord_y})))) then
+                                ;print("paso")
+                                if all(ismissing(pd_se(:,{coord_x},{coord_y}))) then
                                     pd_se(:,{coord_x},{coord_y}) = ppd_s
                                 else
                                     pd_se3 := pd_se2
@@ -293,20 +292,16 @@ begin
                     end if
                 end if
             end do
-
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;-----procesando la anomalia
-            pd_pi_ip = linint2(pd_pi&longitude,pd_pi&latitude,pd_pi,False,lon_w(0,:),lat_w(:,0),0)
-            ;pd_pi_ip  := linint2(pd_pi&longitude,pd_pi&latitude,pd_pi,False,lon_w,lat_w,0)
-            pd_pi_ip!0                = "latitude"        ;--->rotulo lat
-            pd_pi_ip!1                = "longitude"       ;--->rotulo lon 
-            pd_pi_ip&latitude         = lat_w(:,0)            
-            pd_pi_ip&longitude        = lon_w(0,:)
-            pd_pi_ip&latitude@units   = "degrees_north"   ;--->und lat
-            pd_pi_ip&longitude@units  = "degrees_east"    ;--->und lon
-            printVarSummary(pd_wrf)
-            printVarSummary(pd_pi_ip)
-            anom  := pd_wrf-pd_pi_ip
+            pd_se_p = dim_avg_n(pd_se,0)
+            pd_se_p!0                = "latitude"        ;--->rotulo lat
+            pd_se_p!1                = "longitude"       ;--->rotulo lon 
+            pd_se_p&latitude         = lat_w(:,0)            
+            pd_se_p&longitude        = lon_w(0,:)
+            pd_se_p&latitude@units   = "degrees_north"   ;--->und lat
+            pd_se_p&longitude@units  = "degrees_east"    ;--->und lon
+            anom  := pd_wrf-pd_se_p
             anom!0                = "latitude"        ;--->rotulo lat
             anom!1                = "longitude"       ;--->rotulo lon 
             anom&latitude         = lat_w(:,0)            
@@ -320,7 +315,7 @@ begin
             res3@cnFillPalette   := color_paleta2
             res3@cnMinLevelValF   = -5.			; set the minimum contour level
             res3@cnMaxLevelValF   = 5.			; set the maximum contour level
-            res3@cnLevelSpacingF  = 0.1
+            res3@cnLevelSpacingF  = 0.5
             ;res3@cnLevels      := levels2
             if (i.eq.0) then
                 delete([/res3@tiYAxisString,res3@tiYAxisFontHeightF,\
