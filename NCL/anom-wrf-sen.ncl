@@ -58,6 +58,15 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_string.ncl"       ;---> para f
 ;============== %%%% CODIGO %%%% ==============
 begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
+    ;-----Extraendo datos senamhi
+    f_est_se  = "/data/users/jticse/data/estaciones_senamhi/*.csv"
+    f_est_se := systemfunc("ls "+f_est_se)
+    ;f_data_se = "/data/users/jticse/data/senamhi_vertpac_cn.csv"
+    f_data_se = "/data/users/jticse/data/senamhi-17-18.csv"
+    fc_sen   := asciiread(f_data_se,-1,"string")
+    fc_sen   := str_split_csv(fc_sen(1:),",",0)
+    dim_fc    = dimsizes(fc_sen(:,0))
+    ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     periodos = (/"2017-01-14","2017-01-21","2017-01-24","2017-01-30","2017-02-02",\
         "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
@@ -74,7 +83,7 @@ begin
         dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
         type@wkWidth     = 7000
         type@wkHeight    = 8000             
-        wks     = gsn_open_wks(type,dirS+"anom-WRF-PI-"+periodo+"-d02")   
+        wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-"+periodo+"-d02")   
         plot    = new(6,graphic)
         plot2   = new(3,graphic)
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -135,15 +144,6 @@ begin
         un_wrf  = t_wrf@units  
         rcv     = wrf_user_getvar(f_wrf,"RAINC",-1)
         rncv    = wrf_user_getvar(f_wrf,"RAINNC",-1)
-        ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-        ;-----Extraendo datos senamhi
-        f_est_se  = "/data/users/jticse/data/estaciones_senamhi/*.csv"
-        f_est_se := systemfunc("ls "+f_est_se)
-        ;f_data_se = "/data/users/jticse/data/senamhi_vertpac_cn.csv"
-        f_data_se = "/data/users/jticse/data/senamhi-17-18.csv"
-        fc_sen   := asciiread(f_data_se,-1,"string")
-        fc_sen   := str_split_csv(fc_sen(1:),",",0)
-        dim_fc    = dimsizes(fc_sen(:,0))
         do i=0,2
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;----- Procesando datos wrf
@@ -196,7 +196,7 @@ begin
             
             ;pd_se      := pd_wrf
             ;pd_se       = pd_se@missing_value
-            pd_se   = new((/1,dimsizes(pd_wrf(:,0)),dimsizes(pd_wrf(0,:))/),typeof(pd_wrf),default_fillvalue("float"))
+            pd_se   := new((/1,dimsizes(pd_wrf(:,0)),dimsizes(pd_wrf(0,:))/),typeof(pd_wrf),default_fillvalue("float"))
             pd_se!0                = "time"
             pd_se!1                = "latitude"        ;--->rotulo lat
             pd_se!2                = "longitude"       ;--->rotulo lon 
