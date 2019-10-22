@@ -62,7 +62,7 @@ begin
         "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
-    do j=12,dimsizes(periodos)-1
+    do j=0,dimsizes(periodos)-1
         periodo = periodos(j)
         year    = stringtoint(str_get_cols(periodo,0,3))
         mes     = stringtoint(str_get_cols(periodo,5,6))

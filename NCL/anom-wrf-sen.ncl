@@ -74,7 +74,7 @@ begin
         dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
         type@wkWidth     = 7000
         type@wkHeight    = 8000             
-        wks     = gsn_open_wks(type,dirS+"anom-WRF-PI-"+periodo+"-d02")   
+        wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-"+periodo+"-d02")   
         plot    = new(6,graphic)
         plot2   = new(3,graphic)
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -196,7 +196,7 @@ begin
             
             ;pd_se      := pd_wrf
             ;pd_se       = pd_se@missing_value
-            pd_se   = new((/1,dimsizes(pd_wrf(:,0)),dimsizes(pd_wrf(0,:))/),typeof(pd_wrf),default_fillvalue("float"))
+            pd_se   := new((/1,dimsizes(pd_wrf(:,0)),dimsizes(pd_wrf(0,:))/),typeof(pd_wrf),default_fillvalue("float"))
             pd_se!0                = "time"
             pd_se!1                = "latitude"        ;--->rotulo lat
             pd_se!2                = "longitude"       ;--->rotulo lon 
