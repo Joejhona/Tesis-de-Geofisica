@@ -187,12 +187,12 @@ begin
             pmres@gsMarkerIndex     = 1
             ;pmres@gsMarkerColor     = "blue"
             ;do m=0,2
-            res3        = res
-            res3@tmXBLabelsOn = True
+            res2        = res
+            res2@tmXBLabelsOn = True
             ;res3@gsnCenterString    = "SENAMHI"
             t_se        = cd_inv_calendar(year,mes,dia+i,0,0,0,"days since 1971-1-1",0)
             fecha_s     = cd_string(t_se,"%D-%N-%Y")   
-            plot(i+3)   = gsn_csm_map(wks,res3)
+            ;plot(i+3)   = gsn_csm_map(wks,res3)
             
             ;pd_se      := pd_wrf
             ;pd_se       = pd_se@missing_value
@@ -207,19 +207,19 @@ begin
             pd_se2  = pd_se
             if (i.eq.0) then
                 ;map1 = map
-                res3@tmYLLabelsOn   = True         ; turn off lat labels
-                ;plot(m+6)   = gsn_csm_map(wks,res3)
+                res2@tmYLLabelsOn   = True         ; turn off lat labels
+                plot(i+6)   = gsn_csm_map(wks,res2)
                 map1        = plot(i+3)
             else if (i.eq.1) then
-                ;plot(m+6)   = gsn_csm_map(wks,res3)
+                plot(i+6)   = gsn_csm_map(wks,res2)
                 map2        = plot(i+3)
             else
-                res3@tiYAxisString       = "SENAMHI"
-                res3@tiYAxisFontHeightF  = 0.04
-                ;res@tiYAxisFontColor    = "navy"
-                res3@tiYAxisSide         = "right"
-                res3@tiYAxisAngleF       = 270
-                ;plot(m+6)   = gsn_csm_map(wks,res3)
+                res2@tiYAxisString       = "SENAMHI"
+                res2@tiYAxisFontHeightF  = 0.04
+                ;res2@tiYAxisFontColor    = "navy"
+                res2@tiYAxisSide         = "right"
+                res2@tiYAxisAngleF       = 270
+                plot(i+6)   = gsn_csm_map(wks,res2)
                 map3        = plot(i+3)
             end if
             end if
