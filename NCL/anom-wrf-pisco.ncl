@@ -62,7 +62,7 @@ begin
         "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
-    do j=0,dimsizes(periodos)-1
+    do j=12,dimsizes(periodos)-1
         periodo = periodos(j)
         year    = stringtoint(str_get_cols(periodo,0,3))
         mes     = stringtoint(str_get_cols(periodo,5,6))
@@ -235,7 +235,7 @@ begin
             res3@cnFillPalette   := color_paleta2
             res3@cnMinLevelValF   = -5.			; set the minimum contour level
             res3@cnMaxLevelValF   = 5.			; set the maximum contour level
-            res3@cnLevelSpacingF  = 0.1
+            res3@cnLevelSpacingF  = 0.5
             ;res3@cnLevels      := levels2
             if (i.eq.0) then
                 delete([/res3@tiYAxisString,res3@tiYAxisFontHeightF,\
@@ -286,10 +286,13 @@ begin
         pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
         pres2@lbTitleFontHeightF = 0.01
         pres2@pmLabelBarHeightF   = 0.3
+	pres2@gsnPanelMainString = "Anomalia lluvia WRF - PISCO"
         pres  = True
         ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
         ;pres2@lbLabelFontHeightF = 0.01
         ;pres1@gsnPanelMainString = "Analisis de lluvia WRF - PISCO"
+    	agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
+    	agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
         panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)
     end do
 end
