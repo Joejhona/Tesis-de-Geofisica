@@ -286,7 +286,7 @@ begin
         pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
         pres2@lbTitleFontHeightF = 0.01
         pres2@pmLabelBarHeightF   = 0.3
-	pres2@gsnPanelMainString = "Anomalia lluvia WRF - PISCO"
+	    ;pres2@gsnPanelMainString = "Anomalia lluvia WRF - PISCO"
         pres  = True
         ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
         ;pres2@lbLabelFontHeightF = 0.01

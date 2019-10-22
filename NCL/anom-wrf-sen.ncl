@@ -248,17 +248,20 @@ begin
                             coord_y    := tofloat(fc_sen(j,2)) ;--> lon
                             cond_1      = max(pd_se&latitude).le.
                             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-                            ;----- guardando lluvia
-                            nm = getind_latlon2d (pd_se&latitude,pd_se&longitude,coord_x,coord_y)
-                            if all(ismissing(pd_se(:,{coord_x},{coord_y}))) then
-                                pd_se(:,{coord_x},{coord_y}) = ppd_s
-                            else
-                                pd_se3 := pd_se2@_FillValue
-                                pd_se3(:,{coord_x},{coord_y}) = ppd_s
-                                pd_se  := array_append_record(pd_se,pd_se3,0)
+                            ;----- guardando lluvia para anomalia
+                            cond_1      = (max(lat_w(:,0)).le.coord_x).and.(coord_x.ge.(min(lat_w(:,0))))
+                            cond_2      = (max(lon_w(:,0)).le.coord_y).and.(coord_y.ge.(min(lon_w(:,0))))
+                            ;dentro      = cond_1.and.cond_2
+                            if cond_1.and.cond_2 then
+                                if all(ismissing(pd_se(:,{coord_x},{coord_y})))) then
+                                    pd_se(:,{coord_x},{coord_y}) = ppd_s
+                                else
+                                    pd_se3 := pd_se2
+                                    pd_se3(:,{coord_x},{coord_y}) = ppd_s
+                                    pd_se  := array_append_record(pd_se,pd_se3,0)
+                                end if
                             end if
-
-
+                            ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
                             do k=0,nlevels_color-1
                                 if (k.eq.nlevels_color-1) then
                                     ;--> si: ppd >= max -> ppd = max
