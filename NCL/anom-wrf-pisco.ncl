@@ -235,7 +235,7 @@ begin
             res3@cnFillPalette   := color_paleta2
             res3@cnMinLevelValF   = -5.			; set the minimum contour level
             res3@cnMaxLevelValF   = 5.			; set the maximum contour level
-            res3@cnLevelSpacingF  = 0.5
+            res3@cnLevelSpacingF  = 0.25
             ;res3@cnLevels      := levels2
             if (i.eq.0) then
                 delete([/res3@tiYAxisString,res3@tiYAxisFontHeightF,\
