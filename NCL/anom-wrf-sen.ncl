@@ -302,7 +302,7 @@ begin
             pd_se_p&longitude        = lon_w(0,:)
             pd_se_p&latitude@units   = "degrees_north"   ;--->und lat
             pd_se_p&longitude@units  = "degrees_east"    ;--->und lon
-            anom  := pd_wrf-pd_se_p
+            anom  = pd_wrf-pd_se_p
             anom@lat2d := lat_w
             anom@lon2d := lon_w
             ;anom!0                = "latitude"        ;--->rotulo lat
