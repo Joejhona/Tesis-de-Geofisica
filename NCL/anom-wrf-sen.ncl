@@ -303,12 +303,14 @@ begin
             pd_se_p&latitude@units   = "degrees_north"   ;--->und lat
             pd_se_p&longitude@units  = "degrees_east"    ;--->und lon
             anom  := pd_wrf-pd_se_p
-            anom!0                = "latitude"        ;--->rotulo lat
-            anom!1                = "longitude"       ;--->rotulo lon 
-            anom&latitude         = lat_w(:,0)            
-            anom&longitude        = lon_w(0,:)
-            anom&latitude@units   = "degrees_north"   ;--->und lat
-            anom&longitude@units  = "degrees_east"    ;--->und lon
+            anom@lat2d := lat_w
+            anom@lon2d := lon_w
+            ;anom!0                = "latitude"        ;--->rotulo lat
+            ;anom!1                = "longitude"       ;--->rotulo lon 
+            ;anom&latitude         = lat_w(:,0)            
+            ;anom&longitude        = lon_w(0,:)
+            ;anom&latitude@units   = "degrees_north"   ;--->und lat
+            ;anom&longitude@units  = "degrees_east"    ;--->und lon
             printVarSummary(anom)
             res3                 := res
             res3@tmXBLabelsOn     = True
