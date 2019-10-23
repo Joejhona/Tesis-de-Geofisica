@@ -306,14 +306,14 @@ begin
             pd_se_p&latitude@units   = "degrees_north"   ;--->und lat
             pd_se_p&longitude@units  = "degrees_east"    ;--->und lon
             anom  = pd_wrf-pd_se_p
-            anom@lat2d := lat_w
-            anom@lon2d := lon_w
-            ;anom!0                = "latitude"        ;--->rotulo lat
-            ;anom!1                = "longitude"       ;--->rotulo lon 
-            ;anom&latitude         = lat_w(:,0)            
-            ;anom&longitude        = lon_w(0,:)
-            ;anom&latitude@units   = "degrees_north"   ;--->und lat
-            ;anom&longitude@units  = "degrees_east"    ;--->und lon
+            ;anom@lat2d := lat_w
+            ;anom@lon2d := lon_w
+            anom!0                = "latitude"        ;--->rotulo lat
+            anom!1                = "longitude"       ;--->rotulo lon 
+            anom&latitude         = lat_w(:,0)            
+            anom&longitude        = lon_w(0,:)
+            anom&latitude@units   = "degrees_north"   ;--->und lat
+            anom&longitude@units  = "degrees_east"    ;--->und lon
             printVarSummary(pd_se_p)
             printVarSummary(anom)
             res3                 := res
@@ -336,7 +336,7 @@ begin
                 res3@tiYAxisAngleF       = 270
             end if
             end if
-            plot2(i) = gsn_csm_contour_map(wks,anom,res3)
+            plot2(i) = gsn_csm_contour_map(wks,pd_se_p,res3)
         end do
         ;delete(res@tiYAxisString)
         ;delete(res@tiYAxisFontHeightF)
