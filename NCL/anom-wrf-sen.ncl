@@ -334,7 +334,7 @@ begin
             anom   := pd_wrf_p-pd_se
             ;anom2  := anom
             res3       := res
-            res3@cnFillOn            = False
+            res3@mpFillOn := False
             res3@tmXBLabelsOn = True
             pmres2                   = True
             pmres2@gsMarkerSizeF     = 0.015       ;-- set size of marker
