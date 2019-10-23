@@ -343,10 +343,10 @@ begin
             if (i.eq.0) then
                 ;map1 = map
                 res3@tmYLLabelsOn   = True         ; turn off lat labels
-                plot2(i)   = gsn_csm_map(wks,res3)
+                plot2(i)    = gsn_map(wks,"CylindricalEquidistant",res3)
                 map4        = plot2(i)
             else if (i.eq.1) then
-                plot2(i)   = gsn_csm_map(wks,res3)
+                plot2(i)    = gsn_map(wks,"CylindricalEquidistant",res3)
                 map5        = plot2(i)
             else
                 res3@tiYAxisString       = "ANOM"
@@ -354,7 +354,8 @@ begin
                 ;res2@tiYAxisFontColor    = "navy"
                 res3@tiYAxisSide         = "right"
                 res3@tiYAxisAngleF       = 270
-                plot2(i)   = gsn_csm_map(wks,res3)
+                ;plot2(i)   = gsn_csm_map(wks,res3)
+                plot2(i)    = gsn_map(wks,"CylindricalEquidistant",res3)
                 map6        = plot2(i)
             end if
             end if
