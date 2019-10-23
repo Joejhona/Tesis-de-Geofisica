@@ -43,11 +43,13 @@ colors        = span_color_rgba(color_paleta,nlevels_color+1)
 ;levels2 = (/-1.,-0.5,-0.25,-0.15,\
 ;        -0.1,-0.05,0,0.05,0.1,\
 ;        0.15,0.25,0.5,1./) 
-;levels2 = (/-5.,-0.5,-0.25,-0.15,\
-;        -0.1,-0.05,0,0.05,0.1,\
-;        0.15,0.25,0.5,1./) 
+levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
+        -9.,-8.,-7.,-6,-5,-4.,-3.,-2.,-1.,-0.9,-0.8,-0.7,-0.6,\
+        -0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
+        0.8,0.9,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,18,\
+        20.,25.,30.,40.,50/) 
 ;color_paleta2 = "precip_diff_12lev";--> paleta 12 colores
-color_paleta2 = "WhBlReWh"
+color_paleta2 = "ViBlGrWhYeOrRe"
 nlevels_color2= dimsizes(levels2) ;--> Cantidad de colores 
 colors2       = span_color_rgba(color_paleta2,nlevels_color2+1)
 
@@ -189,7 +191,7 @@ begin
             ;pmres@gsMarkerColor     = "blue"
             ;do m=0,2
             res2        = res
-            res2@tmXBLabelsOn = True
+            ;res2@tmXBLabelsOn = True
             ;res3@gsnCenterString    = "SENAMHI"
             t_se        = cd_inv_calendar(year,mes,dia+i,0,0,0,"days since 1971-1-1",0)
             fecha_s     = cd_string(t_se,"%D-%N-%Y")   
@@ -197,15 +199,25 @@ begin
             
             ;pd_se      := pd_wrf
             ;pd_se       = pd_se@missing_value
-            pd_se   := new((/1,dimsizes(pd_wrf(:,0)),dimsizes(pd_wrf(0,:))/),typeof(pd_wrf),default_fillvalue("float"))
-            pd_se!0                = "time"
-            pd_se!1                = "latitude"        ;--->rotulo lat
-            pd_se!2                = "longitude"       ;--->rotulo lon 
-            pd_se&latitude         = lat_w(:,0)            
-            pd_se&longitude        = lon_w(0,:)
-            pd_se&latitude@units   = "degrees_north"   ;--->und lat
-            pd_se&longitude@units  = "degrees_east"    ;--->und lon
-            pd_se2  = pd_se
+            ;pd_se   := new((/1,dimsizes(pd_wrf(:,0)),dimsizes(pd_wrf(0,:))/),typeof(pd_wrf),default_fillvalue("float"))
+            ;pd_se!0                = "time"
+            ;pd_se!1                = "latitude"        ;--->rotulo lat
+            ;pd_se!2                = "longitude"       ;--->rotulo lon 
+            ;pd_se&latitude         = lat_w(:,0)            
+            ;pd_se&longitude        = lon_w(0,:)
+            ;pd_se&latitude@units   = "degrees_north"   ;--->und lat
+            ;pd_se&longitude@units  = "degrees_east"    ;--->und lon
+            ;pd_se2  = pd_se
+            pd_wrf!0                = "latitude"        ;--->rotulo lat
+            pd_wrf!1                = "longitude"       ;--->rotulo lon 
+            pd_wrf&latitude         = lat_w(:,0)            
+            pd_wrf&longitude        = lon_w(0,:)
+            pd_wrf&latitude@units   = "degrees_north"   ;--->und lat
+            pd_wrf&longitude@units  = "degrees_east"    ;--->und lon
+            pd_se   := new((/1,3/),float)
+            pd_se2   = pd_se
+            pd_wrf_p:= new((/1,3/),float)
+            pd_wrf_p2= pd_wrf_p
             if (i.eq.0) then
                 ;map1 = map
                 res2@tmYLLabelsOn   = True         ; turn off lat labels
@@ -253,12 +265,31 @@ begin
                             cond_2      = coord_y.le.max(lon_w(0,:)).and.coord_y.ge.min(lon_w(0,:))
                             if cond_1.and.cond_2 then
                                 ;print("paso")
-                                if all(ismissing(pd_se(:,{coord_x},{coord_y}))) then
-                                    pd_se(:,{coord_x},{coord_y}) = ppd_s
+                                ;if all(ismissing(pd_se(:,{coord_x},{coord_y}))) then
+                                ;    pd_se(:,{coord_x},{coord_y}) = ppd_s
+                                ;else
+                                ;    pd_se3 := pd_se2
+                                ;    pd_se3(:,{coord_x},{coord_y}) = ppd_s
+                                ;    pd_se  := array_append_record(pd_se,pd_se3,0)
+                                ;end if
+                                if all(ismissing(pd_se)) then
+                                    pd_se(0,0)      = ppd_s
+                                    pd_se(0,1)      = coord_x
+                                    pd_se(0,2)      = coord_y
+                                    pd_wrf_p(0,0)   = (/pd_wrf({coord_x},{coord_y})/)
+                                    pd_wrf_p(0,1)   = coord_x
+                                    pd_wrf_p(0,2)   = coord_y
                                 else
-                                    pd_se3 := pd_se2
-                                    pd_se3(:,{coord_x},{coord_y}) = ppd_s
+                                    pd_se3         := pd_se2
+                                    pd_se3(0,0)     = ppd_s
+                                    pd_se3(0,1)     = coord_x
+                                    pd_se3(0,2)     = coord_y
                                     pd_se  := array_append_record(pd_se,pd_se3,0)
+                                    pd_wrf_p3      := pd_wrf_p2
+                                    pd_wrf_p3(0,0)  = (/pd_wrf({coord_x},{coord_y})/)
+                                    pd_wrf_p3(0,1)  = coord_x
+                                    pd_wrf_p3(0,2)  = coord_y
+                                    pd_wrf_p  := array_append_record(pd_wrf_p,pd_wrf_p3,0)
                                 end if
                             end if
                             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -298,47 +329,100 @@ begin
             ;printVarSummary(pd_wrf)
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;-----procesando la anomalia
-            pd_se_p = dim_avg_n(pd_se,0)
-            pd_se_p!0                = "latitude"        ;--->rotulo lat
-            pd_se_p!1                = "longitude"       ;--->rotulo lon 
-            pd_se_p&latitude         = lat_w(:,0)            
-            pd_se_p&longitude        = lon_w(0,:)
-            pd_se_p&latitude@units   = "degrees_north"   ;--->und lat
-            pd_se_p&longitude@units  = "degrees_east"    ;--->und lon
-            anom := pd_wrf-pd_se_p
-            anom := where(ismissing(anom),min(anom),anom)
+            pd_se(:,1) = 0
+            pd_se(:,2) = 0
+            anom   := pd_wrf_p-pd_se
+            ;anom2  := anom
+            res3       := res
+            res3@tmXBLabelsOn = True
+            pmres2                   = True
+            pmres2@gsMarkerSizeF     = 0.015       ;-- set size of marker
+            pmres2@gsLineThicknessF  = 3.          ;-- marker line thickness
+            pmres2@gsMarkerIndex     = 1
+            if (i.eq.0) then
+                ;map1 = map
+                res3@tmYLLabelsOn   = True         ; turn off lat labels
+                plot2(i)   = gsn_csm_map(wks,res3)
+                map4        = plot2(i)
+            else if (i.eq.1) then
+                plot2(i)   = gsn_csm_map(wks,res3)
+                map5        = plot2(i)
+            else
+                res3@tiYAxisString       = "ANOM"
+                res3@tiYAxisFontHeightF  = 0.04
+                ;res2@tiYAxisFontColor    = "navy"
+                res3@tiYAxisSide         = "right"
+                res3@tiYAxisAngleF       = 270
+                plot2(i)   = gsn_csm_map(wks,res3)
+                map6        = plot2(i)
+            end if
+            end if
+            do m=0,dimsizes(anom2(:,0))-1
+                anom2 := anom(m,0) 
+                do n=0,nlevels_color2-1
+                    if (n.eq.0) then
+                        anom2 = where(anom2.le.levels2(0),levels2(0),anom2) 
+                    if (n.eq.nlevels_color2-1) then
+                        anom2 = where(anom2.ge.max(levels2),max(levels2),anom2) 
+                    else 
+                        cond5 = anom2.le.levels2(n+1)
+                        cond6 = anom2.ge.levels2(n)
+                        anom2 = where(cond5.and.cond6,levels2(n),anom)
+                    end if
+                    end if
+                end do
+                color_id               := get1Dindex(levels2,anom2)
+                pmres2@gsMarkerColor   := colors2(color_id,:) 
+                if (i.eq.0) then
+                    map4@$str$  = gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
+                else if (i.eq.1) then
+                    map5@$str$  = gsn_add_polymarker(wks,map5,anom(m,2),anom(m,1),pmres2)
+                else
+                    map6@$str$  = gsn_add_polymarker(wks,map6,anom(m,2),anom(m,1),pmres2)
+                end if
+                end if
+            end do
+            ;pd_se_p = dim_avg_n(pd_se,0)
+            ;pd_se_p!0                = "latitude"        ;--->rotulo lat
+            ;pd_se_p!1                = "longitude"       ;--->rotulo lon 
+            ;pd_se_p&latitude         = lat_w(:,0)            
+            ;pd_se_p&longitude        = lon_w(0,:)
+            ;pd_se_p&latitude@units   = "degrees_north"   ;--->und lat
+            ;pd_se_p&longitude@units  = "degrees_east"    ;--->und lon
+            ;anom := pd_wrf-pd_se_p
+            ;anom := where(ismissing(anom),min(anom),anom)
             ;anom@lat2d := lat_w
             ;anom@lon2d := lon_w
-            anom!0                = "latitude"        ;--->rotulo lat
-            anom!1                = "longitude"       ;--->rotulo lon 
-            anom&latitude         = lat_w(:,0)            
-            anom&longitude        = lon_w(0,:)
-            anom&latitude@units   = "degrees_north"   ;--->und lat
-            anom&longitude@units  = "degrees_east"    ;--->und lon
+            ;anom!0                = "latitude"        ;--->rotulo lat
+            ;anom!1                = "longitude"       ;--->rotulo lon 
+            ;anom&latitude         = lat_w(:,0)            
+            ;anom&longitude        = lon_w(0,:)
+            ;anom&latitude@units   = "degrees_north"   ;--->und lat
+            ;anom&longitude@units  = "degrees_east"    ;--->und lon
             ;printVarSummary(pd_se_p)
             ;printVarSummary(anom)
             ;print(max(anom)+"//"+min(anom))
-            res3                 := res
-            res3@tmXBLabelsOn     = True
-            res3@cnLevelSelectionMode= "ManualLevels"   ; manual set levels
-            res3@cnFillPalette   := color_paleta2
-            res3@cnMinLevelValF   = -20;-5.			; set the minimum contour level
-            res3@cnMaxLevelValF   = 20;5.			; set the maximum contour level
-            res3@cnLevelSpacingF  = 2;0.5
+            ;res3                 := res
+            ;res3@tmXBLabelsOn     = True
+            ;res3@cnLevelSelectionMode= "ManualLevels"   ; manual set levels
+            ;res3@cnFillPalette   := color_paleta2
+            ;res3@cnMinLevelValF   = -20;-5.			; set the minimum contour level
+            ;res3@cnMaxLevelValF   = 20;5.			; set the maximum contour level
+            ;res3@cnLevelSpacingF  = 2;0.5
             ;res3@cnLevels      := levels2
-            if (i.eq.0) then
-                delete([/res3@tiYAxisString,res3@tiYAxisFontHeightF,\
-                res3@tiYAxisSide,res3@tiYAxisAngleF/])
-                res3@tmYLLabelsOn        = True         ; turn off lat labels
-            else if (i.eq.2) then
-                res3@tiYAxisString       = "ANOM"
-                res3@tiYAxisFontHeightF  = 0.04
-                ;res@tiYAxisFontColor    = "navy"
-                res3@tiYAxisSide         = "right"
-                res3@tiYAxisAngleF       = 270
-            end if
-            end if
-            plot2(i) = gsn_csm_contour_map(wks,anom,res3)
+            ;if (i.eq.0) then
+            ;    delete([/res3@tiYAxisString,res3@tiYAxisFontHeightF,\
+            ;    res3@tiYAxisSide,res3@tiYAxisAngleF/])
+            ;    res3@tmYLLabelsOn        = True         ; turn off lat labels
+            ;else if (i.eq.2) then
+            ;    res3@tiYAxisString       = "ANOM"
+            ;    res3@tiYAxisFontHeightF  = 0.04
+            ;    ;res@tiYAxisFontColor    = "navy"
+            ;    res3@tiYAxisSide         = "right"
+            ;    res3@tiYAxisAngleF       = 270
+            ;end if
+            ;end if
+            ;plot2(i) = gsn_csm_contour_map(wks,anom,res3)
         end do
         ;delete(res@tiYAxisString)
         ;delete(res@tiYAxisFontHeightF)
