@@ -293,9 +293,9 @@ begin
                     end if
                 end if
             end do
-            print(max(pd_se)+"//"+min(pd_se))
-            printVarSummary(pd_se)
-            printVarSummary(pd_wrf)
+            ;print(max(pd_se)+"//"+min(pd_se))
+            ;printVarSummary(pd_se)
+            ;printVarSummary(pd_wrf)
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;-----procesando la anomalia
             pd_se_p = dim_avg_n(pd_se,0)
@@ -305,7 +305,8 @@ begin
             pd_se_p&longitude        = lon_w(0,:)
             pd_se_p&latitude@units   = "degrees_north"   ;--->und lat
             pd_se_p&longitude@units  = "degrees_east"    ;--->und lon
-            anom  = pd_wrf-pd_se_p
+            anom := pd_wrf-pd_se_p
+            anom := where(ismissing(anom),min(anom),anom)
             ;anom@lat2d := lat_w
             ;anom@lon2d := lon_w
             anom!0                = "latitude"        ;--->rotulo lat
@@ -314,9 +315,9 @@ begin
             anom&longitude        = lon_w(0,:)
             anom&latitude@units   = "degrees_north"   ;--->und lat
             anom&longitude@units  = "degrees_east"    ;--->und lon
-            printVarSummary(pd_se_p)
-            printVarSummary(anom)
-            print(max(anom)+"//"+min(anom))
+            ;printVarSummary(pd_se_p)
+            ;printVarSummary(anom)
+            ;print(max(anom)+"//"+min(anom))
             res3                 := res
             res3@tmXBLabelsOn     = True
             res3@cnLevelSelectionMode= "ManualLevels"   ; manual set levels
