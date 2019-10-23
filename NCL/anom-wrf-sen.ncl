@@ -132,8 +132,8 @@ begin
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----Extraendo datos wrf
         dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
-        ;f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
-        f_wrf  := addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
+        f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
+        ;f_wrf  := addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
         lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
         ;lat_w  := lat_w(:,0)
         lon_w  := wrf_user_getvar(f_wrf,"XLONG",0)
@@ -208,10 +208,10 @@ begin
             if (i.eq.0) then
                 ;map1 = map
                 res2@tmYLLabelsOn   = True         ; turn off lat labels
-                plot(i+6)   = gsn_csm_map(wks,res2)
+                plot(i+3)   = gsn_csm_map(wks,res2)
                 map1        = plot(i+3)
             else if (i.eq.1) then
-                plot(i+6)   = gsn_csm_map(wks,res2)
+                plot(i+3)   = gsn_csm_map(wks,res2)
                 map2        = plot(i+3)
             else
                 res2@tiYAxisString       = "SENAMHI"
@@ -219,7 +219,7 @@ begin
                 ;res2@tiYAxisFontColor    = "navy"
                 res2@tiYAxisSide         = "right"
                 res2@tiYAxisAngleF       = 270
-                plot(i+6)   = gsn_csm_map(wks,res2)
+                plot(i+3)   = gsn_csm_map(wks,res2)
                 map3        = plot(i+3)
             end if
             end if
