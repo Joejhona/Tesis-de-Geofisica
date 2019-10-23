@@ -295,6 +295,7 @@ begin
             end do
             print(max(pd_se)+"//"+min(pd_se))
             printVarSummary(pd_se)
+            printVarSummary(pd_wrf)
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;-----procesando la anomalia
             pd_se_p = dim_avg_n(pd_se,0)
