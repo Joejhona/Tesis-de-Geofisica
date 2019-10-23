@@ -361,13 +361,25 @@ begin
                 anom2 := anom(m,0) 
                 do n=0,nlevels_color2-1
                     if (n.eq.0) then
-                        anom2 = where(anom2.le.levels2(0),levels2(0),anom2) 
+                        ;anom2 = where(anom2.le.levels2(0),levels2(0),anom2n=14) 
+                        if anom2.le.levels2(0) then
+                            color_id               := get1Dindex(levels2,levels2(0))
+                            pmres2@gsMarkerColor   := colors2(color_id,:) 
+                        end if
                     if (n.eq.nlevels_color2-1) then
-                        anom2 = where(anom2.ge.max(levels2),max(levels2),anom2) 
+                        ;anom2 = where(anom2.ge.max(levels2),max(levels2),anom2) 
+                        if anom2.ge.max(levels2) then
+                            color_id               := get1Dindex(levels2,max(levels2))
+                            pmres2@gsMarkerColor   := colors2(color_id,:) 
+                        end if
                     else 
                         cond5 = anom2.le.levels2(n+1)
                         cond6 = anom2.ge.levels2(n)
-                        anom2 = where(cond5.and.cond6,levels2(n),anom2)
+                        ;anom2 = where(cond5.and.cond6,levels2(n),anom2)
+                        if cond5.and.cond6 then
+                            color_id               := get1Dindex(levels2,levels2(n))
+                            pmres2@gsMarkerColor   := colors2(color_id,:)       
+                        end if                     
                     end if
                     end if
                 end do
