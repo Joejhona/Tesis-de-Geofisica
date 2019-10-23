@@ -316,13 +316,14 @@ begin
             anom&longitude@units  = "degrees_east"    ;--->und lon
             printVarSummary(pd_se_p)
             printVarSummary(anom)
+            print(max(anom)+"//"+min(anom))
             res3                 := res
             res3@tmXBLabelsOn     = True
-            ;res3@cnLevelSelectionMode= "ManualLevels"   ; manual set levels
+            res3@cnLevelSelectionMode= "ManualLevels"   ; manual set levels
             res3@cnFillPalette   := color_paleta2
-            ;res3@cnMinLevelValF   = -20;-5.			; set the minimum contour level
-            ;res3@cnMaxLevelValF   = 20;5.			; set the maximum contour level
-            ;res3@cnLevelSpacingF  = 2;0.5
+            res3@cnMinLevelValF   = -20;-5.			; set the minimum contour level
+            res3@cnMaxLevelValF   = 20;5.			; set the maximum contour level
+            res3@cnLevelSpacingF  = 2;0.5
             ;res3@cnLevels      := levels2
             if (i.eq.0) then
                 delete([/res3@tiYAxisString,res3@tiYAxisFontHeightF,\
