@@ -43,11 +43,12 @@ colors        = span_color_rgba(color_paleta,nlevels_color+1)
 levels2 = (/-1.,-0.5,-0.25,-0.15,\
         -0.1,-0.05,0,0.05,0.1,\
         0.15,0.25,0.5,1./) 
-levels2 = (/-5.,-0.5,-0.25,-0.15,\
-        -0.1,-0.05,0,0.05,0.1,\
-        0.15,0.25,0.5,1./) 
+;levels2 = (/-5.,-0.5,-0.25,-0.15,\
+;        -0.1,-0.05,0,0.05,0.1,\
+;        0.15,0.25,0.5,1./) 
 ;color_paleta2 = "precip_diff_12lev";--> paleta 12 colores
-color_paleta2 = "WhBlReWh"
+;color_paleta2 = "WhBlReWh"
+color_paleta2 = "ViBlGrWhYeOrRe"
 nlevels_color2= dimsizes(levels2) ;--> Cantidad de colores 
 colors2       = span_color_rgba(color_paleta2,nlevels_color2+1)
 
@@ -233,9 +234,9 @@ begin
             res3@tmXBLabelsOn     = True
             res3@cnLevelSelectionMode= "ManualLevels"   ; manual set levels
             res3@cnFillPalette   := color_paleta2
-            res3@cnMinLevelValF   = -5.			; set the minimum contour level
-            res3@cnMaxLevelValF   = 5.			; set the maximum contour level
-            res3@cnLevelSpacingF  = 0.25
+            res3@cnMinLevelValF   = -20.			; set the minimum contour level
+            res3@cnMaxLevelValF   = 20.			; set the maximum contour level
+            res3@cnLevelSpacingF  = 0.5
             ;res3@cnLevels      := levels2
             if (i.eq.0) then
                 delete([/res3@tiYAxisString,res3@tiYAxisFontHeightF,\
