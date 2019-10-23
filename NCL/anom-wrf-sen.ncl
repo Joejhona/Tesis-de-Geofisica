@@ -71,7 +71,8 @@ begin
         "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
-    do l=0,dimsizes(periodos)-1
+    ;do l=0,dimsizes(periodos)-1
+    do l=0,1
         periodo = periodos(l)
         year    = stringtoint(str_get_cols(periodo,0,3))
         mes     = stringtoint(str_get_cols(periodo,5,6))
@@ -242,7 +243,7 @@ begin
                         ppd_s  := where(ppd_s.ge.200,ppd_s@_FillValue,ppd_s)
                         ppd_s  := dim_sum(ppd_s)
                         if (.not.all(ismissing(ppd_s))) then
-                            print("lluvia anterior "+tostring(ppd_s))
+                            ;print("lluvia anterior "+tostring(ppd_s))
                             str        := unique_string("poly")
                             coord_x    := tofloat(fc_sen(j,1)) ;--> lat
                             coord_y    := tofloat(fc_sen(j,2)) ;--> lon
@@ -313,9 +314,9 @@ begin
             res3@tmXBLabelsOn     = True
             res3@cnLevelSelectionMode= "ManualLevels"   ; manual set levels
             res3@cnFillPalette   := color_paleta2
-            res3@cnMinLevelValF   = -5.			; set the minimum contour level
-            res3@cnMaxLevelValF   = 5.			; set the maximum contour level
-            res3@cnLevelSpacingF  = 0.5
+            res3@cnMinLevelValF   = -20;-5.			; set the minimum contour level
+            res3@cnMaxLevelValF   = 20;5.			; set the maximum contour level
+            res3@cnLevelSpacingF  = 2;0.5
             ;res3@cnLevels      := levels2
             if (i.eq.0) then
                 delete([/res3@tiYAxisString,res3@tiYAxisFontHeightF,\
