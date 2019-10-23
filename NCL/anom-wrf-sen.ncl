@@ -162,7 +162,7 @@ begin
             pd_wrf@lat2d := lat_w
             pd_wrf@lon2d := lon_w  
             ;print(it_wrf+"==="+id_tiw)
-            printVarSummary(pd_wrf)
+            ;printVarSummary(pd_wrf)
             res1                   := res
             res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
             res1@gsnCenterStringFontHeightF = 0.04
@@ -277,7 +277,7 @@ begin
                                 end if
                                 end if
                             end do
-                            print("lluvia nueva "+tostring(ppd_s))
+                            ;print("lluvia nueva "+tostring(ppd_s))
                             color_id               := get1Dindex(levels,ppd_s)
                             pmres@gsMarkerColor    := colors(color_id,:) 
                             ;map@$str$   = gsn_add_polymarker(wks,map,coord_y,coord_x,pmres)
@@ -293,6 +293,8 @@ begin
                     end if
                 end if
             end do
+            print(max(pd_se)+"//"+min(pd_se))
+            printVarSummary(pd_se)
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;-----procesando la anomalia
             pd_se_p = dim_avg_n(pd_se,0)
@@ -311,6 +313,7 @@ begin
             ;anom&longitude        = lon_w(0,:)
             ;anom&latitude@units   = "degrees_north"   ;--->und lat
             ;anom&longitude@units  = "degrees_east"    ;--->und lon
+            printVarSummary(pd_se_p)
             printVarSummary(anom)
             res3                 := res
             res3@tmXBLabelsOn     = True
