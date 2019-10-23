@@ -245,7 +245,7 @@ begin
   plots1_res_tmp = plots1_res
   plots2_res_tmp = plots2_res
   plots1_res_tmp@gsnPanelLabelBar = True
-  plots2_res_tmp@gsnPanelLabelBar = True
+  ;plots2_res_tmp@gsnPanelLabelBar = True
 
   if(orientation.eq."vertical") then
     plots1_res_tmp@gsnFrame          = False
