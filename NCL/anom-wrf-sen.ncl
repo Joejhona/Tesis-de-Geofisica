@@ -334,6 +334,7 @@ begin
             anom   := pd_wrf_p-pd_se
             ;anom2  := anom
             res3       := res
+            res3@mpFillOn            = False
             res3@tmXBLabelsOn = True
             pmres2                   = True
             pmres2@gsMarkerSizeF     = 0.015       ;-- set size of marker
@@ -384,8 +385,8 @@ begin
                     end if
                 end do
                 print(anom2)
-                color_id               := get1Dindex(levels2,anom2)
-                pmres2@gsMarkerColor   := colors2(color_id,:) 
+                ;color_id               := get1Dindex(levels2,anom2)
+                ;pmres2@gsMarkerColor   := colors2(color_id,:) 
                 if (i.eq.0) then
                     map4@$str$  = gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
                 else if (i.eq.1) then
