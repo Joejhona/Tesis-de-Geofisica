@@ -357,7 +357,7 @@ begin
                 map6        = plot2(i)
             end if
             end if
-            do m=0,dimsizes(anom2(:,0))-1
+            do m=0,dimsizes(anom(:,0))-1
                 anom2 := anom(m,0) 
                 do n=0,nlevels_color2-1
                     if (n.eq.0) then
@@ -367,7 +367,7 @@ begin
                     else 
                         cond5 = anom2.le.levels2(n+1)
                         cond6 = anom2.ge.levels2(n)
-                        anom2 = where(cond5.and.cond6,levels2(n),anom)
+                        anom2 = where(cond5.and.cond6,levels2(n),anom2)
                     end if
                     end if
                 end do
