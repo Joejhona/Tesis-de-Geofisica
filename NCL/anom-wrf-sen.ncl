@@ -71,8 +71,10 @@ begin
         "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
-    ;do l=0,dimsizes(periodos)-1
-    do l=0,1
+    horas = (/"24 hrs","48 hrs","72 hrs"/)
+    dom = (/"-d01","_d01_"/)
+    ;dom = (/"-d02","_d02_"/)
+    do l=0,1;dimsizes(periodos)-1
         periodo = periodos(l)
         year    = stringtoint(str_get_cols(periodo,0,3))
         mes     = stringtoint(str_get_cols(periodo,5,6))
@@ -84,7 +86,7 @@ begin
         dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
         type@wkWidth     = 7000
         type@wkHeight    = 8000             
-        wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-"+periodo+"-d02")   
+        wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-"+periodo+dom(0))   
         plot    = new(9,graphic)
         ;plot2   = new(3,graphic)
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -133,7 +135,7 @@ begin
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----Extraendo datos wrf
         dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
-        f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
+        f_wrf   = addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
         ;f_wrf  := addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
         lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
         ;lat_w  := lat_w(:,0)
@@ -164,7 +166,7 @@ begin
             ;print(it_wrf+"==="+id_tiw)
             ;printVarSummary(pd_wrf)
             res1                   := res
-            res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
+            res1@gsnCenterString   := horas(i);cd_string(it_wrf,"%D-%N-%Y") 
             res1@gsnCenterStringFontHeightF = 0.04
             ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
             if (i.eq.0) then
@@ -172,7 +174,7 @@ begin
                 res1@tiYAxisSide,res1@tiYAxisAngleF/])                
                 res1@tmYLLabelsOn        = True         ; turn off lat labels
             else if (i.eq.2) then
-                res1@tiYAxisString       = "WRF-AWR-d02"
+                res1@tiYAxisString       = "WRF-AWR"+dom(0)
                 res1@tiYAxisFontHeightF  = 0.04
                 ;res@tiYAxisFontColor    = "navy"
                 res1@tiYAxisSide         = "right"
@@ -387,8 +389,10 @@ begin
                 end do
                 color_id               := get1Dindex(levels2,anom2)
                 if ismissing(color_id) then
+                    print("lluvia antes---->> "+anom2)
                     anom2       := where(anom2.gt.levels2(0),levels2(0),anom2)
                     color_id    := get1Dindex(levels2,anom2)
+                    print("lluvia despues---->> "+anom2)
                 end if
                 ;print("lluvia despues---->> "+anom2)
                 pmres2@gsMarkerColor   := colors2(color_id,:) 
@@ -418,7 +422,8 @@ begin
         resP@lbBoxEndCapStyle   = "TriangleHighEnd"
         resP@lbTitleFontHeightF = 0.02
         ;resP@pmLabelBarWidthF   = 0.9
-        resP@pmLabelBarHeightF   = 0.9
+        resP@pmLabelBarHeightF  = 0.5
+        resP@pmLegendSide       = "Top"
         resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
         resP@gsnPanelRowSpec    = True
         agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
