@@ -371,6 +371,7 @@ begin
                             anom2 := where(anom2.gt.levels2(0),levels2(0),anom2)       
                         ;-45.lt.-50
                         ;-45.ge.-50
+                        end if
                     else 
                         cond_5:= anom2.le.levels2(n+1)   ;---> si ppd =< val_2
                         ;print(anom2+"//"+levels2(n+1)+"///"+cond_5)
