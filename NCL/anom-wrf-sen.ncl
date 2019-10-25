@@ -18,10 +18,10 @@ begin
 
 ; Set some labelbar resources.
   lbres                    = True
-  lbres@vpXF               = 0.10         ; Position labelbar at         
+  lbres@vpXF               = 0.90         ; Position labelbar at         
   lbres@vpYF               = 0.16         ; right of frame
-  lbres@vpWidthF           = 0.70
-  lbres@vpHeightF          = 0.10
+  lbres@vpWidthF           = 0.20
+  lbres@vpHeightF          = 0.30
 
   if(mono_pattern) then
     lbres@lbMonoFillPattern  = True
@@ -472,6 +472,7 @@ begin
         resP@gsnFrame           = False
         ;resP@gsnDraw            = False
         resP@gsnPanelLabelBar   = True                ; add common colorbar
+        resP@lbLabelPosition    = "Top"
         resP@lbOrientation      = "Vertical"
         resP@vpHeightF          = 0.6
         resP@lbLabelFontHeightF = 0.01               ; make labels smaller
@@ -483,7 +484,7 @@ begin
         resP@lbTitleString      = "mm/dia"
         resP@lbBoxEndCapStyle   = "TriangleHighEnd"
         resP@lbTitleFontHeightF = 0.02
-        resP@lbLabelPosition    = "Top"
+        ;resP@lbLabelPosition    = "Top"
         ;resP@pmLabelBarWidthF   = 0.9
         resP@pmLabelBarHeightF  = 0.4
         ;resP@pmLabelBarSide     = "Top"
