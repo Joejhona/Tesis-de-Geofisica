@@ -1,55 +1,3 @@
-function labelbar(wks,plot)
-local colors3, levels3, labels, nboxes
-begin
-
-; Retrieve the contour levels and their associated colors.
-  getvalues plot
-    "cnLevels"          : levels3
-    "cnMonoFillPattern" : mono_pattern
-    "cnMonoFillColor"   : mono_color
-    "cnFillColors"      : colors3
-    "cnFillColor"       : color
-    "cnFillPatterns"    : patterns
-    "cnFillPattern"     : pattern
-  end getvalues
-
-  nboxes = dimsizes(colors3)
-  labels = ""+levels3    ; labels for the labelbar
-
-; Set some labelbar resources.
-  lbres                    = True
-  lbres@vpXF               = 0.90         ; Position labelbar at         
-  lbres@vpYF               = 0.86         ; right of frame
-  lbres@vpWidthF           = 0.10
-  lbres@vpHeightF          = 0.70
-
-  if(mono_pattern) then
-    lbres@lbMonoFillPattern  = True
-    lbres@lbFillPattern      = pattern
-  else
-    lbres@lbMonoFillPattern  = False
-    lbres@lbFillPatterns     = patterns
-  end if
-
-  if(mono_color) then
-    lbres@lbMonoFillColor  = True
-
-;---This may look better as black, rather than color used in plot.
-    lbres@lbFillColor      = "black"     ; color
-  else
-    lbres@lbMonoFillColor  = False
-    lbres@lbFillColors     = colors3
-  end if
-
-  lbres@lbPerimOn          = False            ; Turn off perimeter.
-  lbres@lbLabelFontHeightF = 0.013            ; Label font height
-  lbres@lbLabelAlignment   = "InteriorEdges"
-
-  lbid = gsn_create_labelbar(wks,nboxes,labels,lbres)
-
-  return(lbid)
-end
-
 ;============== %%%% SHAPES %%%% ==============
 dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
 shp1    = "shapes/cuencas/VertientePacificoCentroNorte.shp" 
@@ -458,31 +406,20 @@ begin
                 end if
             end do
         end do
-        plot(9)
-        pcpres                    = res
-        ;pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
-        pcpres@cnFillPalette     := color_paleta2
-        pcpres@cnLevels          := levels2
-        ;pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
-        ;pcpres@lbLabelPosition    = "Bottom"
-        ;pcpres@pmLabelBarHeightF  = 0.4
-        shadeplots             := gsn_csm_contour(wks,pd_wrf,res1)
-        plot(9)                := gsn_csm_contour(wks,pd_wrf,pcpres)
-
         resP                    = True                ; modify the panel plot
         resP@gsnMaximize        = True
-        resP@gsnFrame           = False
+        ;resP@gsnFrame           = False
         ;resP@gsnDraw            = False
         resP@gsnPanelLabelBar   = True                ; add common colorbar
-        resP@gsnPanelLabelBarScalePlotIndex = 9
+        ;resP@gsnPanelLabelBarScalePlotIndex = 9
         ;resP@lbLabelPosition    = "Top"
-        ;resP@lbOrientation      = "Vertical"
+        resP@lbOrientation      = "Vertical"
         resP@vpHeightF          = 0.6
         resP@lbLabelFontHeightF = 0.01               ; make labels smaller
         ;resP@gsnPanelLeft       = 0.04
         ;resP@gsnPanelBottom     = 0.08
         resP@gsnPanelSave       = True
-        resP@gsnPanelRight      = 0.90
+        ;resP@gsnPanelRight      = 0.90
         resP@lbTitleOn          = True                  ; turn on title
         ;resP@lbTitlePosition    = "Bottom"
         resP@lbTitleString      = "mm/dia"
@@ -492,14 +429,14 @@ begin
         ;resP@pmLabelBarWidthF   = 0.9
         resP@pmLabelBarHeightF  = 0.4
         ;resP@pmLabelBarSide     = "Top"
-        resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
+        resP@gsnPanelMainString = "Analisis de lluvia WRF-SENAMHI "+periodo
         resP@gsnPanelRowSpec    = True
         agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
         gsn_panel(wks,plot,(/3,3,3/),resP)
 
-        lbid := labelbar(wks,shadeplots)
-        draw(lbid)
-        frame(wks)
+        ;lbid := labelbar(wks,shadeplots)
+        ;draw(lbid)
+        ;frame(wks)
         ;delete([draw,frame])
     end do
 end
