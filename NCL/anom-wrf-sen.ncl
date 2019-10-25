@@ -1,3 +1,55 @@
+function labelbar(wks,plot)
+local colors3, levels3, labels, nboxes
+begin
+
+; Retrieve the contour levels and their associated colors.
+  getvalues plot
+    "cnLevels"          : levels3
+    "cnMonoFillPattern" : mono_pattern
+    "cnMonoFillColor"   : mono_color
+    "cnFillColors"      : colors3
+    "cnFillColor"       : color
+    "cnFillPatterns"    : patterns
+    "cnFillPattern"     : pattern
+  end getvalues
+
+  nboxes = dimsizes(colors3)
+  labels = ""+levels3    ; labels for the labelbar
+
+; Set some labelbar resources.
+  lbres                    = True
+  lbres@vpXF               = 0.90         ; Position labelbar at         
+  lbres@vpYF               = 0.86         ; right of frame
+  lbres@vpWidthF           = 0.10
+  lbres@vpHeightF          = 0.70
+
+  if(mono_pattern) then
+    lbres@lbMonoFillPattern  = True
+    lbres@lbFillPattern      = pattern
+  else
+    lbres@lbMonoFillPattern  = False
+    lbres@lbFillPatterns     = patterns
+  end if
+
+  if(mono_color) then
+    lbres@lbMonoFillColor  = True
+
+;---This may look better as black, rather than color used in plot.
+    lbres@lbFillColor      = "black"     ; color
+  else
+    lbres@lbMonoFillColor  = False
+    lbres@lbFillColors     = colors3
+  end if
+
+  lbres@lbPerimOn          = False            ; Turn off perimeter.
+  lbres@lbLabelFontHeightF = 0.013            ; Label font height
+  lbres@lbLabelAlignment   = "InteriorEdges"
+
+  lbid = gsn_create_labelbar(wks,nboxes,labels,lbres)
+
+  return(lbid)
+end
+
 ;============== %%%% SHAPES %%%% ==============
 dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
 shp1    = "shapes/cuencas/VertientePacificoCentroNorte.shp" 
@@ -406,6 +458,12 @@ begin
                 end if
             end do
         end do
+        pcpres                  = res
+        pcpres@lbOrientation    = "Vertical"   ; Rotate labelbar
+        res3@cnFillPalette     := color_paleta2
+        res3@cnLevels          := levels2
+        shadeplots             := gsn_csm_contour(wks,pd_wrf,pcpres)
+
         resP                    = True                ; modify the panel plot
         resP@gsnMaximize        = True
         resP@gsnFrame           = False
@@ -430,36 +488,9 @@ begin
         agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
         gsn_panel(wks,plot,(/3,3,3/),resP)
 
-
-
-        getvalues plot                      ; Get plot size for use in
-          "vpHeightF" : vph                 ; creating labelbar.
-          "vpWidthF"  : vpw
-        end getvalues
-
-        nboxes = nlevels_color2
-
-        lbres                    = True          ; labelbar only resources
-        lbres@lbAutoManage       = True          ; Necessary to control sizes
-        lbres@vpWidthF           = 0.4*vpw     ; labelbar width
-        lbres@vpHeightF          = 0.5*vph     ; labelbar height
-        lbres@lbBoxMajorExtentF  = 0.75          ; puts space between color boxes
-        lbres@lbFillColors       = span_color_indexes(color_paleta2,nlevels_color2); res@gsnXYBarChartColors ; labelbar colors
-        ;lbres@cnFillPalette      = color_paleta2
-        lbres@lbMonoFillPattern  = True          ; Solid fill pattern
-        lbres@lbLabelFontHeightF = 0.08          ; font height. default is small
-        lbres@lbLabelJust        = "CenterLeft"  ; left justify labels
-
-        lbid := gsn_create_labelbar(wks,nboxes,levels2,lbres)
-
-        amres                  = True
-        amres@amJust           = "TopRight"
-        amres@amParallelPosF   =  0.5
-        amres@amOrthogonalPosF = -0.5
-        annoid := gsn_add_annotation(plot,lbid,amres)
-
-        draw(plot)      ; When you draw plot, labelbar will also get drawn.
+        lbid := labelbar(wks,shadeplots)
+        draw(lbid)
         frame(wks)
-
+        ;delete([draw,frame])
     end do
 end
