@@ -459,7 +459,7 @@ begin
             end do
         end do
         pcpres                  = res
-        pcpres@lbOrientation    = "Vertical"   ; Rotate labelbar
+        pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
         res3@cnFillPalette     := color_paleta2
         res3@cnLevels          := levels2
         shadeplots             := gsn_csm_contour(wks,pd_wrf,pcpres)
