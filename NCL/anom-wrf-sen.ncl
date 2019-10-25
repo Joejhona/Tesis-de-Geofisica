@@ -357,6 +357,7 @@ begin
             end if
             end if
             do m=0,dimsizes(anom(:,0))-1
+                str1  := unique_string("poly1")
                 anom2 := anom(m,0) 
                 print("lluvia antes---->> "+anom2)
                 do n=0,nlevels_color2-1
@@ -392,11 +393,11 @@ begin
                 print("lluvia despues---->> "+anom2)
                 pmres2@gsMarkerColor   := colors2(color_id,:) 
                 if (i.eq.0) then
-                    map4@$str$ := gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
+                    map4@$str1$ := gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
                 else if (i.eq.1) then
-                    map5@$str$ := gsn_add_polymarker(wks,map5,anom(m,2),anom(m,1),pmres2)
+                    map5@$str1$ := gsn_add_polymarker(wks,map5,anom(m,2),anom(m,1),pmres2)
                 else
-                    map6@$str$ := gsn_add_polymarker(wks,map6,anom(m,2),anom(m,1),pmres2)
+                    map6@$str1$ := gsn_add_polymarker(wks,map6,anom(m,2),anom(m,1),pmres2)
                 end if
                 end if
             end do
