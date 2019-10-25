@@ -19,9 +19,9 @@ begin
 ; Set some labelbar resources.
   lbres                    = True
   lbres@vpXF               = 0.90         ; Position labelbar at         
-  lbres@vpYF               = 0.16         ; right of frame
-  lbres@vpWidthF           = 0.20
-  lbres@vpHeightF          = 0.30
+  lbres@vpYF               = 0.86         ; right of frame
+  lbres@vpWidthF           = 0.10
+  lbres@vpHeightF          = 0.70
 
   if(mono_pattern) then
     lbres@lbMonoFillPattern  = True
@@ -137,7 +137,7 @@ begin
         ;type    = "x11"
         dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
         type@wkWidth     = 7000
-        type@wkHeight    = 8000             
+        type@wkHeight    = 8500             
         wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-"+periodo+dom(0))   
         plot    = new(9,graphic)
         ;plot2   = new(3,graphic)
@@ -458,6 +458,7 @@ begin
                 end if
             end do
         end do
+        plot(9)
         pcpres                    = res
         ;pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
         pcpres@cnFillPalette     := color_paleta2
@@ -465,20 +466,23 @@ begin
         ;pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
         ;pcpres@lbLabelPosition    = "Bottom"
         ;pcpres@pmLabelBarHeightF  = 0.4
-        shadeplots             := gsn_csm_contour(wks,pd_wrf,pcpres)
+        shadeplots             := gsn_csm_contour(wks,pd_wrf,res1)
+        plot(9)                := gsn_csm_contour(wks,pd_wrf,pcpres)
 
         resP                    = True                ; modify the panel plot
         resP@gsnMaximize        = True
         resP@gsnFrame           = False
         ;resP@gsnDraw            = False
         resP@gsnPanelLabelBar   = True                ; add common colorbar
-        resP@lbLabelPosition    = "Top"
-        resP@lbOrientation      = "Vertical"
+        resP@gsnPanelLabelBarScalePlotIndex = 9
+        ;resP@lbLabelPosition    = "Top"
+        ;resP@lbOrientation      = "Vertical"
         resP@vpHeightF          = 0.6
         resP@lbLabelFontHeightF = 0.01               ; make labels smaller
         ;resP@gsnPanelLeft       = 0.04
-        resP@gsnPanelBottom     = 0.08
+        ;resP@gsnPanelBottom     = 0.08
         resP@gsnPanelSave       = True
+        resP@gsnPanelRight      = 0.90
         resP@lbTitleOn          = True                  ; turn on title
         ;resP@lbTitlePosition    = "Bottom"
         resP@lbTitleString      = "mm/dia"
