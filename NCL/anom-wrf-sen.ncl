@@ -1,5 +1,3 @@
-load "./panel_two_sets.ncl"
-
 ;============== %%%% SHAPES %%%% ==============
 dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
 shp1    = "shapes/cuencas/VertientePacificoCentroNorte.shp" 
@@ -87,8 +85,8 @@ begin
         type@wkWidth     = 7000
         type@wkHeight    = 8000             
         wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-"+periodo+"-d02")   
-        plot    = new(6,graphic)
-        plot2   = new(3,graphic)
+        plot    = new(9,graphic)
+        ;plot2   = new(3,graphic)
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;----- agregando detalles al mapa -----;
         res                     = True      ;--> activa los detalles
@@ -343,19 +341,19 @@ begin
             if (i.eq.0) then
                 ;map1 = map
                 res3@tmYLLabelsOn   = True         ; turn off lat labels
-                plot2(i)   = gsn_csm_map(wks,res3)
-                map4        = plot2(i)
+                plot(i+6)   = gsn_csm_map(wks,res3)
+                map4        = plot(i+6)
             else if (i.eq.1) then
-                plot2(i)   = gsn_csm_map(wks,res3)
-                map5        = plot2(i)
+                plot(i+6)   = gsn_csm_map(wks,res3)
+                map5        = plot(i+6)
             else
                 res3@tiYAxisString       = "ANOM"
                 res3@tiYAxisFontHeightF  = 0.04
                 ;res2@tiYAxisFontColor    = "navy"
                 res3@tiYAxisSide         = "right"
                 res3@tiYAxisAngleF       = 270
-                plot2(i)   = gsn_csm_map(wks,res3)
-                map6        = plot2(i)
+                plot(i+6)   = gsn_csm_map(wks,res3)
+                map6        = plot(i+6)
             end if
             end if
             do m=0,dimsizes(anom(:,0))-1
@@ -396,89 +394,27 @@ begin
                 end if
                 end if
             end do
-            ;pd_se_p = dim_avg_n(pd_se,0)
-            ;pd_se_p!0                = "latitude"        ;--->rotulo lat
-            ;pd_se_p!1                = "longitude"       ;--->rotulo lon 
-            ;pd_se_p&latitude         = lat_w(:,0)            
-            ;pd_se_p&longitude        = lon_w(0,:)
-            ;pd_se_p&latitude@units   = "degrees_north"   ;--->und lat
-            ;pd_se_p&longitude@units  = "degrees_east"    ;--->und lon
-            ;anom := pd_wrf-pd_se_p
-            ;anom := where(ismissing(anom),min(anom),anom)
-            ;anom@lat2d := lat_w
-            ;anom@lon2d := lon_w
-            ;anom!0                = "latitude"        ;--->rotulo lat
-            ;anom!1                = "longitude"       ;--->rotulo lon 
-            ;anom&latitude         = lat_w(:,0)            
-            ;anom&longitude        = lon_w(0,:)
-            ;anom&latitude@units   = "degrees_north"   ;--->und lat
-            ;anom&longitude@units  = "degrees_east"    ;--->und lon
-            ;printVarSummary(pd_se_p)
-            ;printVarSummary(anom)
-            ;print(max(anom)+"//"+min(anom))
-            ;res3                 := res
-            ;res3@tmXBLabelsOn     = True
-            ;res3@cnLevelSelectionMode= "ManualLevels"   ; manual set levels
-            ;res3@cnFillPalette   := color_paleta2
-            ;res3@cnMinLevelValF   = -20;-5.			; set the minimum contour level
-            ;res3@cnMaxLevelValF   = 20;5.			; set the maximum contour level
-            ;res3@cnLevelSpacingF  = 2;0.5
-            ;res3@cnLevels      := levels2
-            ;if (i.eq.0) then
-            ;    delete([/res3@tiYAxisString,res3@tiYAxisFontHeightF,\
-            ;    res3@tiYAxisSide,res3@tiYAxisAngleF/])
-            ;    res3@tmYLLabelsOn        = True         ; turn off lat labels
-            ;else if (i.eq.2) then
-            ;    res3@tiYAxisString       = "ANOM"
-            ;    res3@tiYAxisFontHeightF  = 0.04
-            ;    ;res@tiYAxisFontColor    = "navy"
-            ;    res3@tiYAxisSide         = "right"
-            ;    res3@tiYAxisAngleF       = 270
-            ;end if
-            ;end if
-            ;plot2(i) = gsn_csm_contour_map(wks,anom,res3)
         end do
-        ;delete(res@tiYAxisString)
-        ;delete(res@tiYAxisFontHeightF)
-        ;delete(res@tiYAxisSide)
-        ;delete(res@tiYAxisAngleF)
-        dims1 = (/2,3/)
-        dims2 = (/1,3/)
-        pres1 = True
-        ;resP                    = True                ; modify the panel plot
-        pres1@gsnMaximize        = True
-        pres1@gsnPanelLabelBar   = True                ; add common colorbar
-        pres1@lbOrientation      = "vertical"
-        pres1@vpHeightF          = 0.6
-        pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
-        pres1@gsnPanelLeft       = 0.04
-        pres1@gsnPanelBottom     = 0.08
-        pres1@gsnPanelSave       = True
-        pres1@lbTitleOn          = True                  ; turn on title
-        pres1@lbTitleString      = "mm/dia"
-        pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
-        pres1@lbTitleFontHeightF = 0.01
-        pres1@pmLabelBarHeightF   = 0.6
-        pres2 = True
-        pres2@gsnMaximize        = True
-        pres2@gsnPanelLabelBar   = True                ; add common colorbar
-        pres2@lbOrientation      = "vertical"
-        pres2@vpHeightF          = 0.6
-        pres2@lbLabelFontHeightF = 0.01               ; make labels smaller
-        pres2@gsnPanelLeft       = 0.04
-        pres2@gsnPanelBottom     = 0.08
-        pres2@gsnPanelSave       = True
-        ;pres2@lbTitleOn          = True                  ; turn on title
-        ;pres2@lbTitleString      = "mm/dia"
-        pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
-        pres2@lbTitleFontHeightF = 0.01
-        pres2@pmLabelBarHeightF   = 0.3
-        pres  = True
-        ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
-        ;pres2@lbLabelFontHeightF = 0.01
-        ;pres1@gsnPanelMainString = "Analisis de lluvia WRF - PISCO"
+        resP                    = True                ; modify the panel plot
+        resP@gsnMaximize        = True
+        ;resP@gsnFrame           = False
+        resP@gsnPanelLabelBar   = True                ; add common colorbar
+        resP@lbOrientation      = "vertical"
+        resP@vpHeightF          = 0.6
+        resP@lbLabelFontHeightF = 0.01               ; make labels smaller
+        resP@gsnPanelLeft       = 0.04
+        resP@gsnPanelBottom     = 0.08
+        resP@gsnPanelSave       = True
+        resP@lbTitleOn          = True                  ; turn on title
+        ;resP@lbTitlePosition    = "Bottom"
+        resP@lbTitleString      = "mm/dia"
+        resP@lbBoxEndCapStyle   = "TriangleHighEnd"
+        resP@lbTitleFontHeightF = 0.02
+        ;resP@pmLabelBarWidthF   = 0.9
+        resP@pmLabelBarHeightF   = 0.9
+        resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
+        resP@gsnPanelRowSpec    = True
         agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
-        agregando_shapefile2    = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
-        panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)
+        gsn_panel(wks,plot,(/3,3,3/),resP)
     end do
 end

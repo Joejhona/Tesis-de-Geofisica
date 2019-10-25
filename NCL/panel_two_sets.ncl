@@ -113,7 +113,7 @@ local tmp_pres, paneled_plots
 begin
   tmp_pres                  = True
   tmp_pres@lbOrientation    = orientation
-  ;tmp_pres@gsnPanelLabelBar = True
+  tmp_pres@gsnPanelLabelBar = True
   tmp_pres@gsnDraw          = False
   tmp_pres@gsnFrame         = False
   tmp_pres@gsnPanelTop      = pres@gsnPanelTop
@@ -244,8 +244,8 @@ begin
 ;---These are the individual resource lists for each panel
   plots1_res_tmp = plots1_res
   plots2_res_tmp = plots2_res
-  ;plots1_res_tmp@gsnPanelLabelBar = True
-  ;plots2_res_tmp@gsnPanelLabelBar = True
+  plots1_res_tmp@gsnPanelLabelBar = True
+  plots2_res_tmp@gsnPanelLabelBar = True
 
   if(orientation.eq."vertical") then
     plots1_res_tmp@gsnFrame          = False
