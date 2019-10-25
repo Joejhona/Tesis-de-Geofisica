@@ -365,10 +365,10 @@ begin
                         anom2 := where(anom2.ge.max(levels2),max(levels2),anom2)   
                     else if (n.eq.0) then
                         ;--> si: ppd < min -> ppd = min
-                        if anom2.ge.0 then
-                            anom2 := where(anom2.lt.levels2(0),levels2(0),anom2)       
-                        else
-                            anom2 := where(anom2.gt.levels2(0),levels2(0),anom2)       
+                        ;if anom2.ge.0 then
+                        anom2 := where(anom2.lt.levels2(0),levels2(0),anom2)       
+                        ;else
+                        ;anom2 := where(anom2.gt.levels2(0),levels2(0),anom2)       
                         ;-45.lt.-50
                         ;-45.ge.-50
                         end if
@@ -384,8 +384,12 @@ begin
                     end if
                     ;print(color_id)
                 end do
-                print("lluvia despues---->> "+anom2)
                 color_id               := get1Dindex(levels2,anom2)
+                if ismissing(color_id) then
+                    anom2       := where(anom2.gt.levels2(0),levels2(0),anom2)
+                    color_id    := get1Dindex(levels2,anom2)
+                end if
+                print("lluvia despues---->> "+anom2)
                 pmres2@gsMarkerColor   := colors2(color_id,:) 
                 if (i.eq.0) then
                     map4@$str$ := gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
