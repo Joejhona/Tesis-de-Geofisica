@@ -18,10 +18,10 @@ begin
 
 ; Set some labelbar resources.
   lbres                    = True
-  lbres@vpXF               = 0.90         ; Position labelbar at         
-  lbres@vpYF               = 0.86         ; right of frame
-  lbres@vpWidthF           = 0.10
-  lbres@vpHeightF          = 0.70
+  lbres@vpXF               = 0.10         ; Position labelbar at         
+  lbres@vpYF               = 0.16         ; right of frame
+  lbres@vpWidthF           = 0.70
+  lbres@vpHeightF          = 0.10
 
   if(mono_pattern) then
     lbres@lbMonoFillPattern  = True
@@ -463,8 +463,8 @@ begin
         pcpres@cnFillPalette     := color_paleta2
         pcpres@cnLevels          := levels2
         ;pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
-        pcpres@lbLabelPosition    = "Bottom"
-        pcpres@pmLabelBarHeightF  = 0.4
+        ;pcpres@lbLabelPosition    = "Bottom"
+        ;pcpres@pmLabelBarHeightF  = 0.4
         shadeplots             := gsn_csm_contour(wks,pd_wrf,pcpres)
 
         resP                    = True                ; modify the panel plot
@@ -475,7 +475,7 @@ begin
         resP@lbOrientation      = "Vertical"
         resP@vpHeightF          = 0.6
         resP@lbLabelFontHeightF = 0.01               ; make labels smaller
-        resP@gsnPanelLeft       = 0.04
+        ;resP@gsnPanelLeft       = 0.04
         resP@gsnPanelBottom     = 0.08
         resP@gsnPanelSave       = True
         resP@lbTitleOn          = True                  ; turn on title
