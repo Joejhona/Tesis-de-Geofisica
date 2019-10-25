@@ -358,42 +358,35 @@ begin
             end if
             do m=0,dimsizes(anom(:,0))-1
                 anom2 := anom(m,0) 
+                print("lluvia antes---->> "+anom2)
                 do n=0,nlevels_color2-1
-                    if (n.eq.0) then
-                        ;anom2 = where(anom2.le.levels2(0),levels2(0),anom2n=14) 
-                        if anom2.le.levels2(0) then
-                            color_id               := get1Dindex(levels2,levels2(0))
-                            pmres2@gsMarkerColor   := colors2(color_id,:) 
-                        end if
                     if (n.eq.nlevels_color2-1) then
-                        ;anom2 = where(anom2.ge.max(levels2),max(levels2),anom2) 
-                        if anom2.ge.max(levels2) then
-                            color_id               := get1Dindex(levels2,max(levels2))
-                            pmres2@gsMarkerColor   := colors2(color_id,:) 
-                        end if
+                        ;--> si: ppd >= max -> ppd = max
+                        anom2 := where(anom2.ge.max(levels2),max(levels2),anom2)   
+                    else if (n.eq.0) then
+                        ;--> si: ppd < min -> ppd = min
+                        anom2 := where(anom2.lt.levels2(0),levels2(0),anom2)       
                     else 
-                        cond5 = anom2.le.levels2(n+1)
-                        cond6 = anom2.ge.levels2(n)
-                        ;anom2 = where(cond5.and.cond6,levels2(n),anom2)
-                        if cond5.and.cond6 then
-                            color_id               := get1Dindex(levels2,levels2(n))
-                            pmres2@gsMarkerColor   := colors2(color_id,:)       
-                        end if                     
+                        cond_5:= anom2.le.levels2(n+1)   ;---> si ppd =< val_2
+                        cond_6:= anom2.gt.levels2(n)     ;---> si ppd > val_1
+                        ;--> si: val_1 < ppd =< val_2 -> ppd = val_2
+                        anom2 := where(cond_5.and.cond_6,levels2(n),anom2)
+                        ;ppd_s := where(ppd_s.ge.levels(m-1).and.ppd_s.lt.levels(m),ppd_s,levels(m))
                     end if
                     end if
                     print(color_id)
-                    if (i.eq.0) then
-                        map4@$str$ := gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
-                    else if (i.eq.1) then
-                        map5@$str$ := gsn_add_polymarker(wks,map5,anom(m,2),anom(m,1),pmres2)
-                    else
-                        map6@$str$ := gsn_add_polymarker(wks,map6,anom(m,2),anom(m,1),pmres2)
-                    end if
-                    end if
                 end do
-                ;print(anom2)
-                ;color_id               := get1Dindex(levels2,anom2)
-                ;pmres2@gsMarkerColor   := colors2(color_id,:) 
+                print("lluvia despues---->> "+anom2)
+                color_id               := get1Dindex(levels2,anom2)
+                pmres2@gsMarkerColor   := colors2(color_id,:) 
+                if (i.eq.0) then
+                    map4@$str$ := gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
+                else if (i.eq.1) then
+                    map5@$str$ := gsn_add_polymarker(wks,map5,anom(m,2),anom(m,1),pmres2)
+                else
+                    map6@$str$ := gsn_add_polymarker(wks,map6,anom(m,2),anom(m,1),pmres2)
+                end if
+                end if
             end do
         end do
         resP                    = True                ; modify the panel plot
