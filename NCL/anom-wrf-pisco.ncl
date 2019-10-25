@@ -242,9 +242,9 @@ begin
             ;res3@cnMaxLevelValF   = 20.			; set the maximum contour level
             ;res3@cnLevelSpacingF  = 0.5
             res3@cnLevels        := levels2
-            res3@vpOn             = False
-            res3@vpHeightF        = 0.5
-            res3@vpWidthF         = 0.5
+            ;res3@vpOn             = False
+            ;res3@vpHeightF        = 0.5
+            ;res3@vpWidthF         = 0.5
             if (i.eq.0) then
                 delete([/res3@tiYAxisString,res3@tiYAxisFontHeightF,\
                 res3@tiYAxisSide,res3@tiYAxisAngleF/])
@@ -297,6 +297,7 @@ begin
         pres2@pmLabelBarHeightF   = 0.3
 	    ;pres2@gsnPanelMainString = "Anomalia lluvia WRF - PISCO"
         pres  = True
+        pres@gsnPanelTop         = 0.95
         ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
         ;pres2@lbLabelFontHeightF = 0.01
     	agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
