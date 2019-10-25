@@ -460,8 +460,8 @@ begin
         end do
         pcpres                  = res
         pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
-        res3@cnFillPalette     := color_paleta2
-        res3@cnLevels          := levels2
+        pcpres@cnFillPalette     := color_paleta2
+        pcpres@cnLevels          := levels2
         shadeplots             := gsn_csm_contour(wks,pd_wrf,pcpres)
 
         resP                    = True                ; modify the panel plot
@@ -469,7 +469,7 @@ begin
         resP@gsnFrame           = False
         ;resP@gsnDraw            = False
         resP@gsnPanelLabelBar   = True                ; add common colorbar
-        resP@lbOrientation      = "vertical"
+        resP@lbOrientation      = "Vertical"
         resP@vpHeightF          = 0.6
         resP@lbLabelFontHeightF = 0.01               ; make labels smaller
         resP@gsnPanelLeft       = 0.04
@@ -482,7 +482,7 @@ begin
         resP@lbTitleFontHeightF = 0.02
         ;resP@pmLabelBarWidthF   = 0.9
         resP@pmLabelBarHeightF  = 0.5
-        resP@pmLabelBarSide     = "Top"
+        ;resP@pmLabelBarSide     = "Top"
         resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
         resP@gsnPanelRowSpec    = True
         agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
