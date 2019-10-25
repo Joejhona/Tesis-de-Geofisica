@@ -409,7 +409,7 @@ begin
         resP                    = True                ; modify the panel plot
         resP@gsnMaximize        = True
         resP@gsnFrame           = False
-        resP@gsnDraw            = False
+        ;resP@gsnDraw            = False
         resP@gsnPanelLabelBar   = True                ; add common colorbar
         resP@lbOrientation      = "vertical"
         resP@vpHeightF          = 0.6
