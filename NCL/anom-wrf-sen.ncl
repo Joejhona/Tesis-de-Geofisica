@@ -368,7 +368,9 @@ begin
                         anom2 := where(anom2.lt.levels2(0),levels2(0),anom2)       
                     else 
                         cond_5:= anom2.le.levels2(n+1)   ;---> si ppd =< val_2
+                        print(anom2+"//"+levels2(n+1)+"///"+cond_5)
                         cond_6:= anom2.gt.levels2(n)     ;---> si ppd > val_1
+                        print(anom2+"//"+levels2(n)+"///"+cond_6)
                         ;--> si: val_1 < ppd =< val_2 -> ppd = val_2
                         anom2 := where(cond_5.and.cond_6,levels2(n),anom2)
                         ;ppd_s := where(ppd_s.ge.levels(m-1).and.ppd_s.lt.levels(m),ppd_s,levels(m))
