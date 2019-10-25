@@ -374,7 +374,7 @@ begin
                         ;ppd_s := where(ppd_s.ge.levels(m-1).and.ppd_s.lt.levels(m),ppd_s,levels(m))
                     end if
                     end if
-                    print(color_id)
+                    ;print(color_id)
                 end do
                 print("lluvia despues---->> "+anom2)
                 color_id               := get1Dindex(levels2,anom2)
