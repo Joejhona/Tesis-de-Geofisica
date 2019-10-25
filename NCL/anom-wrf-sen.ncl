@@ -364,28 +364,12 @@ begin
                         if anom2.le.levels2(0) then
                             color_id               := get1Dindex(levels2,levels2(0))
                             pmres2@gsMarkerColor   := colors2(color_id,:) 
-                            if (i.eq.0) then
-                                map4@$str$ := gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
-                            else if (i.eq.1) then
-                                map5@$str$ := gsn_add_polymarker(wks,map5,anom(m,2),anom(m,1),pmres2)
-                            else
-                                map6@$str$ := gsn_add_polymarker(wks,map6,anom(m,2),anom(m,1),pmres2)
-                            end if
-                            end if
                         end if
                     if (n.eq.nlevels_color2-1) then
                         ;anom2 = where(anom2.ge.max(levels2),max(levels2),anom2) 
                         if anom2.ge.max(levels2) then
                             color_id               := get1Dindex(levels2,max(levels2))
                             pmres2@gsMarkerColor   := colors2(color_id,:) 
-                            if (i.eq.0) then
-                                map4@$str$ := gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
-                            else if (i.eq.1) then
-                                map5@$str$ := gsn_add_polymarker(wks,map5,anom(m,2),anom(m,1),pmres2)
-                            else
-                                map6@$str$ := gsn_add_polymarker(wks,map6,anom(m,2),anom(m,1),pmres2)
-                            end if
-                            end if
                         end if
                     else 
                         cond5 = anom2.le.levels2(n+1)
@@ -394,15 +378,16 @@ begin
                         if cond5.and.cond6 then
                             color_id               := get1Dindex(levels2,levels2(n))
                             pmres2@gsMarkerColor   := colors2(color_id,:)       
-                            if (i.eq.0) then
-                                map4@$str$ := gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
-                            else if (i.eq.1) then
-                                map5@$str$ := gsn_add_polymarker(wks,map5,anom(m,2),anom(m,1),pmres2)
-                            else
-                                map6@$str$ := gsn_add_polymarker(wks,map6,anom(m,2),anom(m,1),pmres2)
-                            end if
-                            end if
                         end if                     
+                    end if
+                    end if
+                    print(color_id)
+                    if (i.eq.0) then
+                        map4@$str$ := gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
+                    else if (i.eq.1) then
+                        map5@$str$ := gsn_add_polymarker(wks,map5,anom(m,2),anom(m,1),pmres2)
+                    else
+                        map6@$str$ := gsn_add_polymarker(wks,map6,anom(m,2),anom(m,1),pmres2)
                     end if
                     end if
                 end do
