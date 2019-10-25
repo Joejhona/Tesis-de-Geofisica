@@ -331,7 +331,7 @@ begin
             pd_se(:,2) = 0
             anom   := pd_wrf_p-pd_se
             ;anom2  := anom
-            res3       := res
+            res3       = res
             ;res3@mpFillOn := False
             res3@tmXBLabelsOn = True
             pmres2                   = True
