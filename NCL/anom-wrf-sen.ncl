@@ -1,3 +1,62 @@
+;----------------------------------------------------------------------
+; Procedure for adding a labelbar at a given NDC location, given
+; the levels and colors to use.
+;----------------------------------------------------------------------
+undef("add_labelbar")
+procedure add_labelbar(wks,plot,levels,colors)
+local lbres, labels
+begin
+  nlevels = dimsizes(levels)
+;----------------------------------------------------------------------
+; Draw a labelbar
+;----------------------------------------------------------------------
+  lbres                    = True
+  lbres@vpWidthF           = 0.80             ; width
+  lbres@vpHeightF          = 0.10             ; height
+  lbres@lbPerimOn          = False            ; Turn off perimeter.
+  lbres@lbOrientation      = "Horizontal"     ; Default is vertical.
+  lbres@lbLabelAlignment   = "InteriorEdges"  ; Default is "BoxCenters"
+  lbres@lbFillColors       = colors           ; Colors for boxes.
+  lbres@lbMonoFillPattern  = True             ; Fill them all solid.
+  lbres@lbLabelFontHeightF = 0.012            ; label font height
+
+  labels = sprintf("%4.2f",levels)
+
+  lbid = gsn_create_labelbar(wks,nlevels+1,labels,lbres)
+   
+;
+; Now, create some annotation resources indicating how we want to
+; attach the labelbar to the plot. Here, we are using the top right
+; corner of the labelbar as the point which we are going to position
+; it, and then we use amParallelPosF and amOrthogonalPosF to indicate
+; where we want to place it.
+;
+; amParallelPosF/amOrthogonalPosF                                       ;
+;    0.0/ 0.0  -  annotation in dead center of plot
+;    0.5/ 0.5  -  annotation at bottom right of plot
+;    0.5/-0.5  -  annotation at top right of plot
+;   -0.5/-0.5  -  annotation at top left of plot
+;   -0.5/ 0.5  -  annotation at bottom left of plot
+;                                                                 
+  amres                  = True
+  amres@amJust           = "TopCenter"
+  amres@amParallelPosF   =  0.0   ; keep labelbar centered
+  amres@amOrthogonalPosF =  0.6   ; move down and outside of plot
+
+;
+; Give both annotation id and labelbar id unique names.
+;
+; Attaching them to plot with unique names ensures that
+; labelbar "lives" outside this procedure.
+;
+  tmpid1 = "anno"+unique_string("id")
+  tmpid2 = "lbar"+unique_string("id")
+
+  plot@$tmpid1$ = gsn_add_annotation(plot,lbid,amres)
+  plot@$tmpid2$ = lbid
+end
+
+
 ;============== %%%% SHAPES %%%% ==============
 dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
 shp1    = "shapes/cuencas/VertientePacificoCentroNorte.shp" 
@@ -423,10 +482,15 @@ begin
         resP@lbTitleFontHeightF = 0.02
         ;resP@pmLabelBarWidthF   = 0.9
         resP@pmLabelBarHeightF  = 0.5
-        resP@pmLegendSide       = "Top"
+        resP@pmLabelBarSide     = "Top"
         resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
         resP@gsnPanelRowSpec    = True
         agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
         gsn_panel(wks,plot,(/3,3,3/),resP)
+
+        ;---Draw labelbar and advance frame.
+        add_labelbar(wks,plot,levels2,colors2)
+        draw(plot)
+        frame(wks)
     end do
 end
