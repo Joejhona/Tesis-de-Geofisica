@@ -1,62 +1,3 @@
-;----------------------------------------------------------------------
-; Procedure for adding a labelbar at a given NDC location, given
-; the levels and colors to use.
-;----------------------------------------------------------------------
-undef("add_labelbar")
-procedure add_labelbar(wks,plot,levels,colors)
-local lbres, labels
-begin
-  nlevels = dimsizes(levels)
-;----------------------------------------------------------------------
-; Draw a labelbar
-;----------------------------------------------------------------------
-  lbres                    = True
-  lbres@vpWidthF           = 0.80             ; width
-  lbres@vpHeightF          = 0.10             ; height
-  lbres@lbPerimOn          = False            ; Turn off perimeter.
-  lbres@lbOrientation      = "Horizontal"     ; Default is vertical.
-  lbres@lbLabelAlignment   = "InteriorEdges"  ; Default is "BoxCenters"
-  lbres@lbFillColors       = colors           ; Colors for boxes.
-  lbres@lbMonoFillPattern  = True             ; Fill them all solid.
-  lbres@lbLabelFontHeightF = 0.012            ; label font height
-
-  labels = sprintf("%4.2f",levels)
-
-  lbid = gsn_create_labelbar(wks,nlevels+1,labels,lbres)
-   
-;
-; Now, create some annotation resources indicating how we want to
-; attach the labelbar to the plot. Here, we are using the top right
-; corner of the labelbar as the point which we are going to position
-; it, and then we use amParallelPosF and amOrthogonalPosF to indicate
-; where we want to place it.
-;
-; amParallelPosF/amOrthogonalPosF                                       ;
-;    0.0/ 0.0  -  annotation in dead center of plot
-;    0.5/ 0.5  -  annotation at bottom right of plot
-;    0.5/-0.5  -  annotation at top right of plot
-;   -0.5/-0.5  -  annotation at top left of plot
-;   -0.5/ 0.5  -  annotation at bottom left of plot
-;                                                                 
-  amres                  = True
-  amres@amJust           = "TopCenter"
-  amres@amParallelPosF   =  0.0   ; keep labelbar centered
-  amres@amOrthogonalPosF =  0.6   ; move down and outside of plot
-
-;
-; Give both annotation id and labelbar id unique names.
-;
-; Attaching them to plot with unique names ensures that
-; labelbar "lives" outside this procedure.
-;
-  tmpid1 = "anno"+unique_string("id")
-  tmpid2 = "lbar"+unique_string("id")
-
-  plot@$tmpid1$ = gsn_add_annotation(plot,lbid,amres)
-  plot@$tmpid2$ = lbid
-end
-
-
 ;============== %%%% SHAPES %%%% ==============
 dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
 shp1    = "shapes/cuencas/VertientePacificoCentroNorte.shp" 
@@ -467,7 +408,8 @@ begin
         end do
         resP                    = True                ; modify the panel plot
         resP@gsnMaximize        = True
-        ;resP@gsnFrame           = False
+        resP@gsnFrame           = False
+        resP@gsnDraw            = False
         resP@gsnPanelLabelBar   = True                ; add common colorbar
         resP@lbOrientation      = "vertical"
         resP@vpHeightF          = 0.6
@@ -488,9 +430,36 @@ begin
         agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
         gsn_panel(wks,plot,(/3,3,3/),resP)
 
-        ;---Draw labelbar and advance frame.
-        add_labelbar(wks,plot,levels2,colors2)
-        draw(plot)
+
+
+        getvalues plot                      ; Get plot size for use in
+          "vpHeightF" : vph                 ; creating labelbar.
+          "vpWidthF"  : vpw
+        end getvalues
+
+        nboxes = nlevels_color2
+
+        lbres                    = True          ; labelbar only resources
+        lbres@lbAutoManage       = True          ; Necessary to control sizes
+        lbres@vpWidthF           = 0.4*vpw     ; labelbar width
+        lbres@vpHeightF          = 0.5*vph     ; labelbar height
+        lbres@lbBoxMajorExtentF  = 0.75          ; puts space between color boxes
+        lbres@lbFillColors       = colors2; res@gsnXYBarChartColors ; labelbar colors
+        ;lbres@cnFillPalette      = color_paleta2
+        lbres@lbMonoFillPattern  = True          ; Solid fill pattern
+        lbres@lbLabelFontHeightF = 0.08          ; font height. default is small
+        lbres@lbLabelJust        = "CenterLeft"  ; left justify labels
+
+        lbid := gsn_create_labelbar(wks,nboxes,levels2,lbres)
+
+        amres                  = True
+        amres@amJust           = "TopRight"
+        amres@amParallelPosF   =  0.5
+        amres@amOrthogonalPosF = -0.5
+        annoid := gsn_add_annotation(plot,lbid,amres)
+
+        draw(plot)      ; When you draw plot, labelbar will also get drawn.
         frame(wks)
+
     end do
 end
