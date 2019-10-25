@@ -462,6 +462,7 @@ begin
         ;pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
         pcpres@cnFillPalette     := color_paleta2
         pcpres@cnLevels          := levels2
+        pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
         shadeplots             := gsn_csm_contour(wks,pd_wrf,pcpres)
 
         resP                    = True                ; modify the panel plot
@@ -469,7 +470,7 @@ begin
         resP@gsnFrame           = False
         ;resP@gsnDraw            = False
         resP@gsnPanelLabelBar   = True                ; add common colorbar
-        ;resP@lbOrientation      = "Vertical"
+        resP@lbOrientation      = "Vertical"
         resP@vpHeightF          = 0.6
         resP@lbLabelFontHeightF = 0.01               ; make labels smaller
         resP@gsnPanelLeft       = 0.04
