@@ -458,11 +458,13 @@ begin
                 end if
             end do
         end do
-        pcpres                  = res
+        pcpres                    = res
         ;pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
         pcpres@cnFillPalette     := color_paleta2
         pcpres@cnLevels          := levels2
-        pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
+        ;pcpres@lbOrientation    = "Horizontal"   ; Rotate labelbar
+        pcpres@lbLabelPosition    = "Bottom"
+        pcpres@pmLabelBarHeightF  = 0.4
         shadeplots             := gsn_csm_contour(wks,pd_wrf,pcpres)
 
         resP                    = True                ; modify the panel plot
@@ -481,8 +483,9 @@ begin
         resP@lbTitleString      = "mm/dia"
         resP@lbBoxEndCapStyle   = "TriangleHighEnd"
         resP@lbTitleFontHeightF = 0.02
+        resP@lbLabelPosition    = "Top"
         ;resP@pmLabelBarWidthF   = 0.9
-        resP@pmLabelBarHeightF  = 0.5
+        resP@pmLabelBarHeightF  = 0.4
         ;resP@pmLabelBarSide     = "Top"
         resP@gsnPanelMainString = "Analisis de lluvia WRF - PISCO - SENAMHI"
         resP@gsnPanelRowSpec    = True
