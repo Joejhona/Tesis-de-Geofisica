@@ -276,7 +276,8 @@ begin
         pres1@lbTitleString      = "mm/dia"
         pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
         pres1@lbTitleFontHeightF = 0.01
-        pres1@pmLabelBarHeightF   = 0.6
+        pres1@pmLabelBarHeightF  = 0.6
+        pres1@gsnPanelMainString = "Analisis de lluvia WRF-PISCO "+periodo
         pres2 = True
         pres2@gsnMaximize        = True
         pres2@gsnPanelLabelBar   = True                ; add common colorbar
@@ -295,7 +296,6 @@ begin
         pres  = True
         ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
         ;pres2@lbLabelFontHeightF = 0.01
-        pres@gsnPanelMainString = "Analisis de lluvia WRF-PISCO "+periodo
     	agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     	agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
         panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)
