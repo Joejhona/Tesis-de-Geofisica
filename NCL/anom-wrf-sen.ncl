@@ -444,7 +444,7 @@ begin
         lbres@vpWidthF           = 0.4*vpw     ; labelbar width
         lbres@vpHeightF          = 0.5*vph     ; labelbar height
         lbres@lbBoxMajorExtentF  = 0.75          ; puts space between color boxes
-        lbres@lbFillColors       = colors2; res@gsnXYBarChartColors ; labelbar colors
+        lbres@lbFillColors       = span_color_indexes(color_paleta2,nlevels_color2); res@gsnXYBarChartColors ; labelbar colors
         ;lbres@cnFillPalette      = color_paleta2
         lbres@lbMonoFillPattern  = True          ; Solid fill pattern
         lbres@lbLabelFontHeightF = 0.08          ; font height. default is small
