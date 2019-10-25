@@ -40,12 +40,14 @@ color_paleta = "WhBlGrYeRe"
 nlevels_color = dimsizes(levels) ;--> Cantidad de colores 
 colors        = span_color_rgba(color_paleta,nlevels_color+1)
 
-levels2 = (/-1.,-0.5,-0.25,-0.15,\
-        -0.1,-0.05,0,0.05,0.1,\
-        0.15,0.25,0.5,1./) 
-;levels2 = (/-5.,-0.5,-0.25,-0.15,\
+;levels2 = (/-1.,-0.5,-0.25,-0.15,\
 ;        -0.1,-0.05,0,0.05,0.1,\
 ;        0.15,0.25,0.5,1./) 
+levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
+        -9.,-8.,-7.,-6,-5,-4.,-3.,-2.,-1.,-0.9,-0.8,-0.7,-0.6,\
+        -0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
+        0.8,0.9,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,18,\
+        20.,25.,30.,40.,50/) 
 ;color_paleta2 = "precip_diff_12lev";--> paleta 12 colores
 ;color_paleta2 = "WhBlReWh"
 color_paleta2 = "ViBlGrWhYeOrRe"
@@ -63,7 +65,10 @@ begin
         "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
-    do j=0,dimsizes(periodos)-1
+    horas = (/"24 hrs","48 hrs","72 hrs"/)
+    dom = (/"-d01","_d01_"/)
+    ;dom = (/"-d02","_d02_"/)
+    do j=0,1;dimsizes(periodos)-1
         periodo = periodos(j)
         year    = stringtoint(str_get_cols(periodo,0,3))
         mes     = stringtoint(str_get_cols(periodo,5,6))
@@ -75,7 +80,7 @@ begin
         dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
         type@wkWidth     = 7000
         type@wkHeight    = 8000             
-        wks     = gsn_open_wks(type,dirS+"anom-WRF-PI-"+periodo+"-d01")   
+        wks     = gsn_open_wks(type,dirS+"anom-WRF-PI-"+periodo+dom(0))   
         plot    = new(6,graphic)
         plot2   = new(3,graphic)
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -124,8 +129,7 @@ begin
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----Extraendo y procesando datos wrf
         dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
-        ;f_wrf   = addfile(dirWRF+"wrfout_d02_"+periodo+"_00:00:00.nc", "r")
-        f_wrf  := addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
+        f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
         lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
         ;lat_w  := lat_w(:,0)
         lon_w  := wrf_user_getvar(f_wrf,"XLONG",0)
@@ -153,7 +157,7 @@ begin
             ;print(it_wrf+"==="+id_tiw)
             printVarSummary(pd_wrf)
             res1                   := res
-            res1@gsnCenterString   := cd_string(it_wrf,"%D-%N-%Y") 
+            res1@gsnCenterString   := horas(i);cd_string(it_wrf,"%D-%N-%Y") 
             res1@gsnCenterStringFontHeightF = 0.04
             ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
             if (i.eq.0) then
@@ -161,7 +165,7 @@ begin
                 res1@tiYAxisSide,res1@tiYAxisAngleF/])                
                 res1@tmYLLabelsOn        = True         ; turn off lat labels
             else if (i.eq.2) then
-                res1@tiYAxisString       = "WRF-AWR-d01"
+                res1@tiYAxisString       = "WRF-AWR"+dom(0)
                 res1@tiYAxisFontHeightF  = 0.04
                 ;res@tiYAxisFontColor    = "navy"
                 res1@tiYAxisSide         = "right"
@@ -232,18 +236,18 @@ begin
             printVarSummary(anom)
             res3                 := res
             res3@tmXBLabelsOn     = True
-            res3@cnLevelSelectionMode= "ManualLevels"   ; manual set levels
+            ;res3@cnLevelSelectionMode= "ManualLevels"   ; manual set levels
             res3@cnFillPalette   := color_paleta2
-            res3@cnMinLevelValF   = -20.			; set the minimum contour level
-            res3@cnMaxLevelValF   = 20.			; set the maximum contour level
-            res3@cnLevelSpacingF  = 0.5
-            ;res3@cnLevels      := levels2
+            ;res3@cnMinLevelValF   = -20.			; set the minimum contour level
+            ;res3@cnMaxLevelValF   = 20.			; set the maximum contour level
+            ;res3@cnLevelSpacingF  = 0.5
+            res3@cnLevels      := levels2
             if (i.eq.0) then
                 delete([/res3@tiYAxisString,res3@tiYAxisFontHeightF,\
                 res3@tiYAxisSide,res3@tiYAxisAngleF/])
                 res3@tmYLLabelsOn        = True         ; turn off lat labels
             else if (i.eq.2) then
-                res3@tiYAxisString       = "ANOM"
+                res3@tiYAxisString       = "Anomalia"
                 res3@tiYAxisFontHeightF  = 0.04
                 ;res@tiYAxisFontColor    = "navy"
                 res3@tiYAxisSide         = "right"
@@ -291,7 +295,7 @@ begin
         pres  = True
         ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
         ;pres2@lbLabelFontHeightF = 0.01
-        ;pres1@gsnPanelMainString = "Analisis de lluvia WRF - PISCO"
+        pres@gsnPanelMainString = "Analisis de lluvia WRF-PISCO "+periodo
     	agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     	agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
         panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)

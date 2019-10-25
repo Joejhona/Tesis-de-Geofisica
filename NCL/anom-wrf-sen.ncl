@@ -359,7 +359,7 @@ begin
             do m=0,dimsizes(anom(:,0))-1
                 str1  := unique_string("poly1")
                 anom2 := anom(m,0) 
-                print("lluvia antes---->> "+anom2)
+                ;print("lluvia antes---->> "+anom2)
                 do n=0,nlevels_color2-1
                     if (n.eq.nlevels_color2-1) then
                         ;--> si: ppd >= max -> ppd = max
@@ -390,7 +390,7 @@ begin
                     anom2       := where(anom2.gt.levels2(0),levels2(0),anom2)
                     color_id    := get1Dindex(levels2,anom2)
                 end if
-                print("lluvia despues---->> "+anom2)
+                ;print("lluvia despues---->> "+anom2)
                 pmres2@gsMarkerColor   := colors2(color_id,:) 
                 if (i.eq.0) then
                     map4@$str1$ := gsn_add_polymarker(wks,map4,anom(m,2),anom(m,1),pmres2)
