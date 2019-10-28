@@ -74,7 +74,7 @@ begin
     horas = (/"24 hrs","48 hrs","72 hrs"/)
     dom = (/"-d01","_d01_"/)
     ;dom = (/"-d02","_d02_"/)
-    do l=0,1;dimsizes(periodos)-1
+    do l=0,dimsizes(periodos)-1
         periodo = periodos(l)
         year    = stringtoint(str_get_cols(periodo,0,3))
         mes     = stringtoint(str_get_cols(periodo,5,6))
@@ -166,6 +166,7 @@ begin
             ;print(it_wrf+"==="+id_tiw)
             ;printVarSummary(pd_wrf)
             res1                   := res
+            res1@tmXBLabelsOn       = True
             res1@gsnCenterString   := horas(i);cd_string(it_wrf,"%D-%N-%Y") 
             res1@gsnCenterStringFontHeightF = 0.04
             ;plot(0) = gsn_csm_contour_map(wks,ppd_pi_e_per99,res1)
@@ -221,15 +222,18 @@ begin
             if (i.eq.0) then
                 ;map1 = map
                 res2@tiYAxisString  = ""
+                res2@tmXBLabelsOn   = True
                 res2@tmYLLabelsOn   = True         ; turn off lat labels
                 plot(i+3)   = gsn_csm_map(wks,res2)
                 map1        = plot(i+3)
             else if (i.eq.1) then
                 res2@tiYAxisString       = ""
+                res2@tmXBLabelsOn   = True
                 plot(i+3)   = gsn_csm_map(wks,res2)
                 map2        = plot(i+3)
             else
                 res2@tiYAxisString       = "SENAMHI"
+                res2@tmXBLabelsOn   = True
                 res2@tiYAxisFontHeightF  = 0.04
                 ;res2@tiYAxisFontColor    = "navy"
                 res2@tiYAxisSide         = "right"
