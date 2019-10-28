@@ -220,10 +220,12 @@ begin
             pd_wrf_p2= pd_wrf_p
             if (i.eq.0) then
                 ;map1 = map
+                res2@tiYAxisString  = ""
                 res2@tmYLLabelsOn   = True         ; turn off lat labels
                 plot(i+3)   = gsn_csm_map(wks,res2)
                 map1        = plot(i+3)
             else if (i.eq.1) then
+                res2@tiYAxisString       = ""
                 plot(i+3)   = gsn_csm_map(wks,res2)
                 map2        = plot(i+3)
             else
@@ -342,13 +344,18 @@ begin
             pmres2@gsMarkerIndex     = 1
             if (i.eq.0) then
                 ;map1 = map
+                res3@tmXBLabelsOn = True
+                res3@tiYAxisString       = ""
                 res3@tmYLLabelsOn   = True         ; turn off lat labels
                 plot(i+6)   = gsn_csm_map(wks,res3)
                 map4        = plot(i+6)
             else if (i.eq.1) then
+                res3@tmXBLabelsOn = True
+                res3@tiYAxisString       = ""
                 plot(i+6)   = gsn_csm_map(wks,res3)
                 map5        = plot(i+6)
             else
+                res3@tmXBLabelsOn = True
                 res3@tiYAxisString       = "ANOM"
                 res3@tiYAxisFontHeightF  = 0.04
                 ;res2@tiYAxisFontColor    = "navy"
