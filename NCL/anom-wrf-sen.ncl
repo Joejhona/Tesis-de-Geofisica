@@ -2,6 +2,16 @@
 dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
 shp1    = "shapes/cuencas/VertientePacificoCentroNorte.shp" 
 shp1    = dirP+shp1     ;--> shape Vertiente Pacifico
+;============== %%%% CSV %%%% ==============
+dirCSV  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/"
+csv_filename = "anom-WRF-SEN.csv"
+
+fields = (/"Estacion","Mes","Data","Tot-ppd","Ex-83-98","Ex->0.1","p99","p95","p90","p75","fecha","ppd"/)
+fields = dq + fields + dq
+header = [/str_join(fields,",")/]
+system("rm -rf " + csv_filename)
+write_table(csv_filename, "w", header, "%s")
+
 ;---Detalles del shape---;
 shpres                  = True
 ;shpres@gsLineColor      = "red" ;--> color de linea
