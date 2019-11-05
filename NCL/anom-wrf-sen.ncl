@@ -1,12 +1,13 @@
 ;============== %%%% SHAPES %%%% ==============
-dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
+;dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
+dirP    = "/data/users/jticse/Tesis-Maestria/PREDATA/" ;--> ruta principal
 shp1    = "shapes/cuencas/VertientePacificoCentroNorte.shp" 
 shp1    = dirP+shp1     ;--> shape Vertiente Pacifico
 ;============== %%%% CSV %%%% ==============
 dirCSV  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/"
 csv_filename = "anom-WRF-SEN.csv"
 
-fields = (/"Estacion","Mes","Data","Tot-ppd","Ex-83-98","Ex->0.1","p99","p95","p90","p75","fecha","ppd"/)
+fields = (/"Estacion","Fecha","ppd-wrf","ppd-sen","wrf_x","wrf_y","sen_x","sen_y","sen_z"/)
 fields = dq + fields + dq
 header = [/str_join(fields,",")/]
 system("rm -rf " + csv_filename)
@@ -57,7 +58,9 @@ levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
         0.8,0.9,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,18,\
         20.,25.,30.,40.,50/) 
 ;color_paleta2 = "precip_diff_12lev";--> paleta 12 colores
-color_paleta2 = "ViBlGrWhYeOrRe"
+;color_paleta2 = "ViBlGrWhYeOrRe"
+color_paleta2 = "MPL_BrBG"
+
 nlevels_color2= dimsizes(levels2) ;--> Cantidad de colores 
 colors2       = span_color_rgba(color_paleta2,nlevels_color2+1)
 
@@ -84,7 +87,11 @@ begin
     horas = (/"24 hrs","48 hrs","72 hrs"/)
     ;dom = (/"-d01","_d01_"/)
     dom = (/"-d02","_d02_"/)
+<<<<<<< HEAD
     do l=0,dimsizes(periodos)-1
+=======
+    do l=0,1;dimsizes(periodos)-1
+>>>>>>> aef41c9e0ad5a5467b567c11117dcf604e8120d6
         periodo = periodos(l)
         year    = stringtoint(str_get_cols(periodo,0,3))
         mes     = stringtoint(str_get_cols(periodo,5,6))
@@ -288,6 +295,10 @@ begin
                                 ;    pd_se3(:,{coord_x},{coord_y}) = ppd_s
                                 ;    pd_se  := array_append_record(pd_se,pd_se3,0)
                                 ;end if
+                                pd_wrf2 := pd_wrf({coord_x},{coord_y})
+                                alist    = [/cod_est,fecha_s,pd_wrf2,ppd_s,pd_wrf2&latitude,pd_wrf2&longitude,coord_x,coord_y,tofloat(fc_sen(j,3))/]
+                                format   = "%s,%s,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.2f"
+                                write_table(csv_filename,"a",alist,format)
                                 if all(ismissing(pd_se)) then
                                     pd_se(0,0)      = ppd_s
                                     pd_se(0,1)      = coord_x

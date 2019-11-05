@@ -7,14 +7,14 @@ dir = "/data/users/jticse/resultados/github/Tesis-de-Geofisica/"
 csv_filename = dir+"salidas/percentiles.csv"
 dq = str_get_dq()
 
-fields = (/"Estacion","Mes","Data","Tot-ppd","Ex-83-98","Ex->0.1","p99","p95","p90","p75","fecha","ppd"/)
-fields = dq + fields + dq
-header = [/str_join(fields,",")/]
+fields  = (/"Estacion","Mes","Data","Tot-ppd","Ex-83-98","Ex->0.1","p99","p95","p90","p75","fecha","ppd"/)
+fields  = dq + fields + dq
+header  = [/str_join(fields,",")/]
 system("rm -rf " + csv_filename)
 write_table(csv_filename, "w", header, "%s")
 
-s17_18 = dir+"estaciones-17-18/*.csv"
-s17_18:= systemfunc("ls "+s17_18)
+s17_18  = dir+"estaciones-17-18/*.csv"
+s17_18 := systemfunc("ls "+s17_18)
 
 dir_est = "/data/users/jticse/data/estaciones/"
 est_sen = systemfunc("ls "+dir_est)
