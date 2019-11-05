@@ -297,7 +297,7 @@ begin
                                 pd_wrf2 := pd_wrf({coord_x},{coord_y})
                                 alist    = [/cod_est,fecha_s,pd_wrf2,ppd_s,pd_wrf2@latitude,pd_wrf2@longitude,coord_x,coord_y,tofloat(fc_sen(j,3))/]
                                 format   = "%s,%s,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.2f"
-                                write_table(csv_filename,"a",alist,format)
+                                write_table(dirCSV+csv_filename,"a",alist,format)
                                 if all(ismissing(pd_se)) then
                                     pd_se(0,0)      = ppd_s
                                     pd_se(0,1)      = coord_x
