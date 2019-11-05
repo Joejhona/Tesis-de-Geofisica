@@ -72,10 +72,12 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_string.ncl"       ;---> para f
 begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;-----Extraendo datos senamhi
-    f_est_se  = "/data/users/jticse/data/estaciones_senamhi/*.csv"
+    ;f_est_se  = "/data/users/jticse/data/estaciones_senamhi/*.csv"
+    f_est_se  = "/data/users/jticse/Tesis-Maestria/PREDATA/estaciones-senamhi-EFM-17-18/*.csv"
     f_est_se := systemfunc("ls "+f_est_se)
     ;f_data_se = "/data/users/jticse/data/senamhi_vertpac_cn.csv"
-    f_data_se = "/data/users/jticse/data/senamhi-17-18.csv"
+    ;f_data_se = "/data/users/jticse/data/senamhi-17-18.csv"
+    f_data_se = "/data/users/jticse/Tesis-Maestria/PREDATA/senamhi-17-18.csv"
     fc_sen   := asciiread(f_data_se,-1,"string")
     fc_sen   := str_split_csv(fc_sen(1:),",",0)
     dim_fc    = dimsizes(fc_sen(:,0))
@@ -147,7 +149,8 @@ begin
         ;res@tmXBLabelStride     = 2
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----Extraendo datos wrf
-        dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
+        ;dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
+        dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/primera_corrida/"
         f_wrf   = addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
         ;f_wrf  := addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")
         lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
