@@ -11,7 +11,7 @@ fields = (/"Estacion","Fecha","ppd-wrf","ppd-sen","wrf_x","wrf_y","sen_x","sen_y
 fields = dq + fields + dq
 header = [/str_join(fields,",")/]
 system("rm -rf " + csv_filename)
-write_table(csv_filename, "w", header, "%s")
+write_table(dirCSV+csv_filename, "w", header, "%s")
 
 ;---Detalles del shape---;
 shpres                  = True
