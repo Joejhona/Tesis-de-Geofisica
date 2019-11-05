@@ -6,7 +6,7 @@ shp1    = dirP+shp1     ;--> shape Vertiente Pacifico
 ;============== %%%% CSV %%%% ==============
 dirCSV  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/"
 csv_filename = "anom-WRF-SEN.csv"
-
+dq = str_get_dq()
 fields = (/"Estacion","Fecha","ppd-wrf","ppd-sen","wrf_x","wrf_y","sen_x","sen_y","sen_z"/)
 fields = dq + fields + dq
 header = [/str_join(fields,",")/]
