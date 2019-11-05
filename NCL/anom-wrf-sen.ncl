@@ -1,12 +1,13 @@
 ;============== %%%% SHAPES %%%% ==============
-dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
+;dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
+dirP    = "/data/users/jticse/Tesis-Maestria/PREDATA/" ;--> ruta principal
 shp1    = "shapes/cuencas/VertientePacificoCentroNorte.shp" 
 shp1    = dirP+shp1     ;--> shape Vertiente Pacifico
 ;============== %%%% CSV %%%% ==============
 dirCSV  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/"
 csv_filename = "anom-WRF-SEN.csv"
 
-fields = (/"Estacion","Mes","Data","Tot-ppd","Ex-83-98","Ex->0.1","p99","p95","p90","p75","fecha","ppd"/)
+fields = (/"Estacion","Fecha","ppd-wrf","ppd-sen","wrf_x","wrf_y","sen_x","sen_y","sen_z"/)
 fields = dq + fields + dq
 header = [/str_join(fields,",")/]
 system("rm -rf " + csv_filename)
@@ -288,6 +289,10 @@ begin
                                 ;    pd_se3(:,{coord_x},{coord_y}) = ppd_s
                                 ;    pd_se  := array_append_record(pd_se,pd_se3,0)
                                 ;end if
+                                pd_wrf2 := pd_wrf({coord_x},{coord_y})
+                                alist    = [/cod_est,fecha_s,pd_wrf2,ppd_s,N3,N4,p99,p95,p90,p75,fecha,ppd/]
+                                format   = "%s,%s,%4.3f,%4.3f,%4d,%4d,%4.2f,%4.2f,%4.2f,%4.2f,%s,%4.2f"
+                                write_table(csv_filename,"a",alist,format)
                                 if all(ismissing(pd_se)) then
                                     pd_se(0,0)      = ppd_s
                                     pd_se(0,1)      = coord_x
