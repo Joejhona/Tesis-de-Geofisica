@@ -41,6 +41,7 @@ begin
     res@xyMarkerSizeF   = 0.01                     ; Marker size (default 0.01)
     res@tmXBMode        = "Explicit"
     res@tmXBValues      = levels2
+    res@tfPolyDrawOrder = "PreDraw"
     ;res@tmXBLabels      = tostring_with_format(levels2,"%3.1f")
     ;res@tmXBLabels      = (/"-50","","-30","","-20","","","","","-10",\
     ;    "","","","","-5","","","","-1","","","","",\
