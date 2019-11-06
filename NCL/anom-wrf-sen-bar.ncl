@@ -37,7 +37,7 @@ begin
     res@gsnFrame        = False                ; Don't advance frame
     res@trXMinF         = -50.0              ; bottom of X-scale
     res@trXMaxF         =  50.0  
-    res@xyMarkerColor   = "red"
+    res@xyMarkerColor   = (/"red","blue","red","blue"/)
     ;res@tiMainString    = "Scatter Plot"           ; add title
     res@xyMarkLineModes = "Markers"                ; choose which have markers
     res@xyMarkers       =  16                      ; choose type of marker  
@@ -88,7 +88,7 @@ begin
                         res@tiMainString    = horas(k)
                     end if
                     if (3*i+k).eq.(3*i+2) then
-                        res@tiYAxisString       = periodo
+                        res@tiYAxisString       = fecha_s
                         res@tiYAxisFontHeightF  = 0.04
                         ;res@tiYAxisFontColor    = "navy"
                         res@tiYAxisSide         = "right"
