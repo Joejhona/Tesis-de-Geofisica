@@ -32,8 +32,8 @@ begin
     res = True
     res@gsnDraw         = False                ; Don't draw plot 
     res@gsnFrame        = False                ; Don't advance frame
-    ;res@trXMinF         = -2.0              ; bottom of X-scale
-    ;res@trXMaxF         =  2.0  
+    res@trXMinF         = -50.0              ; bottom of X-scale
+    res@trXMaxF         =  50.0  
     res@tiMainString    = "Scatter Plot"           ; add title
     res@xyMarkLineModes = "Markers"                ; choose which have markers
     res@xyMarkers       =  16                      ; choose type of marker  
