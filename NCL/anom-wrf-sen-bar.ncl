@@ -65,11 +65,11 @@ begin
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;----- creando mapa ------;
             type    = "png"
-            type@wkWidth     = 4000
-            ;type@wkHeight    = 8500
+            ;type@wkWidth     = 4000
+            type@wkHeight    = 8500
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+cod_est)
+            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+fc_vnp(j,16))
             plot    = new(dimsizes(periodos)*3,graphic)
             poly    = new(dimsizes(periodos)*3,graphic)
             do i=0,dimsizes(periodos)-1
@@ -117,7 +117,7 @@ begin
             txres3               = True             
             txres3@txAngleF      = 90.          ; Rotate string clockwise 
             txres3@txFontHeightF = 0.01
-            gsn_text_ndc(wks,"Altura de las Est. SENAMHI (msnm)",0.085,0.5,txres3)
+            gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.5,0.5,txres3)
             frame(wks)
             psres = True                                                               
             maximize_output(wks,psres)  ; calls draw and frame for you 
