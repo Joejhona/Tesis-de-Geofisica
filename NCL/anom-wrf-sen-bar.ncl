@@ -23,10 +23,7 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
 
-    ;---Calculate number of models
-    nmons    = 5                ; Jan, Mar, May
-    nmodels  = 3                ; The -1 is for the min/max/avg header
-    nmodmon  = nmodels*nmons
+    dq = str_get_dq()
 
     periodos := periodos(:9)
     ;periodos := periodos(10:)
@@ -59,9 +56,11 @@ begin
                 do k=0,2
                     t_se        = cd_inv_calendar(year,mes,dia+k,0,0,0,"days since 1971-1-1",0)
                     fecha_s     = cd_string(t_se,"%D-%N-%Y")
-                    id_fe      := str_match_ind(fc_anom(id_est,1),fecha_s)
-                    anom        = tofloat(fc_anom(id_fe,2))-tofloat(fc_anom(id_fe,3))       
-                    plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom(id_est,8)),res)             
+                    fc_anom_2  := fc_anom(id_est,:)
+                    id_fe      := str_match_ind(fc_anom_2,fecha_s)
+                    fc_anom_2  := str_sub_str(fc_anom_2(id_fe,:),dq,"")
+                    anom       := tofloat(fc_anom_2(:,2))-tofloat(fc_anom_2(:,3))       
+                    plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_est,8)),res)             
                 end do
             end do
             resP             = True
