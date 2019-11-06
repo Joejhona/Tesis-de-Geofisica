@@ -66,8 +66,8 @@ begin
                     fecha_s     = cd_string(t_se,"%D-%N-%Y")
                     fc_anom_2  := fc_anom(id_est,:)
                     id_fe      := str_match_ind(fc_anom_2(:,1),fecha_s)
-                    anom       := tofloat(fc_anom_2(:,2))-tofloat(fc_anom_2(:,3))       
-                    plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(:,8)),res)             
+                    anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))       
+                    plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)             
                 end do
             end do
             resP             = True
