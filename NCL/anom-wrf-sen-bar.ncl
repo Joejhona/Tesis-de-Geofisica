@@ -32,8 +32,8 @@ begin
     res = True
     res@gsnDraw         = False                ; Don't draw plot 
     res@gsnFrame        = False                ; Don't advance frame
-    res@trXMinF         = -2.0              ; bottom of X-scale
-    res@trXMaxF         =  2.0  
+    ;res@trXMinF         = -2.0              ; bottom of X-scale
+    ;res@trXMaxF         =  2.0  
     res@tiMainString    = "Scatter Plot"           ; add title
     res@xyMarkLineModes = "Markers"                ; choose which have markers
     res@xyMarkers       =  16                      ; choose type of marker  
@@ -50,6 +50,8 @@ begin
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;----- creando mapa ------;
             type    = "png"
+            type@wkWidth     = 4000
+            type@wkHeight    = 8500
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
             wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+cod_est)
