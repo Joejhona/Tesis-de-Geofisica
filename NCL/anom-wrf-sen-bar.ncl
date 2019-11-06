@@ -45,7 +45,6 @@ begin
     res@tmXBMode        = "Explicit"
     res@tmXBValues      = levels2
     res@tfPolyDrawOrder = "PreDraw"
-    res@mpShapeMode     = "FreeAspect"
     ;res@tmXBLabels      = tostring_with_format(levels2,"%3.1f")
     ;res@tmXBLabels      = (/"-50","","-30","","-20","","","","","-10",\
     ;    "","","","","-5","","","","-1","","","","",\
@@ -119,8 +118,6 @@ begin
             txres3@txFontHeightF = 0.01
             gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.5,0.5,txres3)
             frame(wks)
-            psres = True                                                               
-            maximize_output(wks,psres)  ; calls draw and frame for you 
         end if
     end do
 end
