@@ -12,12 +12,13 @@ begin
     fc_vnp     := asciiread(f_data_vnp,-1,"string")
     fc_vnp     := str_split_csv(fc_vnp(1:),",",0)
     dim_fc      = dimsizes(fc_vnp(:,0))
+    dq = str_get_dq()
+    fc_vnp     := str_sub_str(fc_vnp,dq,"")
 
     f_data_anom = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/anom-wrf-sen.csv"
     fc_anom    := asciiread(f_data_anom,-1,"string")
     fc_anom    := str_split_csv(fc_anom(1:),",",0)
     ;dim_fc      = dimsizes(fc_anom(:,0))
-    dq = str_get_dq()
     fc_anom    := str_sub_str(fc_anom,dq,"")
 
     periodos:= (/"2017-01-14","2017-01-21","2017-01-24","2017-01-30","2017-02-02",\
