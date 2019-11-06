@@ -57,7 +57,7 @@ begin
         "","","","","","","","","","","","10","","","","",\
         "20","","30","40","50"/) 
 
-    do j=0,1;dim_fc-1
+    do j=0,dim_fc-1
         cod_est    := fc_vnp(j,16)
         id_est     := str_match_ind(fc_anom(:,20),cod_est)
         if (.not.all(ismissing(id_est))) then
@@ -69,8 +69,8 @@ begin
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
             wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+fc_vnp(j,16))
-            plot    = new(dimsizes(periodos)*3,graphic)
-            poly    = new(dimsizes(periodos)*3,graphic)
+            plot   := new(dimsizes(periodos)*3,graphic)
+            poly   := new(dimsizes(periodos)*3,graphic)
             do i=0,dimsizes(periodos)-1
                 periodo = periodos(i)
                 year    = stringtoint(str_get_cols(periodo,0,3))
@@ -94,7 +94,7 @@ begin
                         res@tiYAxisSide         = "right"
                         res@tiYAxisAngleF       = 270
                     end if
-                    plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
+                    plot(3*i+k):= gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
                     ;delete([/res@tiMainString,res@tiYAxisString/])
                     ymin       := new(1,float)
                     ymax       := new(1,float)
