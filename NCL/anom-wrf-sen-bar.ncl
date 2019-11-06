@@ -77,11 +77,6 @@ begin
                     fc_anom_2  := fc_anom(id_est,:)
                     id_fe      := str_match_ind(fc_anom_2(:,1),fecha_s)
                     anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))
-                    if anom.le.0 then
-                        res@xyMarkerColor   = "blue"
-                    else
-                        res@xyMarkerColor   = "red"                    ; Marker color
-                    end if
                     plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
                     ymin       := new(1,float)
                     ymax       := new(1,float)
