@@ -1,3 +1,7 @@
+;============== %%%% HERRAMIENTAS %%%% ==============
+load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_inv_string.ncl"   ;---> para fechas 
+load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_string.ncl"       ;---> para fechas
+
 levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
         -9.,-8.,-7.,-6,-5,-4.,-3.,-2.,-1.,-0.9,-0.8,-0.7,-0.6,\
         -0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
@@ -36,7 +40,7 @@ begin
     res@xyMarkerColor     = "red"                    ; Marker color
     res@xyMarkerSizeF     = 0.01                     ; Marker size (default 0.01)
 
-    do j=0,dim_fc-1
+    do j=0,1;dim_fc-1
         cod_est    := fc_vnp(j,16)
         id_est     := str_match_ind(fc_anom(:,20),cod_est)
         if (.not.all(ismissing(id_est))) then
@@ -65,4 +69,4 @@ begin
             gsn_panel(wks,plot,(/3,dimsizes(periodos)/),resP)
         end if
     end do
-
+end
