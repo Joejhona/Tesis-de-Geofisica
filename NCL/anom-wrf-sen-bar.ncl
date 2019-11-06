@@ -7,6 +7,9 @@ levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
         -0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
         0.8,0.9,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,18,\
         20.,25.,30.,40.,50/) 
+
+horas = (/"24 hrs","48 hrs","72 hrs"/)
+
 begin
     f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP.csv"
     fc_vnp     := asciiread(f_data_vnp,-1,"string")
@@ -34,7 +37,8 @@ begin
     res@gsnFrame        = False                ; Don't advance frame
     res@trXMinF         = -50.0              ; bottom of X-scale
     res@trXMaxF         =  50.0  
-    res@tiMainString    = "Scatter Plot"           ; add title
+    res@xyMarkerColor   = "red"
+    ;res@tiMainString    = "Scatter Plot"           ; add title
     res@xyMarkLineModes = "Markers"                ; choose which have markers
     res@xyMarkers       =  16                      ; choose type of marker  
     res@xyMarkerSizeF   = 0.01                     ; Marker size (default 0.01)
@@ -78,7 +82,11 @@ begin
                     fc_anom_2  := fc_anom(id_est,:)
                     id_fe      := str_match_ind(fc_anom_2(:,1),fecha_s)
                     anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))
+                    if (3*i+k).le.2 then
+                        res@tiMainString    = horas(k)
+                    end if
                     plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
+                    delete([/res@tiMainString/])
                     ymin       := new(1,float)
                     ymax       := new(1,float)
                     getvalues plot(3*i+k)
