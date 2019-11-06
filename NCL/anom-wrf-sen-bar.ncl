@@ -85,8 +85,15 @@ begin
                     if (3*i+k).le.2 then
                         res@tiMainString    = horas(k)
                     end if
+                    if (3*i+k).eq.(3*i+2) then
+                        res@tiYAxisString       = periodo
+                        res@tiYAxisFontHeightF  = 0.04
+                        ;res@tiYAxisFontColor    = "navy"
+                        res@tiYAxisSide         = "right"
+                        res@tiYAxisAngleF       = 270
+                    end if
                     plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
-                    delete([/res@tiMainString/])
+                    delete([/res@tiMainString,res@tiYAxisString/])
                     ymin       := new(1,float)
                     ymax       := new(1,float)
                     getvalues plot(3*i+k)
