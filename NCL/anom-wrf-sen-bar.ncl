@@ -64,7 +64,7 @@ begin
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;----- creando mapa ------;
             type    = "png"
-            ;type@wkWidth     = 4000
+            type@wkWidth     = 4000
             type@wkHeight    = 8500
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
@@ -116,7 +116,7 @@ begin
             txres3               = True             
             txres3@txAngleF      = 90.          ; Rotate string clockwise 
             txres3@txFontHeightF = 0.01
-            gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.5,0.5,txres3)
+            gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.3,0.5,txres3)
             frame(wks)
         end if
     end do
