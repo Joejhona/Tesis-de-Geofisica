@@ -37,7 +37,6 @@ begin
     res@tiMainString    = "Scatter Plot"           ; add title
     res@xyMarkLineModes = "Markers"                ; choose which have markers
     res@xyMarkers       =  16                      ; choose type of marker  
-    res@xyMarkerColor   = "red"                    ; Marker color
     res@xyMarkerSizeF   = 0.01                     ; Marker size (default 0.01)
     res@tmXBMode        = "Explicit"
     res@tmXBValues      = levels2
@@ -77,7 +76,12 @@ begin
                     fecha_s     = cd_string(t_se,"%D-%N-%Y")
                     fc_anom_2  := fc_anom(id_est,:)
                     id_fe      := str_match_ind(fc_anom_2(:,1),fecha_s)
-                    anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))       
+                    anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))
+                    if anom.le.0 then
+                        res@xyMarkerColor   = "blue"
+                    else
+                        res@xyMarkerColor   = "red"                    ; Marker color
+                    end if
                     plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
                     ymin       := new(1,float)
                     ymax       := new(1,float)
@@ -87,7 +91,7 @@ begin
                     end getvalues    
                     gres             = True
                     gres@gsFillColor = "lightgray"
-                    poly       := gsn_add_polygon(wks,plot(3*i+k),(/-5.,5./),(/ymin,ymax/),gres)       
+                    poly       := gsn_add_polygon(wks,plot(3*i+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)       
                 end do
             end do
             resP             = True
