@@ -57,10 +57,10 @@ begin
                     t_se        = cd_inv_calendar(year,mes,dia+k,0,0,0,"days since 1971-1-1",0)
                     fecha_s     = cd_string(t_se,"%D-%N-%Y")
                     fc_anom_2  := fc_anom(id_est,:)
-                    id_fe      := str_match_ind(fc_anom_2,fecha_s)
+                    id_fe      := str_match_ind(fc_anom_2(:,1),fecha_s)
                     fc_anom_2  := str_sub_str(fc_anom_2(id_fe,:),dq,"")
                     anom       := tofloat(fc_anom_2(:,2))-tofloat(fc_anom_2(:,3))       
-                    plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_est,8)),res)             
+                    plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(:,8)),res)             
                 end do
             end do
             resP             = True
