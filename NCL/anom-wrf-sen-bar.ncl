@@ -109,13 +109,13 @@ begin
             end do
             resP                    = True
             resP@gsnPanelMainString = "Anomalia WRF-SENAMHI "+fc_vnp(j,17)
-            resP@gsnPanelMainFontHeightF = 0.025 
+            resP@gsnPanelMainFontHeightF = 0.01 
             resP@gsnMaximize        = True
             resP@gsnFrame           = False
             gsn_panel(wks,plot,(/dimsizes(periodos),3/),resP)
             txres3               = True             
             txres3@txAngleF      = 90.          ; Rotate string clockwise 
-            txres3@txFontHeightF = 0.02
+            txres3@txFontHeightF = 0.01
             gsn_text_ndc(wks,"Altura de las Est. SENAMHI (msnm)",0.085,0.5,txres3)
             frame(wks)
         end if
