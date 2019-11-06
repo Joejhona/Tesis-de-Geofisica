@@ -41,7 +41,12 @@ begin
     res@xyMarkerSizeF   = 0.01                     ; Marker size (default 0.01)
     res@tmXBMode        = "Explicit"
     res@tmXBValues      = levels2
-    res@tmXBLabels      = tostring_with_format(levels2,"%3.1f")
+    ;res@tmXBLabels      = tostring_with_format(levels2,"%3.1f")
+    res@tmXBLabels      = (/"-50","","-30","","-20","","","","","-10",\
+        "","","","","-5","","","","-1","","","","",\
+        "","","","","","0","","","","","","","",\
+        "","","1","","","","5","","","","","10","","","","",\
+        "20","","30","40","50"/) 
 
     do j=0,1;dim_fc-1
         cod_est    := fc_vnp(j,16)
