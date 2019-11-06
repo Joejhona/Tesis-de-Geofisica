@@ -45,6 +45,9 @@ begin
     res@tmXBMode        = "Explicit"
     res@tmXBValues      = levels2
     res@tfPolyDrawOrder = "PreDraw"
+    res@mpShapeMode     = "FreeAspect"
+    res@vpWidthF        = 0.2
+    res@vpHeightF       = 0.8
     ;res@tmXBLabels      = tostring_with_format(levels2,"%3.1f")
     ;res@tmXBLabels      = (/"-50","","-30","","-20","","","","","-10",\
     ;    "","","","","-5","","","","-1","","","","",\
@@ -65,7 +68,7 @@ begin
             ;----- creando mapa ------;
             type    = "png"
             type@wkWidth     = 4000
-            type@wkHeight    = 8500
+            ;type@wkHeight    = 8500
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
             wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+cod_est)
