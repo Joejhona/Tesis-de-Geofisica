@@ -37,7 +37,7 @@ begin
     res@gsnFrame        = False                ; Don't advance frame
     res@trXMinF         = -50.0              ; bottom of X-scale
     res@trXMaxF         =  50.0  
-    res@xyMarkerColor   = (/"red","blue","red","blue"/)
+    res@xyMarkerColor   = "blue"
     ;res@tiMainString    = "Scatter Plot"           ; add title
     res@xyMarkLineModes = "Markers"                ; choose which have markers
     res@xyMarkers       =  16                      ; choose type of marker  
@@ -107,9 +107,17 @@ begin
                     poly(3*i+k) = gsn_add_polygon(wks,plot(3*i+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)       
                 end do
             end do
-            resP             = True
-            resP@gsnMaximize = True
+            resP                    = True
+            resP@gsnPanelMainString = "Anomalia WRF-SENAMHI "+fc_vnp(j,17)
+            resP@gsnPanelMainFontHeightF = 0.025 
+            resP@gsnMaximize        = True
+            resP@gsnFrame           = False
             gsn_panel(wks,plot,(/dimsizes(periodos),3/),resP)
+            txres3               = True             
+            txres3@txAngleF      = 90.          ; Rotate string clockwise 
+            txres3@txFontHeightF = 0.02
+            gsn_text_ndc(wks,"Altura de las Est. SENAMHI (msnm)",0.085,0.5,txres3)
+            frame(wks)
         end if
     end do
 end
