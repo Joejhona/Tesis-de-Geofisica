@@ -118,6 +118,7 @@ begin
             txres3@txFontHeightF = 0.01
             gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.35,0.5,txres3)
             frame(wks)
+            delete(wks)
         end if
     end do
 end
