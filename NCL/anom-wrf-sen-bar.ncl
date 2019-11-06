@@ -116,7 +116,7 @@ begin
             txres3               = True             
             txres3@txAngleF      = 90.          ; Rotate string clockwise 
             txres3@txFontHeightF = 0.01
-            gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.3,0.5,txres3)
+            gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.31,0.5,txres3)
             frame(wks)
         end if
     end do
