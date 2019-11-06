@@ -66,6 +66,7 @@ begin
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
             wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+cod_est)
             plot    = new(dimsizes(periodos)*3,graphic)
+            poly    = new(dimsizes(periodos)*3,graphic)
             do i=0,dimsizes(periodos)-1
                 periodo = periodos(i)
                 year    = stringtoint(str_get_cols(periodo,0,3))
@@ -86,7 +87,7 @@ begin
                     end getvalues    
                     gres             = True
                     gres@gsFillColor = "lightgray"
-                    poly       := gsn_add_polygon(wks,plot(3*i+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)       
+                    poly(3*i+k) = gsn_add_polygon(wks,plot(3*i+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)       
                 end do
             end do
             resP             = True
