@@ -29,8 +29,8 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
 
-    periodos := periodos(:9)
-    ;periodos := periodos(10:)
+    ;periodos := periodos(:9)
+    periodos := periodos(10:)
 
     res = True
     res@gsnDraw         = False                ; Don't draw plot 
@@ -57,6 +57,11 @@ begin
         "","","","","","","","","","","","10","","","","",\
         "20","","30","40","50"/) 
 
+    res@gsnXRefLine           = 0.              ; reference line   
+    res@gsnXYBarChart         = True            ; create bar chart 
+    res@gsnRightXRefLineColor = "red"           ; right of ref line fill red
+    res@gsnLeftXRefLineColor  = "blue"          ; left of ref line fill blue
+
     do j=0,dim_fc-1
         cod_est    := fc_vnp(j,16)
         id_est     := str_match_ind(fc_anom(:,20),cod_est)
@@ -68,10 +73,10 @@ begin
             type@wkHeight    = 8500
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+fc_vnp(j,16))
+            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+fc_vnp(j,16)+"-2018")
             plot   := new(dimsizes(periodos)*3,graphic)
             poly   := new(dimsizes(periodos)*3,graphic)
-            print("Plot---> "+isdefined("plot"))
+            ;print("Plot---> "+isdefined("plot"))
             do i=0,dimsizes(periodos)-1
                 periodo = periodos(i)
                 year    = stringtoint(str_get_cols(periodo,0,3))
@@ -88,7 +93,7 @@ begin
                         altura     := tofloat(fc_anom_2(id_fe,8))
                         ;print(fc_anom_2(id_fe,8)+"////"+anom)
                         if dimsizes(anom).ge.3 then
-                            print("encontradu--->"+fecha_s+" valores-->"+dimsizes(anom))
+                            ;print("encontradu--->"+fecha_s+" valores-->"+dimsizes(anom))
                             res@tiMainString    = ""
                             res@tiYAxisString   = ""
                             if (3*i+k).le.2 then
