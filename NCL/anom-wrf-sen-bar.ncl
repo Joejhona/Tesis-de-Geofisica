@@ -86,49 +86,49 @@ begin
                     anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))
                     altura     := tofloat(fc_anom_2(id_fe,8))
                     ;print(fc_anom_2(id_fe,8)+"////"+anom)
-                    if dimsizes(anom).eq.1 then
-                        anom   := array_append_record(anom,anom,0)
-                        altura := array_append_record(altura,altura,0)
+                    if dimsizes(anom).ge.3 then
+                        print("encontradu--->"+fecha_s+" valores-->"+dimsizes(anom))
+                        res@tiMainString    = ""
+                        res@tiYAxisString   = ""
+                        if (3*i+k).le.2 then
+                            res@tiMainString    = horas(k)
+                        end if
+                        if (3*i+k).eq.(3*i+2) then
+                            res@tiYAxisString       = fecha_s
+                            res@tiYAxisFontHeightF  = 0.04
+                            ;res@tiYAxisFontColor    = "navy"
+                            res@tiYAxisSide         = "right"
+                            res@tiYAxisAngleF       = 270
+                        end if
+                        ;plot(3*i+k)= gsn_csm_xy(wks,(/5./),(/40./),res)
+                        plot(3*i+k)= gsn_csm_xy(wks,anom,altura,res)  
+                        ;delete([/res@tiMainString,res@tiYAxisString/])
+                        ymin       := new(1,float)
+                        ymax       := new(1,float)
+                        getvalues plot(3*i+k)
+                            "trYMinF": ymin
+                            "trYMaxF": ymax
+                        end getvalues    
+                        gres             = True
+                        gres@gsFillColor = "lightgray"
+                        poly(3*i+k) = gsn_add_polygon(wks,plot(3*i+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)       
                     end if
-                    print("encontradu--->"+fecha_s+" valores-->"+dimsizes(anom))
-                    res@tiMainString    = ""
-                    res@tiYAxisString   = ""
-                    if (3*i+k).le.2 then
-                        res@tiMainString    = horas(k)
-                    end if
-                    if (3*i+k).eq.(3*i+2) then
-                        res@tiYAxisString       = fecha_s
-                        res@tiYAxisFontHeightF  = 0.04
-                        ;res@tiYAxisFontColor    = "navy"
-                        res@tiYAxisSide         = "right"
-                        res@tiYAxisAngleF       = 270
-                    end if
-                    ;plot(3*i+k)= gsn_csm_xy(wks,(/5./),(/40./),res)
-                    plot(3*i+k)= gsn_csm_xy(wks,anom,altura,res)  
-                    ;delete([/res@tiMainString,res@tiYAxisString/])
-                    ymin       := new(1,float)
-                    ymax       := new(1,float)
-                    getvalues plot(3*i+k)
-                        "trYMinF": ymin
-                        "trYMaxF": ymax
-                    end getvalues    
-                    gres             = True
-                    gres@gsFillColor = "lightgray"
-                    poly(3*i+k) = gsn_add_polygon(wks,plot(3*i+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)       
                 end do
             end do
-            resP                    = True
-            resP@gsnPanelMainString = "Anomalia WRF-SENAMHI "+fc_vnp(j,17)
-            resP@gsnPanelMainFontHeightF = 0.01 
-            resP@gsnMaximize        = True
-            resP@gsnFrame           = False
-            gsn_panel(wks,plot,(/dimsizes(periodos),3/),resP)
-            txres3               = True             
-            txres3@txAngleF      = 90.          ; Rotate string clockwise 
-            txres3@txFontHeightF = 0.01
-            gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.35,0.5,txres3)
-            frame(wks)
-	        delete(plot)
+            if (.not.all(ismissing(plot))) then
+                resP                    = True
+                resP@gsnPanelMainString = "Anomalia WRF-SENAMHI "+fc_vnp(j,17)
+                resP@gsnPanelMainFontHeightF = 0.01 
+                resP@gsnMaximize        = True
+                resP@gsnFrame           = False
+                gsn_panel(wks,plot,(/dimsizes(periodos),3/),resP)
+                txres3               = True             
+                txres3@txAngleF      = 90.          ; Rotate string clockwise 
+                txres3@txFontHeightF = 0.01
+                gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.35,0.5,txres3)
+                frame(wks)
+            end if
+            delete(plot)
             delete(wks)
         end if
     end do
