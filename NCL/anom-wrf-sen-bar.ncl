@@ -11,7 +11,8 @@ levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
 horas = (/"24 hrs","48 hrs","72 hrs"/)
 
 begin
-    f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP.csv"
+    ;f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP.csv"
+    f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP2.csv"
     fc_vnp     := asciiread(f_data_vnp,-1,"string")
     fc_vnp     := str_split_csv(fc_vnp(1:),",",0)
     dim_fc      = dimsizes(fc_vnp(:,0))
@@ -29,8 +30,8 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
 
-    ;periodos := periodos(:9)
-    periodos := periodos(10:)
+    ;periodos := periodos(:9)    ;----> 2017
+    periodos := periodos(10:)   ;----> 2018
 
     res = True
     res@gsnDraw         = False                ; Don't draw plot 
@@ -73,7 +74,7 @@ begin
             type@wkHeight    = 8500
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+fc_vnp(j,16)+"-2018")
+            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+fc_vnp(j,17)+"-2017")
             plot   := new(dimsizes(periodos)*3,graphic)
             poly   := new(dimsizes(periodos)*3,graphic)
             ;print("Plot---> "+isdefined("plot"))
@@ -132,7 +133,7 @@ begin
                 txres3               = True             
                 txres3@txAngleF      = 90.          ; Rotate string clockwise 
                 txres3@txFontHeightF = 0.01
-                gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.35,0.5,txres3)
+                gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.3,0.5,txres3)
                 frame(wks)
             end if
             delete(plot)
