@@ -80,10 +80,12 @@ begin
                 do k=0,2
                     t_se        = cd_inv_calendar(year,mes,dia+k,0,0,0,"days since 1971-1-1",0)
                     fecha_s     = cd_string(t_se,"%D-%N-%Y")
+                    ;print("encontrado--->"+fecha_s)
                     fc_anom_2  := fc_anom(id_est,:)
                     id_fe      := str_match_ind(fc_anom_2(:,1),fecha_s)
                     anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))
-                    print(fc_anom_2(id_fe,8)+"////"+anom)
+                    ;print(fc_anom_2(id_fe,8)+"////"+anom)
+		    print("encontradu--->"+fecha_s+" valores-->"+dimsizes(anom))
                     res@tiMainString    = ""
                     res@tiYAxisString   = ""
                     if (3*i+k).le.2 then
@@ -96,7 +98,8 @@ begin
                         res@tiYAxisSide         = "right"
                         res@tiYAxisAngleF       = 270
                     end if
-                    plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
+                    ;plot(3*i+k)= gsn_csm_xy(wks,(/5./),(/40./),res)
+                    plot(3*i+k)= gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
                     ;delete([/res@tiMainString,res@tiYAxisString/])
                     ymin       := new(1,float)
                     ymax       := new(1,float)
