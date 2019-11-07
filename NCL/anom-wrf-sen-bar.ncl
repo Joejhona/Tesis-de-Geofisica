@@ -42,16 +42,16 @@ begin
     res@xyMarkLineModes = "Markers"                ; choose which have markers
     res@xyMarkers       =  16                      ; choose type of marker  
     res@xyMarkerSizeF   = 0.01                     ; Marker size (default 0.01)
-    res@tmXBMode        = "Explicit"
-    res@tmXBValues      = levels2
-    res@tfPolyDrawOrder = "PreDraw"
+    ;res@tmXBMode        = "Explicit"
+    ;res@tmXBValues      = levels2
+    ;res@tfPolyDrawOrder = "PreDraw"
     ;res@tmXBLabels      = tostring_with_format(levels2,"%3.1f")
     ;res@tmXBLabels      = (/"-50","","-30","","-20","","","","","-10",\
     ;    "","","","","-5","","","","-1","","","","",\
     ;    "","","","","","0","","","","","","","",\
     ;    "","","1","","","","5","","","","","10","","","","",\
     ;    "20","","30","40","50"/) 
-    res@tmXBLabels      = (/"-50","","-30","","-20","","","","","-10",\
+    ;res@tmXBLabels      = (/"-50","","-30","","-20","","","","","-10",\
         "","","","","","","","","","","","","",\
         "","","","","","0","","","","","","","",\
         "","","","","","","","","","","","10","","","","",\
