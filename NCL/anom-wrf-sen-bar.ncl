@@ -82,32 +82,31 @@ begin
                     fecha_s     = cd_string(t_se,"%D-%N-%Y")
                     fc_anom_2  := fc_anom(id_est,:)
                     id_fe      := str_match_ind(fc_anom_2(:,1),fecha_s)
-		            if (.not.all(ismissing(id_fe))) then
-                        anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))
-                        res@tiMainString    = ""
-                        res@tiYAxisString   = ""
-                        if (3*i+k).le.2 then
-                            res@tiMainString    = horas(k)
-                        end if
-                        if (3*i+k).eq.(3*i+2) then
-                            res@tiYAxisString       = fecha_s
-                            res@tiYAxisFontHeightF  = 0.04
-                            ;res@tiYAxisFontColor    = "navy"
-                            res@tiYAxisSide         = "right"
-                            res@tiYAxisAngleF       = 270
-                        end if
-                        plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
-                        ;delete([/res@tiMainString,res@tiYAxisString/])
-                        ymin       := new(1,float)
-                        ymax       := new(1,float)
-                        getvalues plot(3*i+k)
-                            "trYMinF": ymin
-                            "trYMaxF": ymax
-                        end getvalues    
-                        gres             = True
-                        gres@gsFillColor = "lightgray"
-                        poly(3*i+k) = gsn_add_polygon(wks,plot(3*i+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)       
+                    print(fc_anom_2(id_fe,8))
+                    anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))
+                    res@tiMainString    = ""
+                    res@tiYAxisString   = ""
+                    if (3*i+k).le.2 then
+                        res@tiMainString    = horas(k)
                     end if
+                    if (3*i+k).eq.(3*i+2) then
+                        res@tiYAxisString       = fecha_s
+                        res@tiYAxisFontHeightF  = 0.04
+                        ;res@tiYAxisFontColor    = "navy"
+                        res@tiYAxisSide         = "right"
+                        res@tiYAxisAngleF       = 270
+                    end if
+                    plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
+                    ;delete([/res@tiMainString,res@tiYAxisString/])
+                    ymin       := new(1,float)
+                    ymax       := new(1,float)
+                    getvalues plot(3*i+k)
+                        "trYMinF": ymin
+                        "trYMaxF": ymax
+                    end getvalues    
+                    gres             = True
+                    gres@gsFillColor = "lightgray"
+                    poly(3*i+k) = gsn_add_polygon(wks,plot(3*i+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)       
                 end do
             end do
             resP                    = True
