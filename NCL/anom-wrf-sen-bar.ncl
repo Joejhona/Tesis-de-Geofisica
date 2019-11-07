@@ -71,6 +71,7 @@ begin
             wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+fc_vnp(j,16))
             plot   := new(dimsizes(periodos)*3,graphic)
             poly   := new(dimsizes(periodos)*3,graphic)
+            print("Plot---> "+isdefined("plot"))
             do i=0,dimsizes(periodos)-1
                 periodo = periodos(i)
                 year    = stringtoint(str_get_cols(periodo,0,3))
@@ -81,6 +82,7 @@ begin
                     fecha_s     = cd_string(t_se,"%D-%N-%Y")
                     fc_anom_2  := fc_anom(id_est,:)
                     id_fe      := str_match_ind(fc_anom_2(:,1),fecha_s)
+		    print(id_fe)
                     anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))
                     res@tiMainString    = ""
                     res@tiYAxisString   = ""
@@ -94,7 +96,7 @@ begin
                         res@tiYAxisSide         = "right"
                         res@tiYAxisAngleF       = 270
                     end if
-                    plot(3*i+k):= gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
+                    plot(3*i+k) = gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
                     ;delete([/res@tiMainString,res@tiYAxisString/])
                     ymin       := new(1,float)
                     ymax       := new(1,float)
@@ -118,6 +120,7 @@ begin
             txres3@txFontHeightF = 0.01
             gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.35,0.5,txres3)
             frame(wks)
+	    delete(plot)
             delete(wks)
         end if
     end do
