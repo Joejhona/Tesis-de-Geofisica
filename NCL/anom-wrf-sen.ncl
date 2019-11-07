@@ -464,6 +464,7 @@ begin
         resP@gsnPanelMainString = "Analisis de lluvia WRF-SENAMHI "+periodo
         resP@gsnPanelRowSpec    = True
         agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
+        agregando_shapefile2    = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
         gsn_panel(wks,plot,(/3,3,3/),resP)
 
         ;lbid := labelbar(wks,shadeplots)
