@@ -82,8 +82,8 @@ begin
                     fecha_s     = cd_string(t_se,"%D-%N-%Y")
                     fc_anom_2  := fc_anom(id_est,:)
                     id_fe      := str_match_ind(fc_anom_2(:,1),fecha_s)
-                    print(fc_anom_2(id_fe,8))
                     anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))
+                    print(fc_anom_2(id_fe,8)+"////"+anom)
                     res@tiMainString    = ""
                     res@tiYAxisString   = ""
                     if (3*i+k).le.2 then
