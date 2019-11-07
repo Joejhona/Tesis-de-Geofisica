@@ -74,7 +74,7 @@ begin
     horas = (/"24 hrs","48 hrs","72 hrs"/)
     dom = (/"-d01","_d01_"/)
     ;dom = (/"-d02","_d02_"/)
-    do j=0,1;dimsizes(periodos)-1
+    do j=0,dimsizes(periodos)-1
         periodo = periodos(j)
         year    = stringtoint(str_get_cols(periodo,0,3))
         mes     = stringtoint(str_get_cols(periodo,5,6))

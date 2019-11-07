@@ -30,8 +30,8 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
 
-    ;periodos := periodos(:9)    ;----> 2017
-    periodos := periodos(10:)   ;----> 2018
+    periodos := periodos(:9)    ;----> 2017
+    ;periodos := periodos(10:)   ;----> 2018
 
     res = True
     res@gsnDraw         = False                ; Don't draw plot 
