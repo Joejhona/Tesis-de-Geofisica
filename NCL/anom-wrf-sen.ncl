@@ -149,7 +149,6 @@ begin
         ;res@tmXBLabelStride     = 2
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----Extraendo datos wrf
-        ;dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
         dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/primera_corrida/"
         f_wrf   = addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
         ;f_wrf  := addfile(dirWRF+"wrfout_d01_"+periodo+"_00:00:00.nc", "r")

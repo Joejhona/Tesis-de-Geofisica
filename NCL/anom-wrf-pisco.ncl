@@ -1,14 +1,18 @@
 load "./panel_two_sets.ncl"
 
 ;============== %%%% SHAPES %%%% ==============
-dirP    = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/" ;--> ruta principal
-shp1    = "shapes/cuencas/VertientePacificoCentroNorte.shp" 
+dirP    = "/data/users/jticse/Tesis-Maestria/PREDATA/shapes/" ;--> ruta principal
+shp1    = "cuencas/VertientePacificoCentroNorte.shp" 
+shp2    = "Peru/Peru.shp" 
 shp1    = dirP+shp1     ;--> shape Vertiente Pacifico
+shp2    = dirP+shp2     ;--> shape Vertiente Pacifico
 ;---Detalles del shape---;
 shpres                  = True
 ;shpres@gsLineColor      = "red" ;--> color de linea
 shpres@gsLineColor      = "black" ;--> color de linea
 shpres@gsLineThicknessF = 3.     ;3.0   ;--> grosor de linea
+shpres2                 = shpres
+shpres2@gsLineThicknessF= 4.     ;3.0   ;--> grosor de linea
 
 ;============== %%%% LIMITES %%%% ==============
 ;---activar corners---;
@@ -50,7 +54,9 @@ levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
         20.,25.,30.,40.,50/) 
 ;color_paleta2 = "precip_diff_12lev";--> paleta 12 colores
 ;color_paleta2 = "WhBlReWh"
-color_paleta2 = "ViBlGrWhYeOrRe"
+;color_paleta2 = "ViBlGrWhYeOrRe"
+color_paleta2 = "MPL_BrBG"
+
 nlevels_color2= dimsizes(levels2) ;--> Cantidad de colores 
 colors2       = span_color_rgba(color_paleta2,nlevels_color2+1)
 
@@ -128,7 +134,7 @@ begin
         ;res@tmXBLabelStride     = 2
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----Extraendo y procesando datos wrf
-        dirWRF  = "/data/users/jticse/WRFV4/wrfout/periodos/"
+        dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/primera_corrida/"
         f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
         lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
         ;lat_w  := lat_w(:,0)
@@ -176,8 +182,8 @@ begin
             ;end do
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;-----Extraendo y procesando  datos pisco
-            dirPI   = "/data/users/jticse/data/piscopd-17-18/"  
-            fnc_pi  = addfile("/data/users/jticse/data/pisco21ppd_perc_e_MAR.nc","r")  
+            dirPI   = "/data/users/jticse/Tesis-Maestria/PREDATA/piscopd-17-18/"
+            fnc_pi  = addfile("/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/percentiles/pisco21ppd_perc_e_MAR.nc","r")  
             nc_pi   = fnc_pi->ppd_pi_e_per
             ;delete(res@tiYAxisString)
             ;delete(res@tiYAxisFontHeightF)
@@ -302,6 +308,8 @@ begin
         ;pres2@lbLabelFontHeightF = 0.01
     	agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     	agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
+        agregando_shapefile3      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
+    	agregando_shapefile4      = gsn_add_shapefile_polylines(wks,plot2,shp2,shpres2)
         panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)
     end do
 end
