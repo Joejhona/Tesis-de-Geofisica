@@ -84,12 +84,13 @@ begin
                     fc_anom_2  := fc_anom(id_est,:)
                     id_fe      := str_match_ind(fc_anom_2(:,1),fecha_s)
                     anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))
+                    altura     := tofloat(fc_anom_2(id_fe,8))
                     ;print(fc_anom_2(id_fe,8)+"////"+anom)
-		            print("encontradu--->"+fecha_s+" valores-->"+dimsizes(anom))
                     if dimsizes(anom).eq.1 then
-                        res@trYMinF         = 0              ; bottom of X-scale
-                        res@trYMaxF         = tofloat(fc_anom_2(id_fe,8))
+                        anom   := array_append_record(anom,anom,0)
+                        altura := array_append_record(altura,altura,0)
                     end if
+                    print("encontradu--->"+fecha_s+" valores-->"+dimsizes(anom))
                     res@tiMainString    = ""
                     res@tiYAxisString   = ""
                     if (3*i+k).le.2 then
@@ -103,7 +104,7 @@ begin
                         res@tiYAxisAngleF       = 270
                     end if
                     ;plot(3*i+k)= gsn_csm_xy(wks,(/5./),(/40./),res)
-                    plot(3*i+k)= gsn_csm_xy(wks,anom,tofloat(fc_anom_2(id_fe,8)),res)  
+                    plot(3*i+k)= gsn_csm_xy(wks,anom,altura,res)  
                     ;delete([/res@tiMainString,res@tiYAxisString/])
                     ymin       := new(1,float)
                     ymax       := new(1,float)
