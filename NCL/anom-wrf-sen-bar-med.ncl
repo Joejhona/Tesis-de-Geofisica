@@ -36,7 +36,7 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
 
-    periodos := periodos(:9)    ;----> 2017
+    ;periodos := periodos(:9)    ;----> 2017
     ;periodos := periodos(10:)   ;----> 2018
 
     res = True
@@ -80,52 +80,58 @@ begin
             ;type@wkHeight    = 600
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-AVG-2017-"+fc_vnp(j,17))
-            plot   := new(3,graphic)
-            poly   := new(3,graphic)
+            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-AVG-"+fc_vnp(j,17))
+            plot   := new(6,graphic)
+            poly   := new(6,graphic)
             ;print("Plot---> "+isdefined("plot"))
             do k=0,2
-                year   := stringtoint(str_get_cols(periodos,0,3))
-                mes    := stringtoint(str_get_cols(periodos,5,6))
-                dia    := stringtoint(str_get_cols(periodos,8,9))
-                hora   := dia
-                hora    = 0
-                minuto  = hora
-                seg     = minuto
-                t_se    = cd_inv_calendar(year,mes,dia+k,hora,minuto,seg,"days since 1971-1-1",0)
-                fecha_s = cd_string(t_se,"%D-%N-%Y")        ;---> fechas del primer periodo
-                fc_anom_2  := fc_anom(id_est,:)             ;---> anomalias de todas est de la cuenca todas las fechas
-                dim1        = count_unique_values(fc_anom_2(:,0)) 
-                dim1_get   := get_unique_values(fc_anom_2(:,0))     ;--> estaciones
-                dim2        = dimsizes(periodos)
-                fc_anom_3  := new((/dim1,dim2,2/),float)
-                do i=0,dimsizes(fc_anom_2(:,0))-1
-                    do m=0,dim1-1
-                        do l=0,dim2-1
-                            cond1 = fc_anom_2(i,0).eq.dim1_get(m)
-                            cond2 = fc_anom_2(i,1).eq.fecha_s(l)
-                            if cond1.and.cond2 then
-                                fc_anom_3(m,l,0) = tofloat(fc_anom_2(i,2))-tofloat(fc_anom_2(i,3))
-                                fc_anom_3(m,l,1) = tofloat(fc_anom_2(i,8))
-                            end if
+                do n=0,1
+                    periodo := periodos(:9)
+                    if n.eq.1 then
+                        periodo := periodos(10:)
+                    end if
+                    year   := stringtoint(str_get_cols(periodo,0,3))
+                    mes    := stringtoint(str_get_cols(periodo,5,6))
+                    dia    := stringtoint(str_get_cols(periodo,8,9))
+                    hora   := dia
+                    hora    = 0
+                    minuto  = hora
+                    seg     = minuto
+                    t_se    = cd_inv_calendar(year,mes,dia+k,hora,minuto,seg,"days since 1971-1-1",0)
+                    fecha_s = cd_string(t_se,"%D-%N-%Y")        ;---> fechas del primer periodo
+                    fc_anom_2  := fc_anom(id_est,:)             ;---> anomalias de todas est de la cuenca todas las fechas
+                    dim1        = count_unique_values(fc_anom_2(:,0)) 
+                    dim1_get   := get_unique_values(fc_anom_2(:,0))     ;--> estaciones
+                    dim2        = dimsizes(periodo)
+                    fc_anom_3  := new((/dim1,dim2,2/),float)
+                    do i=0,dimsizes(fc_anom_2(:,0))-1
+                        do m=0,dim1-1
+                            do l=0,dim2-1
+                                cond1 = fc_anom_2(i,0).eq.dim1_get(m)
+                                cond2 = fc_anom_2(i,1).eq.fecha_s(l)
+                                if cond1.and.cond2 then
+                                    fc_anom_3(m,l,0) = tofloat(fc_anom_2(i,2))-tofloat(fc_anom_2(i,3))
+                                    fc_anom_3(m,l,1) = tofloat(fc_anom_2(i,8))
+                                end if
+                            end do
                         end do
                     end do
+                    avg_anom   := dim_avg_n(fc_anom_3(:,:,0),1)
+                    altura     := dim_avg_n(fc_anom_3(:,:,1),1)
+                    if dimsizes(avg_anom).ge.3 then
+                        res@tiMainString    = horas(k)
+                        plot(3*n+k)  = gsn_csm_xy(wks,avg_anom,altura,res)  
+                        ymin       := new(1,float)
+                        ymax       := new(1,float)
+                        getvalues plot(3*n+k)
+                            "trYMinF": ymin
+                            "trYMaxF": ymax
+                        end getvalues    
+                        gres             = True
+                        gres@gsFillColor = "lightgray"
+                        poly(3*n+k) = gsn_add_polygon(wks,plot(3*n+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)
+                    end if
                 end do
-                avg_anom   := dim_avg_n(fc_anom_3(:,:,0),1)
-                altura     := dim_avg_n(fc_anom_3(:,:,1),1)
-                if dimsizes(avg_anom).ge.3 then
-                    res@tiMainString    = horas(k)
-                    plot(k)  = gsn_csm_xy(wks,avg_anom,altura,res)  
-                    ymin       := new(1,float)
-                    ymax       := new(1,float)
-                    getvalues plot(k)
-                        "trYMinF": ymin
-                        "trYMaxF": ymax
-                    end getvalues    
-                    gres             = True
-                    gres@gsFillColor = "lightgray"
-                    poly(k) = gsn_add_polygon(wks,plot(k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)
-                end if
             end do
             if (.not.all(ismissing(plot))) then
                 resP                    = True
@@ -135,7 +141,7 @@ begin
                 resP@gsnFrame           = False
                 resP@gsnPanelLeft  = 0.05	; shrink panel plot so that there is extra room for the left y-axis label
                 resP@gsnPanelRight = 0.95	; shrink panel plot so that there is extra room for the right y-axis label
-                gsn_panel(wks,plot,(/1,3/),resP)
+                gsn_panel(wks,plot,(/2,3/),resP)
                 txres3               = True             
                 txres3@txAngleF      = 90.          ; Rotate string clockwise 
                 txres3@txFontHeightF = 0.01
