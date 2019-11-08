@@ -51,9 +51,7 @@ begin
     res@xyMarkerSizeF   = 0.01                     ; Marker size (default 0.01)
     res@tmXBMode        = "Explicit"
     res@tmXBValues      = levels2
-    res@tfPolyDrawOrder = "PreDraw"
-    res@tiMainString    = ""
-    res@tiYAxisString   = ""    
+    res@tfPolyDrawOrder = "PreDraw"  
     ;res@tmXBLabels      = tostring_with_format(levels2,"%3.1f")
     ;res@tmXBLabels      = (/"-50","","-30","","-20","","","","","-10",\
     ;    "","","","","-5","","","","-1","","","","",\
@@ -88,6 +86,8 @@ begin
             ;print("Plot---> "+isdefined("plot"))
             do k=0,2
                 do n=0,1
+                    res@tiMainString    = ""
+                    res@tiYAxisString   = ""  
                     periodo := periodos(:9)
                     if n.eq.1 then
                         periodo := periodos(10:)
