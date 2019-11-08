@@ -53,9 +53,7 @@ begin
             plot   := new(9,graphic)
             poly   := new(9,graphic)
             ;print("Plot---> "+isdefined("plot"))
-            do k=0,2
-                ;res@tiMainString    = ""
-                ;res@tiYAxisString   = ""  
+            do k=0,2 
                 year   := stringtoint(str_get_cols(periodos,0,3))
                 mes    := stringtoint(str_get_cols(periodos,5,6))
                 dia    := stringtoint(str_get_cols(periodos,8,9))
@@ -118,30 +116,48 @@ begin
                 res                 = True
                 res@tmXBLabelAngleF = 45.                                           ; InclinaÃ§Ã£o do texto.
                 res@tmXBLabels      = dim1_get ; RÃ³tulos do eixo x.
-                res@tiMainString    = "Box plot default"                            ; TÃ­tulo da figura.
-                if (.not.all(ismissing(yval(0,:,:)))) then
+                res@trYMinF         = -50.0              ; bottom of X-scale
+                res@trYMaxF         =  50.0
+                res@tiYAxisFontHeightF  = 0.04
+                ;res@tiYAxisFontColor    = "navy"
+                res@tiYAxisSide         = "right"
+                res@tiYAxisAngleF       = 270
+                if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
+                    res@tiMainString    = horas(k)
+                    if k.eq.2 then
+                        res@tiYAxisString       = "2017"
+                    end if
                     plot(3*k) = boxplot(wks,x,yval(0,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
                 end if
-                if (.not.all(ismissing(yval(1,:,:)))) then
+                if (.not.all(ismissing(yval(1,:,:)))) then ;---> 2018
+                    res@tiMainString    = ""
+                    if k.eq.2 then
+                        res@tiYAxisString       = "2018"
+                    end if
                     plot(3*k+1) = boxplot(wks,x,yval(1,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
                 end if
-                if (.not.all(ismissing(yval(2,:,:)))) then
+                if (.not.all(ismissing(yval(2,:,:)))) then ;---> 2019
+                    res@tiMainString    = ""
+                    if k.eq.2 then
+                        res@tiYAxisString       = "Total"
+                    end if
                     plot(3*k+2) = boxplot(wks,x,yval(2,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
                 end if
             end do                
             if (.not.all(ismissing(plot))) then
                 resP                    = True
-                resP@gsnPanelMainString = "Anomalia Promedio WRF-SENAMHI "+fc_vnp(j,17)
+                resP@gsnPanelMainString = "Anomalia WRF-SENAMHI-Boxplot-"+fc_vnp(j,17)
                 resP@gsnPanelMainFontHeightF = 0.01 
                 resP@gsnMaximize        = True
                 resP@gsnFrame           = False
-                resP@gsnPanelLeft  = 0.05	; shrink panel plot so that there is extra room for the left y-axis label
-                resP@gsnPanelRight = 0.95	; shrink panel plot so that there is extra room for the right y-axis label
-                gsn_panel(wks,plot,(/2,3/),resP)
+                resP@gsnPanelLeft       = 0.05	; shrink panel plot so that there is extra room for the left y-axis label
+                resP@gsnPanelRight      = 0.95	; shrink panel plot so that there is extra room for the right y-axis label
+                resP@gsnPanelRowSpec    = True
+                gsn_panel(wks,plot,(/3,3,3/),resP)
                 txres3               = True             
                 txres3@txAngleF      = 90.          ; Rotate string clockwise 
                 txres3@txFontHeightF = 0.01
-                gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.025,0.5,txres3)
+                gsn_text_ndc(wks,"Anomalia",0.025,0.5,txres3)
                 frame(wks)
             end if
             delete(plot)
