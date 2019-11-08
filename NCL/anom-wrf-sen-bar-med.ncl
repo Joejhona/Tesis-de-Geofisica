@@ -12,18 +12,24 @@ horas = (/"24 hrs","48 hrs","72 hrs"/)
 
 begin
     ;f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP.csv"
-    f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP2.csv"
+    f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP2.csv"  ;---> estaciones y cuencas
     fc_vnp     := asciiread(f_data_vnp,-1,"string")
-    fc_vnp     := str_split_csv(fc_vnp(1:),",",0)       ;---> cuencas
-    dim_fc      = dimsizes(fc_vnp(:,0))
+    fc_vnp     := str_split_csv(fc_vnp(1:),",",0)       
+    dim_fc_vnp  = dimsizes(fc_vnp(:,0))
     dq = str_get_dq()
     fc_vnp     := str_sub_str(fc_vnp,dq,"")
 
-    f_data_anom = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/anom-wrf-sen.csv"
+    f_data_anom = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/anom-wrf-sen.csv"  ;---> registro de lluvia 
     fc_anom    := asciiread(f_data_anom,-1,"string")
     fc_anom    := str_split_csv(fc_anom(1:),",",0)
     ;dim_fc      = dimsizes(fc_anom(:,0))
     fc_anom    := str_sub_str(fc_anom,dq,"")
+
+    f_data_se   = "/data/users/jticse/Tesis-Maestria/PREDATA/senamhi-17-18.csv"     ;---> registro de est-sen 
+    fc_sen     := asciiread(f_data_se,-1,"string")
+
+    fc_sen     := str_split_csv(fc_sen(1:),",",0)
+    dim_fc_sen  = dimsizes(fc_sen(:,0))
 
     periodos:= (/"2017-01-14","2017-01-21","2017-01-24","2017-01-30","2017-02-02",\
         "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
@@ -63,9 +69,9 @@ begin
     ;res@gsnRightXRefLineColor = "red"           ; right of ref line fill red
     ;res@gsnLeftXRefLineColor  = "blue"          ; left of ref line fill blue
 
-    do j=0,dim_fc-1
+    do j=0,dim_fc_vnp-1
         cod_est    := fc_vnp(j,16)                          ;--> codigo de las estaciones 
-        id_est     := str_match_ind(fc_anom(:,20),cod_est)  ;--> array de estaciones
+        id_est     := str_match_ind(fc_anom(:,20),cod_est)  ;--> array de estaciones dentro de la cuenca
         if (.not.all(ismissing(id_est))) then
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;----- creando mapa ------;
@@ -74,7 +80,7 @@ begin
             type@wkHeight    = 8500
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-"+fc_vnp(j,17)+"-2017")
+            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-AVG-2017-"+fc_vnp(j,17))
             plot   := new(3,graphic)
             poly   := new(3,graphic)
             ;print("Plot---> "+isdefined("plot"))
@@ -87,76 +93,51 @@ begin
                 minuto  = hora
                 seg     = minuto
                 t_se    = cd_inv_calendar(year,mes,dia+k,hora,minuto,seg,"days since 1971-1-1",0)
-                fecha_s = cd_string(t_se,"%D-%N-%Y")
-                fc_anom_2  := fc_anom(id_est,:)             ;---> anomalias de todas es est de la cuenca
-                id_fe   = new(dimsizes(fecha_s),integer)
-                do i=0,dimsizes(fecha_s)-1
-                    id_fe(i) = str_match_ind(fc_anom_2(:,1),fecha_s(i)) 
-                end do
-                
-            end do
-        end if
-    end do
-
-
-
-
-            do i=0,dimsizes(periodos)-1                             ;---> para cada periodo
-                periodo = periodos(i)                               
-                year    = stringtoint(str_get_cols(periodo,0,3))
-                mes     = stringtoint(str_get_cols(periodo,5,6))
-                dia     = stringtoint(str_get_cols(periodo,8,9))
-                do k=0,2
-                    t_se        = cd_inv_calendar(year,mes,dia+k,0,0,0,"days since 1971-1-1",0)
-                    fecha_s     = cd_string(t_se,"%D-%N-%Y")
-                    ;print("encontrado--->"+fecha_s)
-                    fc_anom_2  := fc_anom(id_est,:)
-                    id_fe      := str_match_ind(fc_anom_2(:,1),fecha_s)
-                    if (.not.all(ismissing(id_fe))) then
-                        anom       := tofloat(fc_anom_2(id_fe,2))-tofloat(fc_anom_2(id_fe,3))
-                        altura     := tofloat(fc_anom_2(id_fe,8))
-                        ;print(fc_anom_2(id_fe,8)+"////"+anom)
-                        if dimsizes(anom).ge.3 then
-                            ;print("encontradu--->"+fecha_s+" valores-->"+dimsizes(anom))
-                            res@tiMainString    = ""
-                            res@tiYAxisString   = ""
-                            if (3*i+k).le.2 then
-                                res@tiMainString    = horas(k)
+                fecha_s = cd_string(t_se,"%D-%N-%Y")        ;---> fechas del primer periodo
+                fc_anom_2  := fc_anom(id_est,:)             ;---> anomalias de todas est de la cuenca todas las fechas
+                dim1        = count_unique_values(fc_anom_2(:,0)) 
+                dim1_get    = get_unique_values(fc_anom_2(:,0))     ;--> estaciones
+                dim2        = dimsizes(periodos)
+                fc_anom_3  := new((/dim1,dim2,2/),float)
+                do i=0,dimsizes(fc_anom_2(:,0))-1
+                    do m=0,dim1-1
+                        do l=0,dim2-1
+                            cond1 = fc_anom_2(i,0).eq.dim1_get(m)
+                            cond2 = fc_anom_2(i,1).eq.fecha_s(l)
+                            if cond1.and.cond2 then
+                                fc_anom_3(m,l,0) = tofloat(fc_anom_2(i,2))-tofloat(fc_anom_2(i,3))
+                                fc_anom_3(m,l,1) = tofloat(fc_anom_2(i,8))
                             end if
-                            if (3*i+k).eq.(3*i+2) then
-                                res@tiYAxisString       = fecha_s
-                                res@tiYAxisFontHeightF  = 0.04
-                                ;res@tiYAxisFontColor    = "navy"
-                                res@tiYAxisSide         = "right"
-                                res@tiYAxisAngleF       = 270
-                            end if
-                            ;plot(3*i+k)= gsn_csm_xy(wks,(/5./),(/40./),res)
-                            plot(3*i+k)= gsn_csm_xy(wks,anom,altura,res)  
-                            ;delete([/res@tiMainString,res@tiYAxisString/])
-                            ymin       := new(1,float)
-                            ymax       := new(1,float)
-                            getvalues plot(3*i+k)
-                                "trYMinF": ymin
-                                "trYMaxF": ymax
-                            end getvalues    
-                            gres             = True
-                            gres@gsFillColor = "lightgray"
-                            poly(3*i+k) = gsn_add_polygon(wks,plot(3*i+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)       
-                        end if
-                    end if
+                        end do
+                    end do
                 end do
+                avg_anom = dim_avg_n(fc_anom_3(:,:,0),1)
+                altura   = dim_avg_n(fc_anom_3(:,:,1),1)
+                if dimsizes(avg_anom).ge.3 then
+                    res@tiMainString    = horas(k)
+                    plot(k)  = gsn_csm_xy(wks,avg_anom,altura,res)  
+                    ymin       := new(1,float)
+                    ymax       := new(1,float)
+                    getvalues plot(k)
+                        "trYMinF": ymin
+                        "trYMaxF": ymax
+                    end getvalues    
+                    gres             = True
+                    gres@gsFillColor = "lightgray"
+                    poly(k) = gsn_add_polygon(wks,plot(k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)
+                end if
             end do
             if (.not.all(ismissing(plot))) then
                 resP                    = True
-                resP@gsnPanelMainString = "Anomalia WRF-SENAMHI "+fc_vnp(j,17)
+                resP@gsnPanelMainString = "Anomalia Promedio WRF-SENAMHI "+fc_vnp(j,17)
                 resP@gsnPanelMainFontHeightF = 0.01 
                 resP@gsnMaximize        = True
                 resP@gsnFrame           = False
-                gsn_panel(wks,plot,(/dimsizes(periodos),3/),resP)
+                gsn_panel(wks,plot,(/1,3/),resP)
                 txres3               = True             
                 txres3@txAngleF      = 90.          ; Rotate string clockwise 
                 txres3@txFontHeightF = 0.01
-                gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.3,0.5,txres3)
+                gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.085,0.5,txres3)
                 frame(wks)
             end if
             delete(plot)
