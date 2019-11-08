@@ -118,6 +118,7 @@ begin
                     end do
                     avg_anom   := dim_avg_n(fc_anom_3(:,:,0),1)
                     altura     := dim_avg_n(fc_anom_3(:,:,1),1)
+                    print(avg_anom)
                     if dimsizes(avg_anom).ge.3 then
                         res@tiMainString    = horas(k)
                         plot(3*n+k)  = gsn_csm_xy(wks,avg_anom,altura,res)  
