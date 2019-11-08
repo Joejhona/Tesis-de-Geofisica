@@ -97,23 +97,23 @@ begin
                 end do
                 yval      = new((/3,dim1,5/),float,-999.)
                 do q=0,dim1-1
-                    yval(0,q,0) = stat(1,q,2) ; Tamanho da haste inferior.
-                    yval(0,q,1) = stat(1,q,7) ; Primeiro quartil.
-                    yval(0,q,2) = stat(1,q,8) ; Mediana.
-                    yval(0,q,3) = stat(1,q,11) ; Terceiro quartil.
-                    yval(0,q,4) = stat(1,q,14) ; Tamanho da haste superior.
+                    yval(0,q,0) = stat(0,q,2) ; Tamanho da haste inferior.
+                    yval(0,q,1) = stat(0,q,7) ; Primeiro quartil.
+                    yval(0,q,2) = stat(0,q,8) ; Mediana.
+                    yval(0,q,3) = stat(0,q,11) ; Terceiro quartil.
+                    yval(0,q,4) = stat(0,q,14) ; Tamanho da haste superior.
                     yval(1,q,0) = stat(1,q,2) ; Tamanho da haste inferior.
                     yval(1,q,1) = stat(1,q,7) ; Primeiro quartil.
                     yval(1,q,2) = stat(1,q,8) ; Mediana.
                     yval(1,q,3) = stat(1,q,11) ; Terceiro quartil.
                     yval(1,q,4) = stat(1,q,14) ; Tamanho da haste superior.
-                    yval(2,q,0) = stat(1,q,2) ; Tamanho da haste inferior.
-                    yval(2,q,1) = stat(1,q,7) ; Primeiro quartil.
-                    yval(2,q,2) = stat(1,q,8) ; Mediana.
-                    yval(2,q,3) = stat(1,q,11) ; Terceiro quartil.
-                    yval(2,q,4) = stat(1,q,14) ; Tamanho da haste superior.    
+                    yval(2,q,0) = stat(2,q,2) ; Tamanho da haste inferior.
+                    yval(2,q,1) = stat(2,q,7) ; Primeiro quartil.
+                    yval(2,q,2) = stat(2,q,8) ; Mediana.
+                    yval(2,q,3) = stat(2,q,11) ; Terceiro quartil.
+                    yval(2,q,4) = stat(2,q,14) ; Tamanho da haste superior.    
                 end do
-		print(yval)
+		        print(yval)
                 x = ispan(1,dim1,1) ; Valores para o eixo x.
                 res                 = True
                 res@tmXBLabelAngleF = 45.                                           ; InclinaÃ§Ã£o do texto.
@@ -121,18 +121,12 @@ begin
                 res@tiMainString    = "Box plot default"                            ; TÃ­tulo da figura.
                 if (.not.all(ismissing(yval(0,:,:)))) then
                     plot(3*k) = boxplot(wks,x,yval(0,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
-		    draw(wks)
-		    frame(wks)
                 end if
                 if (.not.all(ismissing(yval(1,:,:)))) then
                     plot(3*k+1) = boxplot(wks,x,yval(1,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
-                    draw(wks)
-                    frame(wks)
                 end if
                 if (.not.all(ismissing(yval(2,:,:)))) then
                     plot(3*k+2) = boxplot(wks,x,yval(2,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
-                    draw(wks)
-                    frame(wks)
                 end if
             end do                
             if (.not.all(ismissing(plot))) then
