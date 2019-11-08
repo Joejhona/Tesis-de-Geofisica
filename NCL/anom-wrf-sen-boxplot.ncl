@@ -150,16 +150,16 @@ begin
                 resP@gsnPanelMainString = "Anomalia WRF-SENAMHI-Boxplot-"+fc_vnp(j,17)
                 resP@gsnPanelMainFontHeightF = 0.01 
                 resP@gsnMaximize        = True
-                resP@gsnFrame           = False
+                ;resP@gsnFrame           = False
                 resP@gsnPanelLeft       = 0.05	; shrink panel plot so that there is extra room for the left y-axis label
                 resP@gsnPanelRight      = 0.95	; shrink panel plot so that there is extra room for the right y-axis label
                 ;resP@gsnPanelRowSpec    = True
                 gsn_panel(wks,plot,(/3,3/),resP)
-                txres3               = True             
-                txres3@txAngleF      = 90.          ; Rotate string clockwise 
-                txres3@txFontHeightF = 0.01
-                gsn_text_ndc(wks,"Anomalia",0.025,0.5,txres3)
-                frame(wks)
+                ;txres3               = True             
+                ;txres3@txAngleF      = 90.          ; Rotate string clockwise 
+                ;txres3@txFontHeightF = 0.01
+                ;gsn_text_ndc(wks,"Anomalia",0.025,0.5,txres3)
+                ;frame(wks)
             end if
             delete(plot)
             delete(wks)
