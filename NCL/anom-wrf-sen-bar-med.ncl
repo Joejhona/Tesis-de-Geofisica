@@ -95,8 +95,8 @@ begin
                     dia    := stringtoint(str_get_cols(periodo,8,9))
                     hora   := dia
                     hora    = 0
-                    minuto  = hora
-                    seg     = minuto
+                    minuto := hora
+                    seg    := minuto
                     t_se    = cd_inv_calendar(year,mes,dia+k,hora,minuto,seg,"days since 1971-1-1",0)
                     fecha_s = cd_string(t_se,"%D-%N-%Y")        ;---> fechas del primer periodo
                     fc_anom_2  := fc_anom(id_est,:)             ;---> anomalias de todas est de la cuenca todas las fechas
