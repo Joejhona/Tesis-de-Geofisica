@@ -96,7 +96,7 @@ begin
                 fecha_s = cd_string(t_se,"%D-%N-%Y")        ;---> fechas del primer periodo
                 fc_anom_2  := fc_anom(id_est,:)             ;---> anomalias de todas est de la cuenca todas las fechas
                 dim1        = count_unique_values(fc_anom_2(:,0)) 
-                dim1_get    = get_unique_values(fc_anom_2(:,0))     ;--> estaciones
+                dim1_get   := get_unique_values(fc_anom_2(:,0))     ;--> estaciones
                 dim2        = dimsizes(periodos)
                 fc_anom_3  := new((/dim1,dim2,2/),float)
                 do i=0,dimsizes(fc_anom_2(:,0))-1
@@ -111,8 +111,8 @@ begin
                         end do
                     end do
                 end do
-                avg_anom = dim_avg_n(fc_anom_3(:,:,0),1)
-                altura   = dim_avg_n(fc_anom_3(:,:,1),1)
+                avg_anom   := dim_avg_n(fc_anom_3(:,:,0),1)
+                altura     := dim_avg_n(fc_anom_3(:,:,1),1)
                 if dimsizes(avg_anom).ge.3 then
                     res@tiMainString    = horas(k)
                     plot(k)  = gsn_csm_xy(wks,avg_anom,altura,res)  
