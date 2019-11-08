@@ -52,6 +52,8 @@ begin
     res@tmXBMode        = "Explicit"
     res@tmXBValues      = levels2
     res@tfPolyDrawOrder = "PreDraw"
+    res@tiMainString    = ""
+    res@tiYAxisString   = ""    
     ;res@tmXBLabels      = tostring_with_format(levels2,"%3.1f")
     ;res@tmXBLabels      = (/"-50","","-30","","-20","","","","","-10",\
     ;    "","","","","-5","","","","-1","","","","",\
@@ -120,7 +122,19 @@ begin
                     altura     := dim_avg_n(fc_anom_3(:,:,1),1)
                     if (.not.all(ismissing(avg_anom))) then
                         if dimsizes(avg_anom).ge.3 then
-                            res@tiMainString    = horas(k)
+                            if (3*n+k).le.2 then
+                                res@tiMainString    = horas(k)
+                            end if
+                            if (3*n+k).eq.2 then
+                                res@tiYAxisString       = "2017"    
+                            end if
+                            if (3*n+k).eq.5 then
+                                res@tiYAxisString       = "2018"    
+                            end if
+                            res@tiYAxisFontHeightF  = 0.04
+                            ;res@tiYAxisFontColor    = "navy"
+                            res@tiYAxisSide         = "right"
+                            res@tiYAxisAngleF       = 270
                             plot(3*n+k)  = gsn_csm_xy(wks,avg_anom,altura,res)  
                             ymin       := new(1,float)
                             ymax       := new(1,float)
@@ -131,6 +145,7 @@ begin
                             gres             = True
                             gres@gsFillColor = "lightgray"
                             poly(3*n+k) = gsn_add_polygon(wks,plot(3*n+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)
+
                         end if
                     end if
                 end do
