@@ -122,26 +122,27 @@ begin
                 ;res@tiYAxisFontColor    = "navy"
                 res@tiYAxisSide         = "right"
                 res@tiYAxisAngleF       = 270
+                res@tiYAxisString       = ""
                 if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
                     res@tiMainString    = horas(k)
                     if k.eq.2 then
                         res@tiYAxisString       = "2017"
                     end if
-                    plot(3*k) = boxplot(wks,x,yval(0,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
+                    plot(k) = boxplot(wks,x,yval(0,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
                 end if
                 if (.not.all(ismissing(yval(1,:,:)))) then ;---> 2018
                     res@tiMainString    = ""
                     if k.eq.2 then
                         res@tiYAxisString       = "2018"
                     end if
-                    plot(3*k+1) = boxplot(wks,x,yval(1,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
+                    plot(k+3) = boxplot(wks,x,yval(1,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
                 end if
                 if (.not.all(ismissing(yval(2,:,:)))) then ;---> 2019
                     res@tiMainString    = ""
                     if k.eq.2 then
                         res@tiYAxisString       = "Total"
                     end if
-                    plot(3*k+2) = boxplot(wks,x,yval(2,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
+                    plot(k+6) = boxplot(wks,x,yval(2,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
                 end if
             end do                
             if (.not.all(ismissing(plot))) then
@@ -152,8 +153,8 @@ begin
                 resP@gsnFrame           = False
                 resP@gsnPanelLeft       = 0.05	; shrink panel plot so that there is extra room for the left y-axis label
                 resP@gsnPanelRight      = 0.95	; shrink panel plot so that there is extra room for the right y-axis label
-                resP@gsnPanelRowSpec    = True
-                gsn_panel(wks,plot,(/3,3,3/),resP)
+                ;resP@gsnPanelRowSpec    = True
+                gsn_panel(wks,plot,(/3,3/),resP)
                 txres3               = True             
                 txres3@txAngleF      = 90.          ; Rotate string clockwise 
                 txres3@txFontHeightF = 0.01
