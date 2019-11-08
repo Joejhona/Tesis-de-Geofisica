@@ -69,7 +69,7 @@ begin
     ;res@gsnRightXRefLineColor = "red"           ; right of ref line fill red
     ;res@gsnLeftXRefLineColor  = "blue"          ; left of ref line fill blue
 
-    do j=0,dim_fc_vnp-1
+    do j=0,1;dim_fc_vnp-1
         cod_est    := fc_vnp(j,16)                          ;--> codigo de las estaciones 
         id_est     := str_match_ind(fc_anom(:,20),cod_est)  ;--> array de estaciones dentro de la cuenca
         if (.not.all(ismissing(id_est))) then
@@ -77,7 +77,7 @@ begin
             ;----- creando mapa ------;
             type    = "png"
             type@wkWidth     = 1000
-            ;type@wkHeight    = 8500
+            ;type@wkHeight    = 600
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
             wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-AVG-2017-"+fc_vnp(j,17))
@@ -133,13 +133,13 @@ begin
                 resP@gsnPanelMainFontHeightF = 0.01 
                 resP@gsnMaximize        = True
                 resP@gsnFrame           = False
-                resP@gsnPanelLeft  = 0.1	; shrink panel plot so that there is extra room for the left y-axis label
-                ;resP@gsnPanelRight = 0.9	; shrink panel plot so that there is extra room for the right y-axis label
+                resP@gsnPanelLeft  = 0.05	; shrink panel plot so that there is extra room for the left y-axis label
+                resP@gsnPanelRight = 0.95	; shrink panel plot so that there is extra room for the right y-axis label
                 gsn_panel(wks,plot,(/1,3/),resP)
                 txres3               = True             
                 txres3@txAngleF      = 90.          ; Rotate string clockwise 
                 txres3@txFontHeightF = 0.01
-                gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.085,0.5,txres3)
+                gsn_text_ndc(wks,"Altura Est. SENAMHI (msnm)",0.025,0.5,txres3)
                 frame(wks)
             end if
             delete(plot)
