@@ -145,7 +145,6 @@ begin
                             gres             = True
                             gres@gsFillColor = "lightgray"
                             poly(3*n+k) = gsn_add_polygon(wks,plot(3*n+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)
-
                         end if
                     end if
                 end do
