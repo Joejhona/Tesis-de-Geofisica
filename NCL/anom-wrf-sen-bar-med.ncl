@@ -118,19 +118,20 @@ begin
                     end do
                     avg_anom   := dim_avg_n(fc_anom_3(:,:,0),1)
                     altura     := dim_avg_n(fc_anom_3(:,:,1),1)
-                    print(avg_anom)
-                    if dimsizes(avg_anom).ge.3 then
-                        res@tiMainString    = horas(k)
-                        plot(3*n+k)  = gsn_csm_xy(wks,avg_anom,altura,res)  
-                        ymin       := new(1,float)
-                        ymax       := new(1,float)
-                        getvalues plot(3*n+k)
-                            "trYMinF": ymin
-                            "trYMaxF": ymax
-                        end getvalues    
-                        gres             = True
-                        gres@gsFillColor = "lightgray"
-                        poly(3*n+k) = gsn_add_polygon(wks,plot(3*n+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)
+                    if (.not.all(ismissing(avg_anom))) then
+                        if dimsizes(avg_anom).ge.3 then
+                            res@tiMainString    = horas(k)
+                            plot(3*n+k)  = gsn_csm_xy(wks,avg_anom,altura,res)  
+                            ymin       := new(1,float)
+                            ymax       := new(1,float)
+                            getvalues plot(3*n+k)
+                                "trYMinF": ymin
+                                "trYMaxF": ymax
+                            end getvalues    
+                            gres             = True
+                            gres@gsFillColor = "lightgray"
+                            poly(3*n+k) = gsn_add_polygon(wks,plot(3*n+k),(/-5.,5.,5.,-5.,-5./),(/ymin,ymin,ymax,ymax,ymin/),gres)
+                        end if
                     end if
                 end do
             end do
