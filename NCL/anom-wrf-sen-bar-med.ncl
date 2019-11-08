@@ -76,8 +76,8 @@ begin
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;----- creando mapa ------;
             type    = "png"
-            type@wkWidth     = 4000
-            type@wkHeight    = 8500
+            type@wkWidth     = 1000
+            ;type@wkHeight    = 8500
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
             wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-AVG-2017-"+fc_vnp(j,17))
@@ -133,6 +133,8 @@ begin
                 resP@gsnPanelMainFontHeightF = 0.01 
                 resP@gsnMaximize        = True
                 resP@gsnFrame           = False
+                resP@gsnPanelLeft  = 0.1	; shrink panel plot so that there is extra room for the left y-axis label
+                ;resP@gsnPanelRight = 0.9	; shrink panel plot so that there is extra room for the right y-axis label
                 gsn_panel(wks,plot,(/1,3/),resP)
                 txres3               = True             
                 txres3@txAngleF      = 90.          ; Rotate string clockwise 
