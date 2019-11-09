@@ -38,15 +38,15 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
 
-    do j=0,1;dim_fc_vnp-1
+    do j=0,dim_fc_vnp-1
         cod_est    := fc_vnp(j,16)                          ;--> codigo de las estaciones 
         id_est     := str_match_ind(fc_anom(:,20),cod_est)  ;--> array de estaciones dentro de la cuenca
         if (.not.all(ismissing(id_est))) then
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
             ;----- creando mapa ------;
             type    = "png"
-            type@wkWidth     = 1000
-            ;type@wkHeight    = 600
+            type@wkWidth     = 2000
+            type@wkHeight    = 2000
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
             wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-BOX-"+fc_vnp(j,17))
@@ -93,7 +93,7 @@ begin
                     stat(1,p,:) = stat_dispersion(fc_anom_3(p,:,1,0),opt) ;----> 2018
                     stat(2,p,:) = stat_dispersion(fc_anom_3(p,:,:,0),opt) ;----> 2017 y 2018
                 end do
-                yval      = new((/3,dim1,5/),float,-999.)
+                yval     := new((/3,dim1,5/),float,-999.)
                 do q=0,dim1-1
                     yval(0,q,0) = stat(0,q,2) ; Tamanho da haste inferior.
                     yval(0,q,1) = stat(0,q,7) ; Primeiro quartil.
@@ -112,10 +112,10 @@ begin
                     yval(2,q,4) = stat(2,q,14) ; Tamanho da haste superior.    
                 end do
 		        print(yval)
-                x = ispan(1,dim1,1) ; Valores para o eixo x.
+                x := ispan(1,dim1,1) ; Valores para o eixo x.
                 res                 = True
-                res@tmXBLabelAngleF = 45.                                           ; InclinaÃ§Ã£o do texto.
-                res@tmXBLabels      = dim1_get ; RÃ³tulos do eixo x.
+                res@tmXBLabelAngleF = 90.                                           ; InclinaÃ§Ã£o do texto.
+                res@tmXBLabels     := dim1_get ; RÃ³tulos do eixo x.
                 res@trYMinF         = -50.0              ; bottom of X-scale
                 res@trYMaxF         =  50.0
                 res@tiYAxisFontHeightF  = 0.04
