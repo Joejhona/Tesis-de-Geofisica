@@ -49,13 +49,13 @@ begin
             ;type@wkHeight    = 600
             ;type    = "x11"
             dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-AVG-"+fc_vnp(j,17))
+            wks     = gsn_open_wks(type,dirS+"anom-WRF-SE-CU-BOX-"+fc_vnp(j,17))
             plot   := new(9,graphic)
             poly   := new(9,graphic)
             ;print("Plot---> "+isdefined("plot"))
             do k=0,2
-                res@tiMainString    = ""
-                res@tiYAxisString   = ""  
+                ;res@tiMainString    = ""
+                ;res@tiYAxisString   = ""  
                 year   := stringtoint(str_get_cols(periodos,0,3))
                 mes    := stringtoint(str_get_cols(periodos,5,6))
                 dia    := stringtoint(str_get_cols(periodos,8,9))
@@ -79,7 +79,7 @@ begin
                             if stringtoint(str_get_cols(fecha_s(l),6,9)).eq.2018
                                 n=1
                             end if
-                            print(n+"--->"+str_get_cols(fecha_s(l),6,9))
+                            ;print(n+"--->"+str_get_cols(fecha_s(l),6,9))
                             if cond1.and.cond2 then
                                 fc_anom_3(m,l,n,0) = tofloat(fc_anom_2(i,2))-tofloat(fc_anom_2(i,3))
                                 fc_anom_3(m,l,n,1) = tofloat(fc_anom_2(i,8))
@@ -88,7 +88,7 @@ begin
                     end do
                 end do
                 opt             = True ; Habilita personalizaÃ§Ã£o da estatÃ­stica.
-                opt@PrintStat   = True ; Mostra na tela o resultado da estÃ¡tistica da funÃ§Ã£o stat_dispersion. 
+                ;opt@PrintStat   = True ; Mostra na tela o resultado da estÃ¡tistica da funÃ§Ã£o stat_dispersion. 
                 stat := new((/3,dim1,30/),float)
                 do p=0,dim1-1
                     stat(0,p,:) = stat_dispersion(fc_anom_3(p,:,0,0),opt) ;----> 2017
@@ -113,6 +113,7 @@ begin
                     yval(2,q,3) = stat(1,q,11) ; Terceiro quartil.
                     yval(2,q,4) = stat(1,q,14) ; Tamanho da haste superior.    
                 end do
+		print(yval)
                 x = ispan(1,dim1,1) ; Valores para o eixo x.
                 res                 = True
                 res@tmXBLabelAngleF = 45.                                           ; InclinaÃ§Ã£o do texto.
@@ -120,12 +121,18 @@ begin
                 res@tiMainString    = "Box plot default"                            ; TÃ­tulo da figura.
                 if (.not.all(ismissing(yval(0,:,:)))) then
                     plot(3*k) = boxplot(wks,x,yval(0,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
+		    draw(wks)
+		    frame(wks)
                 end if
                 if (.not.all(ismissing(yval(1,:,:)))) then
                     plot(3*k+1) = boxplot(wks,x,yval(1,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
+                    draw(wks)
+                    frame(wks)
                 end if
                 if (.not.all(ismissing(yval(2,:,:)))) then
                     plot(3*k+2) = boxplot(wks,x,yval(2,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
+                    draw(wks)
+                    frame(wks)
                 end if
             end do                
             if (.not.all(ismissing(plot))) then
