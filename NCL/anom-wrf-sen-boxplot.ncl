@@ -14,7 +14,8 @@ horas = (/"24 hrs","48 hrs","72 hrs"/)
 
 begin
     ;f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP.csv"
-    f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP2.csv"  ;---> estaciones y cuencas
+    ;f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP2.csv"  ;---> estaciones y cuencas
+    f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP3.csv"  ;---> estaciones y cuencas
     fc_vnp     := asciiread(f_data_vnp,-1,"string")
     fc_vnp     := str_split_csv(fc_vnp(1:),",",0)       
     dim_fc_vnp  = dimsizes(fc_vnp(:,0))
@@ -123,15 +124,15 @@ begin
                 res@tiYAxisSide         = "right"
                 res@tiYAxisAngleF       = 270
                 res@tiYAxisString       = ""
-		opti          	= True			
-  		opti@boxWidth 	= 1.2				; Width of box (x units)
-  		opti@boxColors	= "blue"  	; Color of box(es)
+		        opti          	= True			
+  		        opti@boxWidth 	= 1.0				; Width of box (x units)
+  		        opti@boxColors	= "blue"  	; Color of box(es)
                 if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
                     res@tiMainString    = horas(k)
                     if k.eq.2 then
                         res@tiYAxisString       = "2017"
                     end if
-                    plot(k) = boxplot(wks,x,yval(0,:,:),False,opti,False) ; GeraÃ§Ã£o do boxplot.
+                    plot(k) = boxplot(wks,x,yval(0,:,:),opti,res,False) ; GeraÃ§Ã£o do boxplot.
                 end if
                 if (.not.all(ismissing(yval(1,:,:)))) then ;---> 2018
                     res@tiMainString    = ""
