@@ -127,26 +127,28 @@ begin
 		        opti          	= True			
   		        opti@boxWidth 	= 0.8				; Width of box (x units)
   		        opti@boxColors	= "blue"  	; Color of box(es)
+                llres                   = True			
+                llres@gsLineThicknessF  = 2.5                 ; line thickness 
                 if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
                     res@tiMainString    = horas(k)
                     if k.eq.2 then
                         res@tiYAxisString       = "2017"
                     end if
-                    plot(k) = boxplot(wks,x,yval(0,:,:),opti,res,False) ; GeraÃ§Ã£o do boxplot.
+                    plot(k) = boxplot(wks,x,yval(0,:,:),opti,res,llres) ; GeraÃ§Ã£o do boxplot.
                 end if
                 if (.not.all(ismissing(yval(1,:,:)))) then ;---> 2018
                     res@tiMainString    = ""
                     if k.eq.2 then
                         res@tiYAxisString       = "2018"
                     end if
-                    plot(k+3) = boxplot(wks,x,yval(1,:,:),opti,res,False) ; GeraÃ§Ã£o do boxplot.
+                    plot(k+3) = boxplot(wks,x,yval(1,:,:),opti,res,llres) ; GeraÃ§Ã£o do boxplot.
                 end if
                 if (.not.all(ismissing(yval(2,:,:)))) then ;---> 2019
                     res@tiMainString    = ""
                     if k.eq.2 then
                         res@tiYAxisString       = "Total"
                     end if
-                    plot(k+6) = boxplot(wks,x,yval(2,:,:),opti,res,False) ; GeraÃ§Ã£o do boxplot.
+                    plot(k+6) = boxplot(wks,x,yval(2,:,:),opti,res,llres) ; GeraÃ§Ã£o do boxplot.
                 end if
             end do                
             if (.not.all(ismissing(plot))) then
