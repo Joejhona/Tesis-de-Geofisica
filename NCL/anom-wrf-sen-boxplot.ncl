@@ -38,7 +38,7 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
 
-    do j=0,dim_fc_vnp-1
+    do j=0,1;dim_fc_vnp-1
         cod_est    := fc_vnp(j,16)                          ;--> codigo de las estaciones 
         id_est     := str_match_ind(fc_anom(:,20),cod_est)  ;--> array de estaciones dentro de la cuenca
         if (.not.all(ismissing(id_est))) then
@@ -123,26 +123,29 @@ begin
                 res@tiYAxisSide         = "right"
                 res@tiYAxisAngleF       = 270
                 res@tiYAxisString       = ""
+		opti          	= True			
+  		opti@boxWidth 	= 1.2				; Width of box (x units)
+  		opti@boxColors	= "blue"  	; Color of box(es)
                 if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
                     res@tiMainString    = horas(k)
                     if k.eq.2 then
                         res@tiYAxisString       = "2017"
                     end if
-                    plot(k) = boxplot(wks,x,yval(0,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
+                    plot(k) = boxplot(wks,x,yval(0,:,:),False,opti,False) ; GeraÃ§Ã£o do boxplot.
                 end if
                 if (.not.all(ismissing(yval(1,:,:)))) then ;---> 2018
                     res@tiMainString    = ""
                     if k.eq.2 then
                         res@tiYAxisString       = "2018"
                     end if
-                    plot(k+3) = boxplot(wks,x,yval(1,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
+                    plot(k+3) = boxplot(wks,x,yval(1,:,:),opti,res,False) ; GeraÃ§Ã£o do boxplot.
                 end if
                 if (.not.all(ismissing(yval(2,:,:)))) then ;---> 2019
                     res@tiMainString    = ""
                     if k.eq.2 then
                         res@tiYAxisString       = "Total"
                     end if
-                    plot(k+6) = boxplot(wks,x,yval(2,:,:),False,res,False) ; GeraÃ§Ã£o do boxplot.
+                    plot(k+6) = boxplot(wks,x,yval(2,:,:),opti,res,False) ; GeraÃ§Ã£o do boxplot.
                 end if
             end do                
             if (.not.all(ismissing(plot))) then
