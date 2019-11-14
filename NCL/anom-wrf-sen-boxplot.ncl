@@ -39,7 +39,7 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
 
-    do j=0,1;dim_fc_vnp-1
+    do j=0,dim_fc_vnp-1
         cod_est    := fc_vnp(j,16)                          ;--> codigo de las estaciones 
         id_est     := str_match_ind(fc_anom(:,20),cod_est)  ;--> array de estaciones dentro de la cuenca
         if (.not.all(ismissing(id_est))) then
@@ -125,7 +125,7 @@ begin
                 res@tiYAxisAngleF       = 270
                 res@tiYAxisString       = ""
 		        opti          	= True			
-  		        opti@boxWidth 	= 1.0				; Width of box (x units)
+  		        opti@boxWidth 	= 0.8				; Width of box (x units)
   		        opti@boxColors	= "blue"  	; Color of box(es)
                 if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
                     res@tiMainString    = horas(k)
