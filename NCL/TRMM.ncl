@@ -26,20 +26,22 @@ begin
 ; User Input
 ;***************************************************************
                                              ; INPUT
-   diri   = "./"                             ; input directory
-   fili   = "3B42.030901.0.6.HDF"            ; binary uncompressed
+   ;diri   = "./"                             ; input directory
+   ;fili   = "3B42.030901.0.6.HDF"            ; binary uncompressed
+   diri   = "/data/users/jticse/Tesis-Maestria/PREDATA/TRMM_3B42_3H_25_FEB_2019/"                             ; input directory
+   fili   = "3B42.20190225.03.7.HDF"            ; binary uncompressed
                                              ; OUTPUT
    netCDF = True                             ; generate netCDF file
    PLOT   = True                             ; generate plots
 
    if (netCDF) then
-       ncDir   = "./"                        ; directory for netCDF output
-       ncFil   = "3B42.030901.0.6.nc"        ; netCDF name output
+       ncDir   = "/data/users/jticse/Tesis-Maestria/PREDATA/TRMM_3B42_3H_25_FEB_2019/"                        ; directory for netCDF output
+       ncFil   = "3B42.20190225.03.7.nc"        ; netCDF name output
        ncPack  = True                        ; True=>create "short"; False=>float
    end if
 
    if (PLOT) then
-       pltDir  = "./"                        ; directory for plot output
+       pltDir  = "/data/users/jticse/Tesis-Maestria/PREDATA/TRMM_3B42_3H_25_FEB_2019/"                        ; directory for plot output
        pltName = "hdf4sds"                   ; plot name
        pltType = "png"                       ; send graphics to PNG file
    end if
@@ -50,20 +52,21 @@ begin
 ; Miscellaneous: Parse the file name to extract strings/ date info
 ;***************************************************************
    filc        = stringtochar( fili ) 
-   yy_str      = chartostring(filc(5: 6))     ; "yy" 
-   mon_str     = chartostring(filc(7: 8))     ; "mon" 
-   dd_str      = chartostring(filc(9:10))     ; "dd" 
-   tst_str     = chartostring(filc(13))       ; test for "."
-   if (tst_str.eq.".") then                   ; hour of day
-       hh_str  = "0"+chartostring(filc(12))   ; "00", "03", "06", "09"
-   else
-       hh_str  = chartostring(filc(12:13))    ; "12", ..., "21"
-   end if
+   yy_str      = chartostring(filc(5:8))     ; "yy" 
+   mon_str     = chartostring(filc(9:10))     ; "mon" 
+   dd_str      = chartostring(filc(11:12))     ; "dd" 
+   hh_str      = chartostring(filc(14:15))    ; "12", ..., "21"
+   ;tst_str     = chartostring(filc(13))       ; test for "."
+   ;if (tst_str.eq.".") then                   ; hour of day
+   ;    hh_str  = "0"+chartostring(filc(12))   ; "00", "03", "06", "09"
+   ;else
+   ;    hh_str  = chartostring(filc(12:13))    ; "12", ..., "21"
+   ;end if
 
-   yyyy        = stringtoint( yy_str ) + 2000 ; full year
-   mm          = stringtoint( mon_str )       ; month
-   dd          = stringtoint( dd_str )        ; day  of month
-   hh          = stringtoint( hh_str )
+   yyyy        = stringtoint(yy_str)        ; full year
+   mm          = stringtoint(mon_str)       ; month
+   dd          = stringtoint(dd_str)        ; day  of month
+   hh          = stringtoint(hh_str)
 
 ;***************************************************************
 ; Read hdf 
@@ -73,7 +76,7 @@ begin
 ; Use NCL's dimension reordering syntax to accomplish this
 ;***************************************************************
 
-   f      = addfile (diri+fili, "r")
+   f      = addfile (diri+fili,"r")
    work   = f->precipitation                   ; (scan, longitude, latitude)
    prc    = work(scan|:,latitude|:,longitude|:)
    work   = f->relativeError       
