@@ -30,8 +30,8 @@ precip      = prc({min_lat_p:max_lat_p},{min_lon_p:max_lon_p})
 size        = dimsizes(precip)
 
 dirCSV      = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/"
-file       := str_sub_str(fili,".","-")
-csv_file    = file+".csv"
+fili2       := str_sub_str(fili,".","-")
+csv_file    = fili2+".csv"
 dq          = str_get_dq()
 fields      = (/"lat","lon","precip"/)
 fields      = dq + fields + dq
