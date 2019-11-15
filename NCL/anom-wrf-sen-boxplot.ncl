@@ -40,7 +40,7 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
 
-    do j=0,3;dim_fc_vnp-1
+    do j=0,dim_fc_vnp-1
         cod_est    := fc_vnp(j,16)                          ;--> codigo de las estaciones 
         id_est     := str_match_ind(fc_anom(:,20),cod_est)  ;--> array de estaciones dentro de la cuenca
         if (.not.all(ismissing(id_est))) then
@@ -136,7 +136,7 @@ begin
                 res@tmXBLabels := ninguno
                 if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
                     res@tiMainString    = horas(k)
-                    res@trYMinF         = min(yval(0,:,0))*1.1              ; bottom of X-scale
+                    res@trYMinF         = min(yval(0,:,0))*1.2              ; bottom of X-scale
                     res@trYMaxF         = max(yval(0,:,4))
                     if k.eq.2 then
                         res@tiYAxisString       = "2017"
@@ -145,7 +145,7 @@ begin
                 end if
                 if (.not.all(ismissing(yval(1,:,:)))) then ;---> 2018
                     res@tiMainString    = ""
-                    res@trYMinF         = min(yval(1,:,0))*1.1              ; bottom of X-scale
+                    res@trYMinF         = min(yval(1,:,0))*1.2              ; bottom of X-scale
                     res@trYMaxF         = max(yval(1,:,4))
                     if k.eq.2 then
                         res@tiYAxisString       = "2018"
@@ -154,10 +154,10 @@ begin
                 end if
                 if (.not.all(ismissing(yval(2,:,:)))) then ;---> Total
                     res@tiMainString    = ""
-                    res@trYMinF         = min(yval(2,:,0))*1.1              ; bottom of X-scale
+                    res@trYMinF         = min(yval(2,:,0))*1.2              ; bottom of X-scale
                     res@trYMaxF         = max(yval(2,:,4))
                     res@tmXBLabels     := dim1_get ; RÃ³tulos do eixo x.
-                    res@tmXBMajorLengthF = 0.02
+                    ;res@tmXBMajorLengthF = 0.02
                     if k.eq.2 then
                         res@tiYAxisString       = "Total"
                     end if
