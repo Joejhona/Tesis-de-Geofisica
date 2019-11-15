@@ -16,18 +16,22 @@ begin
     ;f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP.csv"
     ;f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP2.csv"  ;---> estaciones y cuencas
     ;f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP3.csv"  ;---> estaciones y cuencas
-    f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP4.csv"  ;---> estaciones y cuencas
+    f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP4.csv"  ;---> listado de cuencas
     fc_vnp     := asciiread(f_data_vnp,-1,"string")
     fc_vnp     := str_split_csv(fc_vnp(1:),",",0)       
     dim_fc_vnp  = dimsizes(fc_vnp(:,0))
     dq = str_get_dq()
     fc_vnp     := str_sub_str(fc_vnp,dq,"")
 
-    f_data_anom = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/anom-wrf-sen.csv"  ;---> registro de lluvia 
+    f_data_anom = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/anom-wrf-sen.csv"  ;---> registro de lluvia de cada estacion
     fc_anom    := asciiread(f_data_anom,-1,"string")
     fc_anom    := str_split_csv(fc_anom(1:),",",0)
     ;dim_fc      = dimsizes(fc_anom(:,0))
     fc_anom    := str_sub_str(fc_anom,dq,"")
+    anular      = (/"109091"/)
+    id_anular   = str_match_ind(fc_anom(:,0),anular)
+    fc_anom(id_anular,20) = "anulado"
+
 
     f_data_se   = "/data/users/jticse/Tesis-Maestria/PREDATA/senamhi-17-18.csv"     ;---> registro de est-sen 
     fc_sen     := asciiread(f_data_se,-1,"string")
@@ -41,7 +45,7 @@ begin
         "2018-03-05","2018-03-17","2018-03-22"/)
 
     do j=0,3;dim_fc_vnp-1
-        cod_est    := fc_vnp(j,16)                          ;--> codigo de las estaciones 
+        cod_est    := fc_vnp(j,16)                          ;--> codigo de la cuenca 
         id_est     := str_match_ind(fc_anom(:,20),cod_est)  ;--> array de estaciones dentro de la cuenca
         if (.not.all(ismissing(id_est))) then
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
