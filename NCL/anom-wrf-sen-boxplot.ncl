@@ -133,7 +133,7 @@ begin
                 llres@gsLineThicknessF  = 3.5                 ; line thickness 
                 ninguno := dim1_get
                 ninguno = ""
-                res@tmXBLabels  = ninguno
+                res@tmXBLabels := ninguno
                 if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
                     res@tiMainString    = horas(k)
                     res@trYMinF         = min(yval(0,:,0))*1.1              ; bottom of X-scale
