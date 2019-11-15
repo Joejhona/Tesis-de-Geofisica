@@ -134,7 +134,7 @@ begin
                 llres@gsLineThicknessF  = 3.5                 ; line thickness 
                 if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
                     res@tiMainString    = horas(k)
-                    res@trYMinF         = min(yval(0,:,0))-10              ; bottom of X-scale
+                    res@trYMinF         = min(yval(0,:,0))*1.1              ; bottom of X-scale
                     res@trYMaxF         = max(yval(0,:,4))
                     if k.eq.2 then
                         res@tiYAxisString       = "2017"
@@ -143,7 +143,7 @@ begin
                 end if
                 if (.not.all(ismissing(yval(1,:,:)))) then ;---> 2018
                     res@tiMainString    = ""
-                    res@trYMinF         = min(yval(1,:,0))-10              ; bottom of X-scale
+                    res@trYMinF         = min(yval(1,:,0))*1.1              ; bottom of X-scale
                     res@trYMaxF         = max(yval(1,:,4))
                     if k.eq.2 then
                         res@tiYAxisString       = "2018"
@@ -152,7 +152,7 @@ begin
                 end if
                 if (.not.all(ismissing(yval(2,:,:)))) then ;---> Total
                     res@tiMainString    = ""
-                    res@trYMinF         = min(yval(2,:,0))-10              ; bottom of X-scale
+                    res@trYMinF         = min(yval(2,:,0))*1.1              ; bottom of X-scale
                     res@trYMaxF         = max(yval(2,:,4))
                     if k.eq.2 then
                         res@tiYAxisString       = "Total"
