@@ -15,7 +15,8 @@ horas = (/"24 hrs","48 hrs","72 hrs"/)
 begin
     ;f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP.csv"
     ;f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP2.csv"  ;---> estaciones y cuencas
-    f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP3.csv"  ;---> estaciones y cuencas
+    ;f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP3.csv"  ;---> estaciones y cuencas
+    f_data_vnp  = "/data/users/jticse/Tesis-Maestria/SALIDAS/csv/VNP4.csv"  ;---> estaciones y cuencas
     fc_vnp     := asciiread(f_data_vnp,-1,"string")
     fc_vnp     := str_split_csv(fc_vnp(1:),",",0)       
     dim_fc_vnp  = dimsizes(fc_vnp(:,0))
