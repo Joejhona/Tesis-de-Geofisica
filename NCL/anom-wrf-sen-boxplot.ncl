@@ -117,8 +117,8 @@ begin
                 res                 = True
                 res@tmXBLabelAngleF = 90.                                           ; InclinaÃ§Ã£o do texto.
                 res@tmXBLabels     := dim1_get ; RÃ³tulos do eixo x.
-                res@trYMinF         = -50.0              ; bottom of X-scale
-                res@trYMaxF         =  50.0
+                ;res@trYMinF         = -50.0              ; bottom of X-scale
+                ;res@trYMaxF         =  50.0
                 res@tiYAxisFontHeightF  = 0.04
                 ;res@tiYAxisFontColor    = "navy"
                 res@tiYAxisSide         = "right"
@@ -128,9 +128,11 @@ begin
   		        opti@boxWidth 	= 0.8				; Width of box (x units)
   		        opti@boxColors	= "blue"  	; Color of box(es)
                 llres                   = True			
-                llres@gsLineThicknessF  = 2.5                 ; line thickness 
+                llres@gsLineThicknessF  = 3.5                 ; line thickness 
                 if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
                     res@tiMainString    = horas(k)
+                    res@trYMinF         = min(yval(0,:,2))              ; bottom of X-scale
+                    res@trYMaxF         = max(yval(0,:,14))
                     if k.eq.2 then
                         res@tiYAxisString       = "2017"
                     end if
@@ -138,13 +140,17 @@ begin
                 end if
                 if (.not.all(ismissing(yval(1,:,:)))) then ;---> 2018
                     res@tiMainString    = ""
+                    res@trYMinF         = min(yval(1,:,2))              ; bottom of X-scale
+                    res@trYMaxF         = max(yval(1,:,14))
                     if k.eq.2 then
                         res@tiYAxisString       = "2018"
                     end if
                     plot(k+3) = boxplot(wks,x,yval(1,:,:),opti,res,llres) ; GeraÃ§Ã£o do boxplot.
                 end if
-                if (.not.all(ismissing(yval(2,:,:)))) then ;---> 2019
+                if (.not.all(ismissing(yval(2,:,:)))) then ;---> Total
                     res@tiMainString    = ""
+                    res@trYMinF         = min(yval(2,:,2))              ; bottom of X-scale
+                    res@trYMaxF         = max(yval(2,:,14))
                     if k.eq.2 then
                         res@tiYAxisString       = "Total"
                     end if
