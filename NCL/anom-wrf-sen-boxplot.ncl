@@ -136,7 +136,6 @@ begin
                     res@trYMinF         = min(yval(0,:,0))*1.1              ; bottom of X-scale
                     res@trYMaxF         = max(yval(0,:,4))
                     res@tmXBLabelsOn    = False
-                    res@tmXBMajorLengthF = 0.02
                     if k.eq.2 then
                         res@tiYAxisString       = "2017"
                     end if
@@ -158,6 +157,7 @@ begin
                     res@trYMaxF         = max(yval(2,:,4))
                     res@tmXBLabelsOn    = True
                     res@tmXBLabels     := dim1_get ; RÃ³tulos do eixo x.
+                    res@tmXBMajorLengthF = 0.02
                     if k.eq.2 then
                         res@tiYAxisString       = "Total"
                     end if
