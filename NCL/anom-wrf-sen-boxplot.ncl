@@ -131,11 +131,13 @@ begin
   		        opti@boxColors	= "blue"  	; Color of box(es)
                 llres                   = True			
                 llres@gsLineThicknessF  = 3.5                 ; line thickness 
+                ninguno = dim1_get
+                ninguno = ""
+                res@tmXBLabels  = ninguno
                 if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
                     res@tiMainString    = horas(k)
                     res@trYMinF         = min(yval(0,:,0))*1.1              ; bottom of X-scale
                     res@trYMaxF         = max(yval(0,:,4))
-                    res@tmXBLabelsOn    = False
                     if k.eq.2 then
                         res@tiYAxisString       = "2017"
                     end if
@@ -145,7 +147,6 @@ begin
                     res@tiMainString    = ""
                     res@trYMinF         = min(yval(1,:,0))*1.1              ; bottom of X-scale
                     res@trYMaxF         = max(yval(1,:,4))
-                    res@tmXBLabelsOn    = False ; RÃ³tulos do eixo x.
                     if k.eq.2 then
                         res@tiYAxisString       = "2018"
                     end if
@@ -155,7 +156,6 @@ begin
                     res@tiMainString    = ""
                     res@trYMinF         = min(yval(2,:,0))*1.1              ; bottom of X-scale
                     res@trYMaxF         = max(yval(2,:,4))
-                    res@tmXBLabelsOn    = True
                     res@tmXBLabels     := dim1_get ; RÃ³tulos do eixo x.
                     res@tmXBMajorLengthF = 0.02
                     if k.eq.2 then
