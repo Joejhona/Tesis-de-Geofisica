@@ -40,7 +40,7 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
 
-    do j=0,dim_fc_vnp-1
+    do j=0,3;dim_fc_vnp-1
         cod_est    := fc_vnp(j,16)                          ;--> codigo de las estaciones 
         id_est     := str_match_ind(fc_anom(:,20),cod_est)  ;--> array de estaciones dentro de la cuenca
         if (.not.all(ismissing(id_est))) then
@@ -113,7 +113,9 @@ begin
                     yval(2,q,3) = stat(2,q,11) ; Terceiro quartil.
                     yval(2,q,4) = stat(2,q,14) ; Tamanho da haste superior.    
                 end do
-		        print(yval)
+		;        print(yval)
+		print(min(yval(0,:,0)))
+		print(max(yval(0,:,4)))
                 x := ispan(1,dim1,1) ; Valores para o eixo x.
                 res                 = True
                 res@tmXBLabelAngleF = 90.                                           ; InclinaÃ§Ã£o do texto.
@@ -132,8 +134,8 @@ begin
                 llres@gsLineThicknessF  = 3.5                 ; line thickness 
                 if (.not.all(ismissing(yval(0,:,:)))) then ;---> 2017
                     res@tiMainString    = horas(k)
-                    res@trYMinF         = min(yval(0,:,2))              ; bottom of X-scale
-                    res@trYMaxF         = max(yval(0,:,14))
+                    res@trYMinF         = min(yval(0,:,0))              ; bottom of X-scale
+                    res@trYMaxF         = max(yval(0,:,4))
                     if k.eq.2 then
                         res@tiYAxisString       = "2017"
                     end if
@@ -141,8 +143,8 @@ begin
                 end if
                 if (.not.all(ismissing(yval(1,:,:)))) then ;---> 2018
                     res@tiMainString    = ""
-                    res@trYMinF         = min(yval(1,:,2))              ; bottom of X-scale
-                    res@trYMaxF         = max(yval(1,:,14))
+                    res@trYMinF         = min(yval(1,:,0))              ; bottom of X-scale
+                    res@trYMaxF         = max(yval(1,:,4))
                     if k.eq.2 then
                         res@tiYAxisString       = "2018"
                     end if
@@ -150,8 +152,8 @@ begin
                 end if
                 if (.not.all(ismissing(yval(2,:,:)))) then ;---> Total
                     res@tiMainString    = ""
-                    res@trYMinF         = min(yval(2,:,2))              ; bottom of X-scale
-                    res@trYMaxF         = max(yval(2,:,14))
+                    res@trYMinF         = min(yval(2,:,0))              ; bottom of X-scale
+                    res@trYMaxF         = max(yval(2,:,4))
                     if k.eq.2 then
                         res@tiYAxisString       = "Total"
                     end if

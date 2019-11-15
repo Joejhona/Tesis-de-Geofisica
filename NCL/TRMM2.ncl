@@ -2,13 +2,13 @@ begin
 
 diri        = "/data/users/jticse/Tesis-Maestria/PREDATA/TRMM_3B42_3H_25_FEB_2019/"                             ; input directory
 ;fili        = "3B42.20190225.03.7.HDF"            ; binary uncompressed
-fili        = "3B42.20190225.06.7.HDF"            ; binary uncompressed
+;fili        = "3B42.20190225.06.7.HDF"            ; binary uncompressed
 ;fili        = "3B42.20190225.09.7.HDF"            ; binary uncompressed
 ;fili        = "3B42.20190225.12.7.HDF"            ; binary uncompressed
 ;fili        = "3B42.20190225.15.7.HDF"            ; binary uncompressed
 ;fili        = "3B42.20190225.18.7.HDF"            ; binary uncompressed
 ;fili        = "3B42.20190225.21.7.HDF"            ; binary uncompressed
-;fili        = "3B42.20190226.00.7.HDF"
+fili        = "3B42.20190226.00.7.HDF"
 f           = addfile (diri+fili,"r")
 work        = f->precipitation                   ; (scan, longitude, latitude)
 prc         = work(nlat|:,nlon|:)
