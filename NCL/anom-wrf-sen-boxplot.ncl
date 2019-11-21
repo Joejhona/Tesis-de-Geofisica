@@ -44,13 +44,8 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
 
-<<<<<<< HEAD
     do j=0,dim_fc_vnp-1
-        cod_est    := fc_vnp(j,16)                          ;--> codigo de las estaciones 
-=======
-    do j=0,3;dim_fc_vnp-1
         cod_est    := fc_vnp(j,16)                          ;--> codigo de la cuenca 
->>>>>>> 7c1a2e0eabf76c21f74ff2e846eee80929297576
         id_est     := str_match_ind(fc_anom(:,20),cod_est)  ;--> array de estaciones dentro de la cuenca
         if (.not.all(ismissing(id_est))) then
             ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
