@@ -42,8 +42,8 @@ begin
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
     horas = (/"24 hrs","48 hrs","72 hrs"/)
-    dom = (/"-d01","_d01_","d01"/)
-    ;dom = (/"-d02","_d02_"/)
+    ;dom = (/"-d01","_d01_","d01"/)
+    dom = (/"-d02","_d02_","d02"/)
     ;----------- WRF
     dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/primera_corrida/"
     f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodos(0)+"_00:00:00.nc", "r")
