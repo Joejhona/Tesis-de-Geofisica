@@ -48,7 +48,7 @@ begin
     dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/primera_corrida/"
     f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodos(0)+"_00:00:00.nc", "r")
     dim_wrf = wrf_user_getvar(f_wrf,"RAINC",-1)
-    dim_wrf = dimsizes(dim_wrf)
+    dim_wrf:= dimsizes(dim_wrf)
     lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
     lat_w  := lat_w(:,0)
     lon_w  := wrf_user_getvar(f_wrf,"XLONG",0)
@@ -183,4 +183,4 @@ begin
     fout->wrf   = (/var01/)
     fout->pisco = (/var02/)
 
-end do
+end
