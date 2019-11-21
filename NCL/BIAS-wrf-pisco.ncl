@@ -154,7 +154,7 @@ begin
     var02&lat   = lat
     var02&lon   = lon
     var02&hrs   = hrs
-    var02@long_name = "WRF"+dom(0)
+    var02@long_name = "PISCO"
     var02@units = "mm/dia"
 
     dims        = dimsizes(var01)
@@ -180,7 +180,7 @@ begin
     fout->lat   = (/var01&lat/)
     fout->lon   = (/var01&lon/)
     fout->hrs   = (/var01&hrs/)
-    fout->wrf   = (/var01/)
-    fout->pisco = (/var02/)
+    fout->var01 = (/var01/)
+    fout->var02 = (/var02/)
 
 end
