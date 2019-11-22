@@ -49,8 +49,8 @@ begin
     type    = "png"
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-    type@wkWidth     = 3500
-    type@wkHeight    = 4000             
+    type@wkWidth     = 1750
+    type@wkHeight    = 2000             
     wks     = gsn_open_wks(type,dirS+"bias-year-"+wrf@long_name+"vsPISCO")   
     plot    = new(9,graphic)
      ;----- agregando detalles al mapa -----;
@@ -148,8 +148,8 @@ begin
     resP@pmLabelBarHeightF  = 0.9
     resP@gsnPanelMainString = "BIAS "+wrf@long_name+"&PISCO"
     resP@gsnPanelRowSpec    = True
-    resP@lbLabelFontHeightF = 0.01
-    resP@pmLabelBarOrthogonalPosF = 0.04
+    resP@lbLabelFontHeightF = 0.012
+    resP@pmLabelBarOrthogonalPosF = 0.035
     agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2    = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
     gsn_panel(wks,plot,(/3,3,3/),resP)
