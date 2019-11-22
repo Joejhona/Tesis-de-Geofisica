@@ -60,9 +60,9 @@ begin
     type    = "png"
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-    type@wkWidth     = 7000
-    type@wkHeight    = 8000             
-    wks     = gsn_open_wks(type,dirS+"bias-WRF-PISCO")   
+    type@wkWidth     = 3500
+    type@wkHeight    = 4000             
+    wks     = gsn_open_wks(type,dirS+"bias-"+wrf@long_name+"-PISCO")   
     plot    = new(6,graphic)
     plot2   = new(3,graphic)
 
@@ -171,7 +171,7 @@ begin
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.6
-    pres1@gsnPanelMainString = "BIAS WRF-PISCO"
+    pres1@gsnPanelMainString = "BIAS "+wrf@long_name+"-PISCO"
     pres2 = True
     pres2@gsnMaximize        = True
     pres2@gsnPanelLabelBar   = True                ; add common colorbar
