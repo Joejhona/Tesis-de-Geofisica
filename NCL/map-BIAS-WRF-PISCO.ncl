@@ -43,8 +43,8 @@ color_paleta2 = "MPL_BrBG"
 
 begin
     dirBIAS = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/"
-    ;f_bias  = "bias-wrfd01-pisco.nc"
-    f_bias  = "bias-wrfd02-pisco.nc"
+    f_bias  = "bias-wrfd01-pisco.nc"
+    ;f_bias  = "bias-wrfd02-pisco.nc"
 
     f_bias := addfile(dirBIAS+f_bias,"r")
 
