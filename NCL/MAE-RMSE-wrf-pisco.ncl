@@ -21,12 +21,19 @@ min_lon_n = -84.
 max_lon_n = -75.
 ;============== %%%% COLORES %%%% ==============    
 levels = (/1.,2.,3.,4.,5.,6.,7.,\
-    8.,9.,10.,15.,20.,25.,30.,35.,\
-    40.,45.,50.,55.,60.,65.,\
+    8.,9.,10.,11.,12.,13.,14.,\
+    15.,16.,17.,18.,19.,20.,\
+    25.,30.,35.,40.,45.,50.,55.,60.,65.,\
     70.,75.,80.,85.,90.,95.,100.,125.,\
-    150.,175.,200.,225.,250.,300.,350.,\
-    400.,450.,500.,600.,700./)
-color_paleta = "MPL_terrain"
+    150.,175.,200.,225.,250.,300.,400.,\
+    500.,600.,700./)
+levels2 = (/0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
+    0.8,0.9,1.,1.5,2.,2.5,3.,3.5,\
+    4.,4.5,5.,6.,7.,8.,\
+    9.,10.,15.,20.,25.,30.,35.,40.,\
+    45.,50.,55.,60.,65.,70.,75.,\
+    80.,85.,90.,95.,100./)
+color_paleta = "MPL_cool"
 color_paleta2 = "MPL_rainbow"
 color_paleta3 = "MPL_YlGnBu"
 
@@ -71,7 +78,7 @@ begin
     ;res@tmXTOn              = False
     ;res@tmXBOn              = False
     res@gsnAddCyclic        = False
-    ;res@lbLabelBarOn        = False             ;---> turn off individual cb's
+    res@lbLabelBarOn        = False             ;---> turn off individual cb's
     res@cnFillOn            = True
     res@cnFillPalette       = color_paleta3
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
@@ -89,6 +96,7 @@ begin
         res3    = res
         res3@tmXBLabelsOn   = True
         res3@cnFillPalette  = color_paleta3
+        res3@cnLevels       = levels2
         if (i.eq.0) then
             res1@tmYLLabelsOn        = True         ; turn off lat labels
             res2@tmYLLabelsOn        = True         ; turn off lat labels
@@ -98,14 +106,20 @@ begin
             res1@tiYAxisFontHeightF  = 0.04
             res1@tiYAxisSide         = "right"
             res1@tiYAxisAngleF       = 270
+            res1@lbLabelBarOn        = True
+            res1@lbOrientation       = "vertical"
             res2@tiYAxisString       = "MAE"
             res2@tiYAxisFontHeightF  = 0.04
             res2@tiYAxisSide         = "right"
             res2@tiYAxisAngleF       = 270
+            res2@lbLabelBarOn        = True
+            res2@lbOrientation       = "vertical"
             res3@tiYAxisString       = "NMAE"
             res3@tiYAxisFontHeightF  = 0.04
             res3@tiYAxisSide         = "right"
             res3@tiYAxisAngleF       = 270
+            res3@lbLabelBarOn        = True
+            res3@lbOrientation       = "vertical"
         end if
         end if
         ;----- plot RMSE, MAE y NMAE -----;        
