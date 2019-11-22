@@ -1,3 +1,6 @@
+;============== %%%% HERRAMIENTAS %%%% ==============
+load "./panel_two_sets.ncl" 
+
 ;============== %%%% SHAPES %%%% ==============
 dirP    = "/data/users/jticse/Tesis-Maestria/PREDATA/shapes/" ;--> ruta principal
 shp1    = "cuencas/VertientePacificoCentroNorte.shp" 
@@ -48,7 +51,8 @@ begin
     hrs     = f_bias->hrs
     lat     = f_bias->lat
     lon     = f_bias->lon
-    
+    time    = f_bias->time
+
     ;----- creando mapa ------;
     type    = "png"
     ;type    = "x11"
@@ -56,7 +60,8 @@ begin
     type@wkWidth     = 3500
     type@wkHeight    = 4000             
     wks     = gsn_open_wks(type,dirS+"rmse-mae-nmae"+wrf@long_name+"&PISCO")   
-    plot    = new(9,graphic)
+    plot    = new(6,graphic)
+    plot2   = new(3,graphic)
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
     ;----- agregando detalles al mapa -----;
     res                     = True      ;--> activa los detalles
@@ -80,7 +85,7 @@ begin
     res@gsnAddCyclic        = False
     res@lbLabelBarOn        = False             ;---> turn off individual cb's
     res@cnFillOn            = True
-    res@cnFillPalette       = color_paleta3
+    res@cnFillPalette       = color_paleta2
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
     res@cnLineLabelsOn      = False
     res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
@@ -90,9 +95,7 @@ begin
         res1    = res
         res1@gsnCenterString   := hrs(i)+" hrs"
         res1@gsnCenterStringFontHeightF = 0.04
-        res1@cnFillPalette  = color_paleta
         res2    = res
-        res2@cnFillPalette  = color_paleta2
         res3    = res
         res3@tmXBLabelsOn   = True
         res3@cnFillPalette  = color_paleta3
@@ -106,25 +109,20 @@ begin
             res1@tiYAxisFontHeightF  = 0.04
             res1@tiYAxisSide         = "right"
             res1@tiYAxisAngleF       = 270
-            res1@lbLabelBarOn        = True
-            res1@lbOrientation       = "vertical"
             res2@tiYAxisString       = "MAE"
             res2@tiYAxisFontHeightF  = 0.04
             res2@tiYAxisSide         = "right"
             res2@tiYAxisAngleF       = 270
-            res2@lbLabelBarOn        = True
-            res2@lbOrientation       = "vertical"
             res3@tiYAxisString       = "NMAE"
             res3@tiYAxisFontHeightF  = 0.04
             res3@tiYAxisSide         = "right"
             res3@tiYAxisAngleF       = 270
-            res3@lbLabelBarOn        = True
-            res3@lbOrientation       = "vertical"
         end if
         end if
         ;----- plot RMSE, MAE y NMAE -----;        
         rmse   := (wrf(:,:,:,{hrs(i)})-pisco(:,:,:,{hrs(i)}))^2
-        rmse   := dim_avg_n(rmse,0)
+        ;rmse   := dim_avg_n(rmse,0)
+        rmse   := dim_sum_n(rmse,0)/dimsizes(time)
         rmse   := sqrt(rmse)
         rmse!0  = lat@long_name
         rmse&latitude       = lat
@@ -134,7 +132,8 @@ begin
         rmse&longitude@units= lon@units
 
         mae    := abs(wrf(:,:,:,{hrs(i)})-pisco(:,:,:,{hrs(i)}))
-        mae    := dim_avg_n(mae,0)
+        ;mae    := dim_avg_n(mae,0)
+        mae    := dim_sum_n(mae,0)/dimsizes(time)
         mae!0   = lat@long_name
         mae&latitude       = lat
         mae&latitude@units = lat@units
@@ -143,7 +142,7 @@ begin
         mae&longitude@units= lon@units
 
         nmae   := (abs(wrf(:,:,:,{hrs(i)})-pisco(:,:,:,{hrs(i)})))/pisco(:,:,:,{hrs(i)})
-        nmae   := dim_avg_n(nmae,0)
+        nmae   := dim_sum_n(nmae,0)/dimsizes(time)
         nmae!0  = lat@long_name
         nmae&latitude       = lat
         nmae&latitude@units = lat@units
@@ -153,13 +152,46 @@ begin
 
         plot(i)     = gsn_csm_contour_map(wks,rmse,res1)
         plot(i+3)   = gsn_csm_contour_map(wks,mae,res2)
-        plot(i+6)   = gsn_csm_contour_map(wks,nmae,res3)
+        plot2(i)   = gsn_csm_contour_map(wks,nmae,res3)
     end do
-    resP                    = True                ; modify the panel plot
-    resP@gsnMaximize        = True
-    resP@gsnPanelMainString = "RMSE-MAE-NMAE "+wrf@long_name+"&PISCO"
-    resP@gsnPanelRowSpec    = True
-    agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
-    agregando_shapefile2    = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
-    gsn_panel(wks,plot,(/3,3,3/),resP)
+    dims1 = (/2,3/)
+    dims2 = (/1,3/)
+
+    pres1 = True
+    pres1@gsnMaximize        = True
+    pres1@gsnPanelLabelBar   = True                ; add common colorbar
+    pres1@lbOrientation      = "vertical"
+    pres1@vpHeightF          = 0.6
+    pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
+    pres1@gsnPanelLeft       = 0.04
+    pres1@gsnPanelBottom     = 0.08
+    pres1@gsnPanelSave       = True
+    pres1@lbTitleOn          = True                  ; turn on title
+    pres1@lbTitleString      = "mm/dia"
+    pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
+    pres1@lbTitleFontHeightF = 0.01
+    pres1@pmLabelBarHeightF  = 0.6
+    pres1@gsnPanelMainString = "RMSE-MAE-NMAE "+wrf@long_name+"-PISCO"
+    pres2 = True
+    pres2@gsnMaximize        = True
+    pres2@gsnPanelLabelBar   = True                ; add common colorbar
+    pres2@lbOrientation      = "vertical"
+    pres2@vpHeightF          = 0.6
+    pres2@lbLabelFontHeightF = 0.01               ; make labels smaller
+    pres2@gsnPanelLeft       = 0.04
+    pres2@gsnPanelBottom     = 0.08
+    pres2@gsnPanelSave       = True
+    ;pres2@lbTitleOn          = True                  ; turn on title
+    ;pres2@lbTitleString      = "mm/dia"
+    pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
+    pres2@lbTitleFontHeightF = 0.01
+    pres2@pmLabelBarHeightF  = 0.3
+	;pres2@gsnPanelMainString = "Anomalia lluvia WRF - PISCO"
+    pres  = True
+    pres@gsnPanelTop         = 0.95
+    agregando_shapefile1     = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
+    agregando_shapefile2     = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
+    agregando_shapefile3     = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
+    agregando_shapefile4     = gsn_add_shapefile_polylines(wks,plot2,shp2,shpres2)
+    panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)
 end
