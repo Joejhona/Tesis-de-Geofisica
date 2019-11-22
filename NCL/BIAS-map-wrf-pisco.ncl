@@ -19,12 +19,11 @@ shpres2@gsLineThicknessF= 5.     ;3.0   ;--> grosor de linea
 
 ;============== %%%% LIMITES %%%% ==============
 ;---activar corners---;
-;---Limites del Perú---;
-min_lat_p = -19.5
-max_lat_p = 0.5
-min_lon_p = -82.
-max_lon_p = -67.
-
+;---Limites norte---;
+min_lat_n = -13.
+max_lat_n = -1.
+min_lon_n = -84.
+max_lon_n = -75.
 ;============== %%%% COLORES %%%% ==============
 levels = (/0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
     0.8,0.9,1.,1.5,2.,2.5,3.,3.5,\
@@ -95,7 +94,7 @@ begin
     res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
     res@cnLevels            = levels
 
-    do i=0.dimsizes(hrs)-1
+    do i=0,dimsizes(hrs)-1
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;----- agregando detalles especificos al mapa -----;
         res1    = res
