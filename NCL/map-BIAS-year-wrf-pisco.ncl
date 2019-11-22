@@ -68,7 +68,7 @@ begin
     res@mpRightCornerLonF   = max_lon_n
 
     res@tmYLLabelsOn        = False         ; turn off lat labels
-    res@tmXBLabelsOn        = False         ; turn off lon labels
+    res@tmXBLabelsOn        = True         ; turn off lon labels
     ;res@tmYROn              = False
     ;res@tmYLOn              = False
     ;res@tmXTOn              = False
@@ -90,7 +90,7 @@ begin
         res1@gsnCenterStringFontHeightF = 0.04
         res2    = res
         res3    = res
-        res3@tmXBLabelsOn     = True
+        ;res3@tmXBLabelsOn     = True
         if (i.eq.0) then
             res1@tmYLLabelsOn        = True         ; turn off lat labels
             res2@tmYLLabelsOn        = True         ; turn off lat labels
