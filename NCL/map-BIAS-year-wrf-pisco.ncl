@@ -10,9 +10,9 @@ shp2    = dirP+shp2     ;--> shape Vertiente Pacifico
 shpres                  = True
 ;shpres@gsLineColor      = "red" ;--> color de linea
 shpres@gsLineColor      = "black" ;--> color de linea
-shpres@gsLineThicknessF = 4.     ;3.0   ;--> grosor de linea
+shpres@gsLineThicknessF = 2.     ;3.0   ;--> grosor de linea
 shpres2                 = shpres
-shpres2@gsLineThicknessF= 5.     ;3.0   ;--> grosor de linea
+shpres2@gsLineThicknessF= 3.     ;3.0   ;--> grosor de linea
 ;============== %%%% LIMITES %%%% ==============
 ;---activar corners---;
 ;---Limites norte---;
@@ -50,7 +50,7 @@ begin
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 1750
-    type@wkHeight    = 2000             
+    type@wkHeight    = 2100             
     wks     = gsn_open_wks(type,dirS+"bias-year-"+wrf@long_name+"vsPISCO")   
     plot    = new(9,graphic)
      ;----- agregando detalles al mapa -----;
