@@ -19,15 +19,17 @@ max_lat_n = -1.
 min_lon_n = -84.
 max_lon_n = -75.
 ;============== %%%% COLORES %%%% ==============
-levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
-        -9.,-8.,-7.,-6,-5,-4.,-3.,-2.,-1.,-0.9,-0.8,-0.7,-0.6,\
-        -0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
-        0.8,0.9,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,18,\
-        20.,25.,30.,40.,50/) 
+levels = (/1.,2.,3.,4.,5.,6.,7.,\
+    8.,9.,10.,11.,12.,13.,14.,\
+    15.,16.,17.,18.,19.,20.,\
+    25.,30.,35.,40.,45.,50.,55.,60.,65.,\
+    70.,75.,80.,85.,90.,95.,100.,125.,\
+    150.,175.,200.,225.,250.,300.,400.,\
+    500.,600.,700./)
 ;color_paleta2 = "precip_diff_12lev";--> paleta 12 colores
 ;color_paleta2 = "WhBlReWh"
 ;color_paleta2 = "ViBlGrWhYeOrRe"
-color_paleta2 = "MPL_sstanom"
+color_paleta2 = "MPL_rainbow"
 
 begin
     dirBIAS = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/"
@@ -49,7 +51,7 @@ begin
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 1750
     type@wkHeight    = 2100             
-    wks     = gsn_open_wks(type,dirS+"bias-year-"+wrf@long_name+"vsPISCO")   
+    wks     = gsn_open_wks(type,dirS+"rmse-year-"+wrf@long_name+"vsPISCO")   
     plot    = new(9,graphic)
      ;----- agregando detalles al mapa -----;
     res                     = True      ;--> activa los detalles
@@ -115,42 +117,50 @@ begin
         end if
         end if
         ;----- plot 2017 -----;    
-        bias_2017  := (wrf({:limite},:,:,{hrs(i)})-pisco({:limite},:,:,{hrs(i)}))
-        bias_2017  := dim_sum_n(bias_2017,0)/dimsizes(time({:limite}))
-        bias_2017!0 = lat@long_name
-        bias_2017&latitude  = lat
-        bias_2017&latitude@units = lat@units
-        bias_2017!1 = lon@long_name
-        bias_2017&longitude = lon
-        bias_2017&longitude@units = lon@units
-        plot(i)     = gsn_csm_contour_map(wks,bias_2017,res1)
+        rmse_2017   := (wrf({:limite},:,:,{hrs(i)})-pisco({:limite},:,:,{hrs(i)}))^2
+        ;rmse   := dim_avg_n(rmse,0)
+        rmse_2017   := dim_sum_n(rmse_2017,0)/dimsizes(time({:limite}))
+        rmse_2017   := sqrt(rmse_2017)
+        rmse_2017!0  = lat@long_name
+        rmse_2017&latitude       = lat
+        rmse_2017&latitude@units = lat@units
+        rmse_2017!1  = lon@long_name
+        rmse_2017&longitude      = lon
+        rmse_2017&longitude@units= lon@units
+        plot(i)   = gsn_csm_contour_map(wks,rmse_2017,res1)
 
-        bias_2018  := (wrf({limite:},:,:,{hrs(i)})-pisco({limite:},:,:,{hrs(i)}))
-        bias_2018  := dim_sum_n(bias_2018,0)/dimsizes(time({limite:}))
-        bias_2018!0 = lat@long_name
-        bias_2018&latitude  = lat
-        bias_2018&latitude@units = lat@units
-        bias_2018!1 = lon@long_name
-        bias_2018&longitude = lon
-        bias_2018&longitude@units = lon@units
-        plot(i+3)   = gsn_csm_contour_map(wks,bias_2018,res2)
 
-        bias       := (wrf(:,:,:,{hrs(i)})-pisco(:,:,:,{hrs(i)}))
-        bias       := dim_sum_n(bias,0)/dimsizes(time)
-        bias!0      = lat@long_name
-        bias&latitude  = lat
-        bias&latitude@units = lat@units
-        bias!1      = lon@long_name
-        bias&longitude = lon
-        bias&longitude@units = lon@units
-        plot(i+6)   = gsn_csm_contour_map(wks,bias,res3)
+        rmse_2018   := (wrf({limite:},:,:,{hrs(i)})-pisco({limite:},:,:,{hrs(i)}))^2
+        ;rmse   := dim_avg_n(rmse,0)
+        rmse_2018   := dim_sum_n(rmse_2018,0)/dimsizes(time({limite:}))
+        rmse_2018   := sqrt(rmse_2018)
+        rmse_2018!0  = lat@long_name
+        rmse_2018&latitude       = lat
+        rmse_2018&latitude@units = lat@units
+        rmse_2018!1  = lon@long_name
+        rmse_2018&longitude      = lon
+        rmse_2018&longitude@units= lon@units
+        plot(i+3)   = gsn_csm_contour_map(wks,rmse_2018,res2)
+
+        rmse   := (wrf(:,:,:,{hrs(i)})-pisco(:,:,:,{hrs(i)}))^2
+        ;rmse   := dim_avg_n(rmse,0)
+        rmse   := dim_sum_n(rmse,0)/dimsizes(time)
+        rmse   := sqrt(rmse)
+        rmse!0  = lat@long_name
+        rmse&latitude       = lat
+        rmse&latitude@units = lat@units
+        rmse!1  = lon@long_name
+        rmse&longitude      = lon
+        rmse&longitude@units= lon@units
+        plot(i+6)   = gsn_csm_contour_map(wks,rmse,res3)
+
     end do
     resP                    = True                ; modify the panel plot
     resP@gsnMaximize        = True
     resP@gsnPanelLabelBar   = True                ; add common colorbar
     resP@lbOrientation      = "Vertical"
     resP@pmLabelBarHeightF  = 0.9
-    resP@gsnPanelMainString = "BIAS "+wrf@long_name+"&PISCO"
+    resP@gsnPanelMainString = "RMSE "+wrf@long_name+"&PISCO"
     resP@gsnPanelRowSpec    = True
     resP@lbLabelFontHeightF = 0.012
     resP@pmLabelBarOrthogonalPosF = 0.035
