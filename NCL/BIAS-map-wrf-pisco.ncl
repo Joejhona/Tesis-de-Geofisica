@@ -1,6 +1,4 @@
 ;============== %%%% HERRAMIENTAS %%%% ==============
-load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_inv_string.ncl"   ;---> para fechas 
-load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_string.ncl"       ;---> para fechas
 load "./panel_two_sets.ncl"                                         ;---> para 
 
 ;============== %%%% SHAPES %%%% ==============
