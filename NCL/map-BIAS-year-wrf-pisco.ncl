@@ -66,9 +66,12 @@ begin
     res@mpRightCornerLatF   = max_lat_n ;--> n=Norte
     res@mpLeftCornerLonF    = min_lon_n
     res@mpRightCornerLonF   = max_lon_n
+    res@gsnMajorLonSpacing  = 2. ;-- change major lon tickmark spacing
+    res@gsnMinorLonSpacing  = 1.
+    res@tmXBLabelStride     = 4 ;-- write only every 4th label
 
     res@tmYLLabelsOn        = False         ; turn off lat labels
-    res@tmXBLabelsOn        = True         ; turn off lon labels
+    ;res@tmXBLabelsOn        = True         ; turn off lon labels
     ;res@tmYROn              = False
     ;res@tmYLOn              = False
     ;res@tmXTOn              = False
@@ -88,9 +91,11 @@ begin
         res1    = res
         res1@gsnCenterString   := hrs(i)+" hrs"
         res1@gsnCenterStringFontHeightF = 0.04
+        res1@tmXBLabelsOn   = False
         res2    = res
+        res2@tmXBLabelsOn   = False
         res3    = res
-        ;res3@tmXBLabelsOn     = True
+        res3@tmXBLabelsOn     = True
         if (i.eq.0) then
             res1@tmYLLabelsOn        = True         ; turn off lat labels
             res2@tmYLLabelsOn        = True         ; turn off lat labels
