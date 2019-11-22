@@ -53,6 +53,8 @@ begin
     wrf     = f_bias->var01
     pisco   = f_bias->var02
     hrs     = f_bias->hrs
+    lat     = f_bias->lat
+    lon     = f_bias->lon
 
     ;----- creando mapa ------;
     type    = "png"
@@ -126,12 +128,30 @@ begin
         end if
         ;----- plot WRF y PISCO -----;        
         pp_wrf      = dim_avg_n(wrf(:,:,:,{hrs(i)}),0)
+        pp_wrf!0    = lat@long_name
+        pp_wrf&lat  = lat
+        pp_wrf&lat@units = lat@units
+        pp_wrf!1    = lon@long_name
+        pp_wrf&lon  = lon
+        pp_wrf&lon@units = lon@units
         pp_pi       = dim_avg_n(pisco(:,:,:,{hrs(i)}),0)
+        pp_pi!0    = lat@long_name
+        pp_pi&lat  = lat
+        pp_pi&lat@units = lat@units
+        pp_pi!1    = lon@long_name
+        pp_pi&lon  = lon
+        pp_pi&lon@units = lon@units
         plot(i)     = gsn_csm_contour_map(wks,pp_wrf,res1)
         plot(i+3)   = gsn_csm_contour_map(wks,pp_pi,res2)
         ;----- plot BIAS -----;        
         bias       := (wrf(:,:,:,{hrs(i)})-pisco(:,:,:,{hrs(i)}))
         bias       := dim_avg_n(bias,0)
+        bias!0    = lat@long_name
+        bias&lat  = lat
+        bias&lat@units = lat@units
+        bias!1    = lon@long_name
+        bias&lon  = lon
+        bias&lon@units = lon@units
         plot2(i)    = gsn_csm_contour_map(wks,bias,res3)
     end do
     dims1 = (/2,3/)
