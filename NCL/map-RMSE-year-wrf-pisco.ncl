@@ -19,7 +19,7 @@ max_lat_n = -1.
 min_lon_n = -84.
 max_lon_n = -75.
 ;============== %%%% COLORES %%%% ==============
-levels = (/1.,2.,3.,4.,5.,6.,7.,\
+levels2 = (/1.,2.,3.,4.,5.,6.,7.,\
     8.,9.,10.,11.,12.,13.,14.,\
     15.,16.,17.,18.,19.,20.,\
     25.,30.,35.,40.,45.,50.,55.,60.,65.,\
@@ -33,8 +33,8 @@ color_paleta2 = "MPL_rainbow"
 
 begin
     dirBIAS = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/"
-    f_bias  = "bias-wrfd01-pisco.nc"
-    ;f_bias  = "bias-wrfd02-pisco.nc"
+    ;f_bias  = "bias-wrfd01-pisco.nc"
+    f_bias  = "bias-wrfd02-pisco.nc"
 
     f_bias := addfile(dirBIAS+f_bias,"r")
 
