@@ -51,7 +51,7 @@ begin
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 3500
     type@wkHeight    = 4000             
-    wks     = gsn_open_wks(type,dirS+"bias-"+wrf@long_name+"&PISCO")   
+    wks     = gsn_open_wks(type,dirS+"bias-year-"+wrf@long_name+"vsPISCO")   
     plot    = new(9,graphic)
      ;----- agregando detalles al mapa -----;
     res                     = True      ;--> activa los detalles
@@ -145,7 +145,8 @@ begin
     resP@gsnMaximize        = True
     resP@gsnPanelLabelBar   = True                ; add common colorbar
     resP@lbOrientation      = "Vertical"
-    resP@gsnPanelMainString = "BIAS "+wrf@long_name+"-PISCO"
+    resP@pmLabelBarHeightF  = 0.8
+    resP@gsnPanelMainString = "BIAS "+wrf@long_name+"&PISCO"
     resP@gsnPanelRowSpec    = True
     agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2    = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
