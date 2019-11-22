@@ -111,7 +111,7 @@ begin
         end if
         end if
         ;----- plot 2017 -----;    
-        bias_2017  := (wrf(:limite,:,:,{hrs(i)})-pisco(:limite,:,:,{hrs(i)}))
+        bias_2017  := (wrf({:limite},:,:,{hrs(i)})-pisco({:limite},:,:,{hrs(i)}))
         bias_2017  := dim_sum_n(bias_2017,0)/dimsizes(time({:limite}))
         bias_2017!0 = lat@long_name
         bias_2017&latitude  = lat
@@ -121,7 +121,7 @@ begin
         bias_2017&longitude@units = lon@units
         plot(i)     = gsn_csm_contour_map(wks,bias_2017,res1)
 
-        bias_2018  := (wrf(limite:,:,:,{hrs(i)})-pisco(limite:,:,:,{hrs(i)}))
+        bias_2018  := (wrf({limite:},:,:,{hrs(i)})-pisco({limite:},:,:,{hrs(i)}))
         bias_2018  := dim_sum_n(bias_2018,0)/dimsizes(time({limite:}))
         bias_2018!0 = lat@long_name
         bias_2018&latitude  = lat
