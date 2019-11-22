@@ -20,6 +20,12 @@ max_lat_n = -1.
 min_lon_n = -84.
 max_lon_n = -75.
 ;============== %%%% COLORES %%%% ==============    
+levels = (/1.,2.,3.,4.,5.,6.,7.,\
+    8.,9.,10.,15.,20.,25.,30.,35.,\
+    40.,45.,50.,55.,60.,65.,\
+    70.,75.,80.,85.,90.,95.,100.,125.,\
+    150.,175.,200.,225.,250.,300.,350.,\
+    400.,450.,500.,600.,700./)
 color_paleta = "MPL_terrain"
 color_paleta2 = "MPL_rainbow"
 color_paleta3 = "MPL_YlGnBu"
@@ -70,14 +76,19 @@ begin
     res@cnFillPalette       = color_paleta3
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
     res@cnLineLabelsOn      = False
+    res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
+    res@cnLevels            = levels
     do i=0,dimsizes(hrs)-1
         ;----- agregando detalles especificos al mapa -----;
         res1    = res
         res1@gsnCenterString   := hrs(i)+" hrs"
         res1@gsnCenterStringFontHeightF = 0.04
+        res1@cnFillPalette  = color_paleta
         res2    = res
+        res2@cnFillPalette  = color_paleta2
         res3    = res
-        res3@tmXBLabelsOn     = True
+        res3@tmXBLabelsOn   = True
+        res3@cnFillPalette  = color_paleta3
         if (i.eq.0) then
             res1@tmYLLabelsOn        = True         ; turn off lat labels
             res2@tmYLLabelsOn        = True         ; turn off lat labels
