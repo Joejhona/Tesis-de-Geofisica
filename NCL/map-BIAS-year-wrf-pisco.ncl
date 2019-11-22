@@ -33,8 +33,8 @@ color_paleta2 = "MPL_sstanom"
 
 begin
     dirBIAS = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/"
-    ;f_bias  = "bias-wrfd01-pisco.nc"
-    f_bias  = "bias-wrfd02-pisco.nc"
+    f_bias  = "bias-wrfd01-pisco.nc"
+    ;f_bias  = "bias-wrfd02-pisco.nc"
 
     f_bias := addfile(dirBIAS+f_bias,"r")
 
@@ -148,6 +148,8 @@ begin
     resP@pmLabelBarHeightF  = 0.8
     resP@gsnPanelMainString = "BIAS "+wrf@long_name+"&PISCO"
     resP@gsnPanelRowSpec    = True
+    resP@lbLabelFontHeightF = 0.015
+    resP@pmLabelBarParallelPosF = 0.5
     agregando_shapefile1    = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2    = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
     gsn_panel(wks,plot,(/3,3,3/),resP)
