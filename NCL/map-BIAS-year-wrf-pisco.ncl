@@ -69,7 +69,8 @@ begin
     ;res@gsnMajorLonSpacing  = 2. ;-- change major lon tickmark spacing
     ;res@gsnMinorLonSpacing  = 1.
     ;res@tmXBLabelStride     = 4 ;-- write only every 4th label
-
+    res@tmYLLabelFontHeightF = 0.016 ;-- change major lat tickmark spacing
+    res@tmXBLabelFontHeightF = 0.014
     res@tmYLLabelsOn        = False         ; turn off lat labels
     res@tmXBLabelsOn        = True         ; turn off lon labels
     ;res@tmYROn              = False
