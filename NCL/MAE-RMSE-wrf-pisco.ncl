@@ -169,7 +169,7 @@ begin
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.6
-    pres1@gsnPanelMainString = "RMSE-MAE-NMAE "+wrf@long_name+"-PISCO"
+    pres1@gsnPanelMainString = "RMSE-MAE-NMAE "+wrf@long_name+"&PISCO"
     pres2 = True
     pres2@gsnMaximize        = True
     pres2@gsnPanelLabelBar   = True                ; add common colorbar
