@@ -167,7 +167,6 @@ begin
     pres1@gsnPanelBottom     = 0.08
     pres1@gsnPanelSave       = True
     pres1@lbTitleOn          = True                  ; turn on title
-    pres1@lbTitleString      = "mm/dia"
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.6
