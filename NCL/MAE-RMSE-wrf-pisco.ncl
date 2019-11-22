@@ -183,7 +183,7 @@ begin
     pres2@gsnPanelSave       = True
     ;pres2@lbTitleOn          = True                  ; turn on title
     ;pres2@lbTitleString      = "mm/dia"
-    pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
+    pres2@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres2@lbTitleFontHeightF = 0.01
     pres2@pmLabelBarHeightF  = 0.3
 	;pres2@gsnPanelMainString = "Anomalia lluvia WRF - PISCO"
