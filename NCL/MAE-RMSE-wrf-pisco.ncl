@@ -99,7 +99,7 @@ begin
         res3    = res
         res3@tmXBLabelsOn   = True
         res3@cnFillPalette  = color_paleta3
-        res3@cnLevels       = levels2
+        res3@cnLevels      := levels2
         if (i.eq.0) then
             res1@tmYLLabelsOn        = True         ; turn off lat labels
             res2@tmYLLabelsOn        = True         ; turn off lat labels
