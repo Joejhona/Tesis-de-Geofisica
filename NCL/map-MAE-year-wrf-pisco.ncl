@@ -33,8 +33,8 @@ color_paleta2 = "MPL_rainbow"
 
 begin
     dirBIAS = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/"
-    ;f_bias  = "bias-wrfd01-pisco.nc"
-    f_bias  = "bias-wrfd02-pisco.nc"
+    f_bias  = "bias-wrfd01-pisco.nc"
+    ;f_bias  = "bias-wrfd02-pisco.nc"
 
     f_bias := addfile(dirBIAS+f_bias,"r")
 
@@ -119,7 +119,7 @@ begin
         ;----- plot 2017 -----;    
         mae_2017   := abs(wrf({:limite},:,:,{hrs(i)})-pisco({:limite},:,:,{hrs(i)}))
         ;mae    := dim_avg_n(mae,0)
-        mae_2017   := dim_sum_n(mae_2017,0)/dimsizes(time({:limite})
+        mae_2017   := dim_sum_n(mae_2017,0)/dimsizes(time({:limite}))
         mae_2017!0  = lat@long_name
         mae_2017&latitude       = lat
         mae_2017&latitude@units = lat@units
@@ -130,7 +130,7 @@ begin
         ;----- plot 2018 -----;    
         mae_2018   := abs(wrf({limite:},:,:,{hrs(i)})-pisco({limite:},:,:,{hrs(i)}))
         ;mae    := dim_avg_n(mae,0)
-        mae_2018   := dim_sum_n(mae_2018,0)/dimsizes(time({limite:})
+        mae_2018   := dim_sum_n(mae_2018,0)/dimsizes(time({limite:}))
         mae_2018!0  = lat@long_name
         mae_2018&latitude       = lat
         mae_2018&latitude@units = lat@units
