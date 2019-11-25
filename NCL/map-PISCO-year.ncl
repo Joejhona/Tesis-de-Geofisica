@@ -46,7 +46,7 @@ begin
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 1750
     type@wkHeight    = 2100             
-    wks     = gsn_open_wks(type,dirS+"prom-"+wrf@long_name+"-year")   
+    wks     = gsn_open_wks(type,dirS+"prom-PISCO-year")   
     plot    = new(9,graphic)
     ;----- agregando detalles al mapa -----;
     res                     = True      ;--> activa los detalles
@@ -146,6 +146,14 @@ begin
     resP@gsnMaximize        = True
     resP@gsnPanelLabelBar   = True                ; add common colorbar
     resP@lbOrientation      = "Vertical"
+    
+    resP@lbTitleOn          = True                  ; turn on title
+    resP@lbTitleString      = "mm/dia"
+    resP@lbBoxEndCapStyle   = "TriangleHighEnd"
+    resP@lbTitleFontHeightF = 0.015
+    ;resP@pmLabelBarHeightF  = 0.6
+
+
     resP@pmLabelBarHeightF  = 0.9
     resP@gsnPanelMainString = "Promedio PISCO"
     resP@gsnPanelRowSpec    = True

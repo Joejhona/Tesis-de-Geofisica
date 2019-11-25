@@ -146,6 +146,13 @@ begin
     resP@gsnMaximize        = True
     resP@gsnPanelLabelBar   = True                ; add common colorbar
     resP@lbOrientation      = "Vertical"
+
+    resP@lbTitleOn          = True                  ; turn on title
+    resP@lbTitleString      = "mm/dia"
+    resP@lbBoxEndCapStyle   = "TriangleHighEnd"
+    resP@lbTitleFontHeightF = 0.015
+    ;resP@pmLabelBarHeightF  = 0.6
+
     resP@pmLabelBarHeightF  = 0.9
     resP@gsnPanelMainString = "Promedio "+wrf@long_name
     resP@gsnPanelRowSpec    = True
