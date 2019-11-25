@@ -193,4 +193,3 @@ begin
     agregando_shapefile4     = gsn_add_shapefile_polylines(wks,plot2,shp2,shpres2)
     panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)
 end
-
