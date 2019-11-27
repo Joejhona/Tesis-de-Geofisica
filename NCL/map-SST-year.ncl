@@ -111,7 +111,7 @@ begin
         end if
         end if
         ;----- plot 2017 -----;    
-        sst_2017 := sst({:limite},:,:,{hrs(i)})
+        sst_2017 := sst({:limite},:,:,{hrs(i)})-273.15
         sst_2017 := dim_avg_n(sst_2017,0)
         sst_2017!0 = lat@long_name
         sst_2017&latitude  = lat
@@ -121,7 +121,7 @@ begin
         sst_2017&longitude@units = lon@units
         plot(i)     = gsn_csm_contour_map(wks,sst_2017,res1)
 
-        sst_2018  := sst({limite:},:,:,{hrs(i)})
+        sst_2018  := sst({limite:},:,:,{hrs(i)})-273.15
         sst_2018  := dim_avg_n(sst_2018,0)
         sst_2018!0 = lat@long_name
         sst_2018&latitude  = lat
@@ -131,7 +131,7 @@ begin
         sst_2018&longitude@units = lon@units
         plot(i+3)   = gsn_csm_contour_map(wks,sst_2018,res2)
 
-        sst_tot    := sst(:,:,:,{hrs(i)})
+        sst_tot    := sst(:,:,:,{hrs(i)})-273.15
         sst_tot    := dim_avg_n(sst_tot,0)
         sst_tot!0   = lat@long_name
         sst_tot&latitude  = lat
