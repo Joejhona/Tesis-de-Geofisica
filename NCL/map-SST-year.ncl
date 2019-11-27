@@ -19,12 +19,7 @@ max_lat_n = -1.
 min_lon_n = -84.
 max_lon_n = -75.
 ;============== %%%% COLORES %%%% ==============
-levels2 = (/0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
-    0.8,0.9,1.,1.5,2.,2.5,3.,3.5,\
-    4.,4.5,5.,6.,7.,8.,\
-    9.,10.,15.,20.,25.,30.,35.,40.,\
-    45.,50.,55.,60.,65.,70.,75.,\
-    80.,85.,90.,95.,100./)
+levels2 = ispan(10,40,1)
 color_paleta2 = "MPL_YlOrRd"
 begin
     dirBIAS = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/"
@@ -77,8 +72,8 @@ begin
     res@cnFillPalette       = color_paleta2
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
     res@cnLineLabelsOn      = False
-    ;res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
-    ;res@cnLevels            = levels2
+    res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
+    res@cnLevels            = levels2
 
     do i=0,dimsizes(hrs)-1
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
