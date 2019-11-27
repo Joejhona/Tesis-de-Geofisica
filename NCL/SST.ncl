@@ -39,12 +39,13 @@ begin
         do i=0,2
             ;----------- WRF
             it_wrf := cd_inv_calendar(year,mes,dia+i,12,0,0,un_wrf,0)   ;---->> hora de inicio de lluvia
-            ft_wrf := cd_inv_calendar(year,mes,dia+1+i,12,0,0,un_wrf,0) ;---->> hora de inicio de lluvia
+            ;ft_wrf := cd_inv_calendar(year,mes,dia+1+i,12,0,0,un_wrf,0) ;---->> hora de inicio de lluvia
             id_tiw := get1Dindex(t_wrf,it_wrf)
-            id_tfw := get1Dindex(t_wrf,ft_wrf)
-            ssti   := sst(id_tiw,:,:)
-            sstf   := sst(id_tfw,:,:)
-            sst_wrf:= sstf-ssti
+            ;id_tfw := get1Dindex(t_wrf,ft_wrf)
+            ;ssti   := sst(id_tiw,:,:)
+            ;sstf   := sst(id_tfw,:,:)
+            sst_wrf := sst(id_tiw,:,:)
+            ;sst_wrf:= sstf-ssti
             ;pd_wrf@lat2d := lat_w
             ;pd_wrf@lon2d := lon_w  
             sst_new(j,:,:,i) = (/sst_wrf/)
