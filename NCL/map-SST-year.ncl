@@ -28,8 +28,8 @@ levels2 = (/0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
 color_paleta2 = "MPL_YlOrRd"
 begin
     dirBIAS = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/"
-    f_bias  = "sst-wrfd01-pisco.nc"
-    ;f_bias  = "sts-wrfd02-pisco.nc"
+    f_bias  = "sst-wrfd01.nc"
+    ;f_bias  = "sts-wrfd02.nc"
     
     f_bias := addfile(dirBIAS+f_bias,"r")
 
@@ -45,7 +45,7 @@ begin
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 1750
     type@wkHeight    = 2100             
-    wks     = gsn_open_wks(type,dirS+"prom-"+wrf@long_name+"-year")   
+    wks     = gsn_open_wks(type,dirS+"prom-"+sst@long_name+"-year")   
     plot    = new(9,graphic)
     ;----- agregando detalles al mapa -----;
     res                     = True      ;--> activa los detalles
@@ -111,7 +111,7 @@ begin
         end if
         end if
         ;----- plot 2017 -----;    
-        sst_2017 := sst({:limite},:,:,{hrs(i)})-273.15
+        sst_2017 := sst({:limite},:,:,{hrs(i)})
         sst_2017 := dim_avg_n(sst_2017,0)
         sst_2017!0 = lat@long_name
         sst_2017&latitude  = lat
@@ -121,7 +121,7 @@ begin
         sst_2017&longitude@units = lon@units
         plot(i)     = gsn_csm_contour_map(wks,sst_2017,res1)
 
-        sst_2018  := sst({limite:},:,:,{hrs(i)})-273.15
+        sst_2018  := sst({limite:},:,:,{hrs(i)})
         sst_2018  := dim_avg_n(sst_2018,0)
         sst_2018!0 = lat@long_name
         sst_2018&latitude  = lat
@@ -131,7 +131,7 @@ begin
         sst_2018&longitude@units = lon@units
         plot(i+3)   = gsn_csm_contour_map(wks,sst_2018,res2)
 
-        sst_tot    := sst(:,:,:,{hrs(i)})-273.15
+        sst_tot    := sst(:,:,:,{hrs(i)})
         sst_tot    := dim_avg_n(sst_tot,0)
         sst_tot!0   = lat@long_name
         sst_tot&latitude  = lat
@@ -153,7 +153,7 @@ begin
     ;resP@pmLabelBarHeightF  = 0.6
 
     resP@pmLabelBarHeightF  = 0.9
-    resP@gsnPanelMainString = "Promedio SST"+wrf@long_name
+    resP@gsnPanelMainString = "Promedio SST"+sst@long_name
     resP@gsnPanelRowSpec    = True
     resP@lbLabelFontHeightF = 0.012
     resP@pmLabelBarOrthogonalPosF = 0.035
