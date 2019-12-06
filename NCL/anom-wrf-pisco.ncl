@@ -73,8 +73,8 @@ begin
     ;    "2018-03-05","2018-03-17","2018-03-22"/)
     periodos = (/"2017-01-14"/)
     horas   = (/"24 hrs","48 hrs","72 hrs"/)
-    dom     = (/"-d01","_d01_"/)
-    ;dom = (/"-d02","_d02_"/)
+    ;dom     = (/"-d01","_d01_"/)
+    dom = (/"-d02","_d02_"/)
     sst     = (/"addSST",""/)
     do j=0,dimsizes(periodos)-1
         periodo = periodos(j)
@@ -289,7 +289,7 @@ begin
         pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
         pres1@lbTitleFontHeightF = 0.01
         pres1@pmLabelBarHeightF  = 0.6
-        pres1@gsnPanelMainString = "Analisis de lluvia WRF-PISCO "+periodo
+        pres1@gsnPanelMainString = "Analisis de lluvia WRFi"+sst(0)+"-PISCO "+periodo
         pres2 = True
         pres2@gsnMaximize        = True
         pres2@gsnPanelLabelBar   = True                ; add common colorbar
