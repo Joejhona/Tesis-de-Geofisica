@@ -67,13 +67,15 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/contrib/cd_string.ncl"       ;---> para f
 ;============== %%%% CODIGO %%%% ==============
 begin
     ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-    periodos = (/"2017-01-14","2017-01-21","2017-01-24","2017-01-30","2017-02-02",\
-        "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
-        "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
-        "2018-03-05","2018-03-17","2018-03-22"/)
-    horas = (/"24 hrs","48 hrs","72 hrs"/)
-    dom = (/"-d01","_d01_"/)
+    ;periodos = (/"2017-01-14","2017-01-21","2017-01-24","2017-01-30","2017-02-02",\
+    ;    "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
+    ;    "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
+    ;    "2018-03-05","2018-03-17","2018-03-22"/)
+    periodos = (/"2017-01-14"/)
+    horas   = (/"24 hrs","48 hrs","72 hrs"/)
+    dom     = (/"-d01","_d01_"/)
     ;dom = (/"-d02","_d02_"/)
+    sst     = (/"addSST",""/)
     do j=0,dimsizes(periodos)-1
         periodo = periodos(j)
         year    = stringtoint(str_get_cols(periodo,0,3))
@@ -86,7 +88,7 @@ begin
         dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
         type@wkWidth     = 7000
         type@wkHeight    = 8000             
-        wks     = gsn_open_wks(type,dirS+"anom-WRF-PI-"+periodo+dom(0))   
+        wks     = gsn_open_wks(type,dirS+"anom-WRF"+sst(0)+"-PI-"+periodo+dom(0))   
         plot    = new(6,graphic)
         plot2   = new(3,graphic)
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -134,7 +136,8 @@ begin
         ;res@tmXBLabelStride     = 2
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----Extraendo y procesando datos wrf
-        dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/primera_corrida/"
+        ;dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/primera_corrida/"
+        dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/segunda_corrida/"
         f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
         lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
         ;lat_w  := lat_w(:,0)
