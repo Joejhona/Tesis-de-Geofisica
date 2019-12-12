@@ -71,11 +71,12 @@ begin
     ;    "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
     ;    "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
     ;    "2018-03-05","2018-03-17","2018-03-22"/)
-    periodos = (/"2017-01-14"/)
+    ;periodos = (/"2017-01-14"/)
+    periodos = (/"2017-02-02"/)
     horas   = (/"24 hrs","48 hrs","72 hrs"/)
     ;dom     = (/"-d01","_d01_"/)
     dom = (/"-d02","_d02_"/)
-    sst     = (/"addSST",""/)
+    sst     = (/"+1sst","-1sst"/)
     do j=0,dimsizes(periodos)-1
         periodo = periodos(j)
         year    = stringtoint(str_get_cols(periodo,0,3))
@@ -137,8 +138,11 @@ begin
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----Extraendo y procesando datos wrf
         ;dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/primera_corrida/"
-        dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/segunda_corrida/"
-        f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
+        ;dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/segunda_corrida/"
+        dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/tercera_corrida/"
+        ;f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
+        f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00+1sst.nc", "r")
+        ;f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00-1sst.nc", "r")
         lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
         ;lat_w  := lat_w(:,0)
         lon_w  := wrf_user_getvar(f_wrf,"XLONG",0)
