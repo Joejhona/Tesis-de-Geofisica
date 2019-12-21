@@ -1,4 +1,4 @@
-a = file
+a = file_wrf
 b = addfile(a,"w")
 c = b->SST
 d = c
