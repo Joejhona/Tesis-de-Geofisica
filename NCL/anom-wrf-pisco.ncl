@@ -143,7 +143,7 @@ begin
         ;dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/tercera_corrida/"
         dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/cuarta_corrida/"
         ;f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
-        f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00"+sst, "r")
+        f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00"+sst+".nc", "r")
         ;f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00-1sst.nc", "r")
         lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
         ;lat_w  := lat_w(:,0)
