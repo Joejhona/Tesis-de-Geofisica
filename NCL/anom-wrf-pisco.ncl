@@ -75,8 +75,9 @@ begin
     periodos = (/"2017-02-02"/)
     horas   = (/"24 hrs","48 hrs","72 hrs"/)
     ;dom     = (/"-d01","_d01_"/)
-    dom = (/"-d02","_d02_"/)
-    sst     = (/"+1sst","-1sst"/)
+    dom     = (/"-d02","_d02_"/)
+    sst_t   = (/"+0p5sst","-0p5sst","+1sst","-1sst","+1p5sst","-1p5sst","+2sst","-2sst"/)
+    sst     = sst_t(0)
     do j=0,dimsizes(periodos)-1
         periodo = periodos(j)
         year    = stringtoint(str_get_cols(periodo,0,3))
@@ -89,7 +90,7 @@ begin
         dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
         type@wkWidth     = 7000
         type@wkHeight    = 8000             
-        wks     = gsn_open_wks(type,dirS+"anom-WRF"+sst(0)+"-PI-"+periodo+dom(0))   
+        wks     = gsn_open_wks(type,dirS+"anom-WRF"+sst+"-PI-"+periodo+dom(0))   
         plot    = new(6,graphic)
         plot2   = new(3,graphic)
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -139,9 +140,10 @@ begin
         ;-----Extraendo y procesando datos wrf
         ;dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/primera_corrida/"
         ;dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/segunda_corrida/"
-        dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/tercera_corrida/"
+        ;dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/tercera_corrida/"
+        dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/cuarta_corrida/"
         ;f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
-        f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00+1sst.nc", "r")
+        f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00"+sst, "r")
         ;f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00-1sst.nc", "r")
         lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
         ;lat_w  := lat_w(:,0)
@@ -293,7 +295,7 @@ begin
         pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
         pres1@lbTitleFontHeightF = 0.01
         pres1@pmLabelBarHeightF  = 0.6
-        pres1@gsnPanelMainString = "Analisis de lluvia WRF"+sst(0)+"-PISCO "+periodo
+        pres1@gsnPanelMainString = "Analisis de lluvia WRF"+sst+"-PISCO "+periodo
         pres2 = True
         pres2@gsnMaximize        = True
         pres2@gsnPanelLabelBar   = True                ; add common colorbar
