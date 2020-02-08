@@ -4,7 +4,7 @@ begin
     if (dif.lt.0) then
         a1 = "-"
     end if
-    a2  = a+a1+dif
+    a2  = a+a1+dif+"sst"
     cmd = "cp "+a+" "+a2
     system(cmd)
     b = addfile(a2,"w")
