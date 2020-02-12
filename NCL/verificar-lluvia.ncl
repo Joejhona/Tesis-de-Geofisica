@@ -8,6 +8,6 @@ begin
     rain_a  = rcv_a+rncv_a
     rain_b  = rcv_b+rncv_b
     dif     = rain_a-rain_b
-    print("max="+max(dif))
-    print("max="+min(dif))
+    print("maximo="+max(dif))
+    print("minimo="+min(dif))
 end
