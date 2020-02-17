@@ -147,7 +147,7 @@ begin
     printVarSummary(pd_wrf_2)
     res2                   := res
     res2@gsnCenterString   := t*24+" hrs add RTG SST" 
-    plot(1) = gsn_csm_contour_map(wks,pd_wrf_2,res1)
+    plot(1) = gsn_csm_contour_map(wks,pd_wrf_2,res2)
 
     do i=0,dimsizes(sst)-1
         file_i   := addfile(file_wrf+sst(i),"r")
@@ -181,11 +181,13 @@ begin
     pres@gsnMaximize        = True
     pres@gsnPanelLabelBar   = True                ; add common colorbar
     pres@lbOrientation      = "vertical"
+    pres@gsnPanelLeft       = 0.04
+    pres@gsnPanelBottom     = 0.08
     pres@lbTitleOn          = True                  ; turn on title
     pres@lbTitleString      = "mm/dia"
     pres@lbBoxEndCapStyle   = "TriangleHighEnd"
-    pres@pmLabelBarHeightF  = 0.6
-    pres@gsnPanelMainString = "Influencia SST "+fecha+" "+t*24+" hrs"
+    pres@pmLabelBarHeightF  = 0.8
+    pres@gsnPanelMainString = "Influencia SST "+fecha
     agregando_shapefile1 = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2 = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
     gsn_panel(wks,plot,(/2,4,4/),pres)
