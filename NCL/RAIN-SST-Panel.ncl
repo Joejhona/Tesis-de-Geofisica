@@ -189,14 +189,14 @@ begin
     pres1@lbOrientation      = "horizontal"
     ;pres1@vpHeightF          = 0.6
     pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
-    pres1@gsnPanelLeft       = 0.06
+    pres1@gsnPanelLeft       = 0.1
     pres1@gsnPanelBottom     = 0.08
     pres1@gsnPanelSave       = True
     pres1@lbTitleOn          = True                  ; turn on title
     pres1@lbTitleString      = "mm/dia"
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
-    ;pres1@pmLabelBarHeightF  = 0.4
+    ;pres1@pmLabelBarHeightF  = 0.2
     pres1@gsnPanelMainString = "Influencia SST "+fecha
     pres2 = True
     pres2@gsnMaximize        = True
@@ -204,7 +204,7 @@ begin
     pres2@lbOrientation      = "horizontal"
     ;pres2@vpHeightF          = 0.6
     pres2@lbLabelFontHeightF = 0.01               ; make labels smaller
-    pres2@gsnPanelLeft       = 0.06
+    pres2@gsnPanelLeft       = 0.1
     pres2@gsnPanelBottom     = 0.08
     pres2@gsnPanelSave       = True
     ;pres2@lbTitleOn          = True                  ; turn on title
