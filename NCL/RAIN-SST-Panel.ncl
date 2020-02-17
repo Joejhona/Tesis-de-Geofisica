@@ -70,7 +70,7 @@ begin
     type@wkWidth     = 7000
     type@wkHeight    = 8000             
     wks     = gsn_open_wks(type,dirS+"rain_sst_"+fecha+"_"+t*24+"_hrs")   
-    plot    = new(9,graphic)
+    plot    = new(10,graphic)
     
 ;----- agregando detalles al mapa -----;
     res                     = True      ;--> activa los detalles
@@ -105,6 +105,10 @@ begin
     res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
     res@cnLevels            = levels
 
+    res@gsnCenterStringFontHeightF = 0.04
+
+
+
     file_1  = addfile(file_wrf,"r")
     lat_w  := wrf_user_getvar(file_1,"XLAT",0)
     lon_w  := wrf_user_getvar(file_1,"XLONG",0)
@@ -127,9 +131,24 @@ begin
     pd_wrf_1@lon2d := lon_w  
     printVarSummary(pd_wrf_1)
     res1                   := res
-    res1@gsnCenterString   := t+" hrs" 
-    res1@gsnCenterStringFontHeightF = 0.04
+    res1@gsnCenterString   := t*24+" hrs Normal" 
     plot(0) = gsn_csm_contour_map(wks,pd_wrf_1,res1)
+
+    file_2   := addfile(file_wrf+"_sst","r")
+    rcv      := wrf_user_getvar(file_2,"RAINC",-1)
+    rncv     := wrf_user_getvar(file_2,"RAINNC",-1)
+    rcvi     := rcv(id_tiw,:,:)
+    rcvf     := rcv(id_tfw,:,:)
+    rncvi    := rncv(id_tiw,:,:)
+    rncvf    := rncv(id_tfw,:,:)
+    pd_wrf_2 := (rcvf-rcvi)+(rncvf-rncvi)
+    pd_wrf_2@lat2d := lat_w
+    pd_wrf_2@lon2d := lon_w 
+    printVarSummary(pd_wrf_2)
+    res2                   := res
+    res2@gsnCenterString   := t*24+" hrs add RTG SST" 
+    plot(1) = gsn_csm_contour_map(wks,pd_wrf_2,res1)
+
     do i=0,dimsizes(sst)-1
         file_i   := addfile(file_wrf+sst(i),"r")
         rcv      := wrf_user_getvar(file_i,"RAINC",-1)
@@ -144,7 +163,7 @@ begin
         printVarSummary(pd_wrf_i)
         resi1                   := res
         resi1@gsnCenterString   := sst(i) 
-        plot(i+1) = gsn_csm_contour_map(wks,pd_wrf_i,resi1)
+        plot(i+2) = gsn_csm_contour_map(wks,pd_wrf_i,resi1)
 
         dif_i  := pd_wrf_1-pd_wrf_i
         dif_i@lat2d := lat_w
@@ -154,10 +173,20 @@ begin
         resi2@gsnCenterString   := "dif "+sst(i) 
         resi2@cnFillPalette     := color_paleta2
         resi2@cnLevels          := levels2
-        plot(i+5) = gsn_csm_contour_map(wks,dif_i,resi2)
+        plot(i+6) = gsn_csm_contour_map(wks,dif_i,resi2)
     end do
     pres                 = True
     pres@gsnPanelRowSpec = True  
     ;pres@gsnPanelCenter  = False
-    gsn_panel(wks,plot,(/1,4,4/),pres)
+    pres@gsnMaximize        = True
+    pres@gsnPanelLabelBar   = True                ; add common colorbar
+    pres@lbOrientation      = "vertical"
+    pres@lbTitleOn          = True                  ; turn on title
+    pres@lbTitleString      = "mm/dia"
+    pres@lbBoxEndCapStyle   = "TriangleHighEnd"
+    pres@pmLabelBarHeightF  = 0.6
+    pres@gsnPanelMainString = "Influencia SST "+fecha+" "+t*24+" hrs"
+    agregando_shapefile1 = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
+    agregando_shapefile2 = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
+    gsn_panel(wks,plot,(/2,4,4/),pres)
 end
