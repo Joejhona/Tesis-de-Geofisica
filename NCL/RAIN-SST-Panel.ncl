@@ -1,5 +1,7 @@
 ;===>> h=1 dia, 2 dias, 3 dias #####
 ;===>> file_wrf   #####
+load "./panel_two_sets.ncl"
+
 ;============== %%%% SHAPES %%%% ==============
 dirP    = "/data/users/jticse/Tesis-Maestria/PREDATA/shapes/" ;--> ruta principal
 shp1    = "cuencas/VertientePacificoCentroNorte.shp" 
