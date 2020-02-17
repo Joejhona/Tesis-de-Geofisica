@@ -58,7 +58,7 @@ levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
 color_paleta2 = "MPL_BrBG"
 
 begin 
-    sst     = (/"-3sst","-2sst","+2sst","+3sst"/)
+    sst     = (/"-3sst","-2sst","-1sst","+1sst","+2sst","+3sst"/)
     fecha   = str_get_cols(file_wrf,11,20)
     year    = stringtoint(str_get_cols(file_wrf,11,14))
     mes     = stringtoint(str_get_cols(file_wrf,16,17))
@@ -72,8 +72,8 @@ begin
     type@wkWidth     = 7000
     type@wkHeight    = 8000             
     wks     = gsn_open_wks(type,dirS+"rain_sst_"+fecha+"_"+t*24+"_hrs")   
-    plot    = new(6,graphic)
-    plot2   = new(4,graphic)
+    plot    = new(dimsizes(sst)+2,graphic)
+    plot2   = new(dimsizes(sst),graphic)
     
 ;----- agregando detalles al mapa -----;
     res                     = True      ;--> activa los detalles
@@ -179,28 +179,9 @@ begin
         plot2(i) = gsn_csm_contour_map(wks,dif_i,resi2)
     end do
 
-    dims1 = (/2,4/)
-    dims2 = (/1,4/)
+    dims1 = (/2,6/)
+    dims2 = (/1,6/)
 
-
-    ;pres                 = True
-    ;pres@gsnPanelRowSpec = True  
-    ;;pres@gsnPanelCenter  = False
-    ;pres@gsnMaximize        = True
-    ;pres@gsnPanelLabelBar   = True                ; add common colorbar
-    ;pres@lbOrientation      = "vertical"
-    ;pres@lbLabelFontHeightF = 0.01
-    ;pres@gsnPanelLeft       = 0.04
-    ;pres@gsnPanelBottom     = 0.08
-    ;pres@lbTitleOn          = True                  ; turn on title
-    ;pres@lbTitleString      = "mm/dia"
-    ;pres@lbBoxEndCapStyle   = "TriangleHighEnd"
-    ;pres@pmLabelBarHeightF  = 0.8
-    ;pres@gsnPanelMainString = "Influencia SST "+fecha
-    ;agregando_shapefile1 = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
-    ;agregando_shapefile2 = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
-
-    ;gsn_panel(wks,plot,(/2,4,4/),pres)
     pres1 = True
     pres1@gsnMaximize        = True
     pres1@gsnPanelRowSpec    = True  ;====================
