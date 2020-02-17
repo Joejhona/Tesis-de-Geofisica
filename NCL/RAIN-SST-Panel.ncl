@@ -186,10 +186,10 @@ begin
     pres1@gsnMaximize        = True
     pres1@gsnPanelRowSpec    = True  ;====================
     pres1@gsnPanelLabelBar   = True                ; add common colorbar
-    ;pres1@lbOrientation      = "vertical"
+    pres1@lbOrientation      = "horizontal"
     ;pres1@vpHeightF          = 0.6
     pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
-    pres1@gsnPanelLeft       = 0.04
+    pres1@gsnPanelLeft       = 0.06
     pres1@gsnPanelBottom     = 0.08
     pres1@gsnPanelSave       = True
     pres1@lbTitleOn          = True                  ; turn on title
@@ -201,10 +201,10 @@ begin
     pres2 = True
     pres2@gsnMaximize        = True
     pres2@gsnPanelLabelBar   = True                ; add common colorbar
-    ;pres2@lbOrientation      = "vertical"
+    pres2@lbOrientation      = "horizontal"
     ;pres2@vpHeightF          = 0.6
     pres2@lbLabelFontHeightF = 0.01               ; make labels smaller
-    pres2@gsnPanelLeft       = 0.04
+    pres2@gsnPanelLeft       = 0.06
     pres2@gsnPanelBottom     = 0.08
     pres2@gsnPanelSave       = True
     ;pres2@lbTitleOn          = True                  ; turn on title
@@ -212,11 +212,8 @@ begin
     pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
     pres2@lbTitleFontHeightF = 0.01
     ;pres2@pmLabelBarHeightF   = 0.2
-	;pres2@gsnPanelMainString = "Anomalia lluvia WRF - PISCO"
     pres  = True
     pres@gsnPanelTop         = 0.95
-    ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
-    ;pres2@lbLabelFontHeightF = 0.01
     agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
     agregando_shapefile3      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
