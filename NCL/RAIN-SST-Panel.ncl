@@ -71,7 +71,7 @@ begin
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 7000
-    ;type@wkHeight    = 1000 ;8000             
+    type@wkHeight    = 5000             
     wks     = gsn_open_wks(type,dirS+"rain_sst_"+fecha+"_"+t*24+"_hrs")   
     plot    = new(dimsizes(sst)+2,graphic)
     wks2    = gsn_open_wks(type,dirS+"dif_"+fecha+"_"+t*24+"_hrs")   
@@ -81,8 +81,8 @@ begin
     res                     = True      ;--> activa los detalles
     res@gsnDraw             = False     ;--> don't draw the plot yet
     res@gsnFrame            = False     ;--> 
-    res@mpFillOn            = True
-    res@gsnMaximize         = False
+    res@mpFillOn            = False
+    ;res@gsnMaximize         = True
     ;res@gsnLeftString       = "mm/dia"
     res@gsnLeftString      = ""
     res@mpLimitMode         = "Corners" ;--> Activa limites modo corners
@@ -186,14 +186,14 @@ begin
     pres1@gsnPanelLabelBar   = True                ; add common colorbar
     ;pres1@vpHeightF          = 0.6
     pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
-    pres1@gsnPanelLeft       = 0.1
+    ;pres1@gsnPanelLeft       = 0.1
     pres1@gsnPanelBottom     = 0.08
     pres1@gsnPanelSave       = True
     pres1@lbTitleOn          = True                  ; turn on title
     pres1@lbTitleString      = "mm/dia"
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
-    ;pres1@pmLabelBarHeightF  = 0.2
+    pres1@pmLabelBarHeightF  = 0.06
     pres1@gsnPanelMainString = "Influencia SST "+fecha
 
     agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
@@ -203,11 +203,14 @@ begin
 
     pres2 = True
     pres2@gsnPanelMainString = "Diferencia"
+    pres2@gsnPanelLabelBar   = True
+    ;pres2@pmLabelBarHeightF = 0.01     
+    pres2@lbLabelFontHeightF = 0.007
     
-    agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
-    agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot2,shp2,shpres2)
+    agregando_shapefile3      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
+    agregando_shapefile4      = gsn_add_shapefile_polylines(wks,plot2,shp2,shpres2)
 
-    gsn_panel(wks2,plot,(/1,6/),pres2)
+    gsn_panel(wks2,plot2,(/1,6/),pres2)
 
     ;dims1 = (/2,6/)
     ;dims2 = (/1,6/)
