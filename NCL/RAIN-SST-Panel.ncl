@@ -70,10 +70,11 @@ begin
     type    = "png"
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-    type@wkWidth     = 1000 ;7000
-    type@wkHeight    = 1000 ;8000             
+    type@wkWidth     = 7000
+    ;type@wkHeight    = 1000 ;8000             
     wks     = gsn_open_wks(type,dirS+"rain_sst_"+fecha+"_"+t*24+"_hrs")   
     plot    = new(dimsizes(sst)+2,graphic)
+    wks2    = gsn_open_wks(type,dirS+"dif_"+fecha+"_"+t*24+"_hrs")   
     plot2   = new(dimsizes(sst),graphic)
     
 ;----- agregando detalles al mapa -----;
@@ -176,58 +177,37 @@ begin
         resi2@gsnCenterString   := "dif "+sst(i) 
         resi2@cnFillPalette     := color_paleta2
         resi2@cnLevels          := levels2
-        plot2(i) = gsn_csm_contour_map(wks,dif_i,resi2)
+        plot2(i) = gsn_csm_contour_map(wks2,dif_i,resi2)
     end do
 
-    ypos1  = 0.962     ; top row
-    ypos2  = 0.667     ; middle row
-    ypos3  = 0.317     ; bottom row
+    pres1 = True
+    pres1@gsnMaximize        = True
+    pres1@gsnPanelRowSpec    = True  ;====================
+    pres1@gsnPanelLabelBar   = True                ; add common colorbar
+    ;pres1@vpHeightF          = 0.6
+    pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
+    pres1@gsnPanelLeft       = 0.1
+    pres1@gsnPanelBottom     = 0.08
+    pres1@gsnPanelSave       = True
+    pres1@lbTitleOn          = True                  ; turn on title
+    pres1@lbTitleString      = "mm/dia"
+    pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
+    pres1@lbTitleFontHeightF = 0.01
+    ;pres1@pmLabelBarHeightF  = 0.2
+    pres1@gsnPanelMainString = "Influencia SST "+fecha
 
-    dist_from_title_to_plot = 0.013
-    ytitl1 = ypos1 + dist_from_title_to_plot
-    ytitl2 = ypos2 + dist_from_title_to_plot
-    ytitl3 = ypos3 + dist_from_title_to_plot
+    agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
+    agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
 
-    nrows       = 3   
-    plot_height = 1./tofloat(nrows)
+    gsn_panel(wks,plot,(/2,6/),pres1)
 
-    pres                          = True
-    pres@gsnFrame                 = False
-    pres@gsnMaximize              = True
+    pres2 = True
+    pres2@gsnPanelMainString = "Diferencia"
+    
+    agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
+    agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot2,shp2,shpres2)
 
-    pres@gsnPanelRowSpec          = True  ;====================
-
-    pres@gsnPanelTop              = 1.0
-    ;pres@gsnPanelBottom           = pres@gsnPanelTop - plot_height
-    ;pres@gsnPanelYF               = (/ypos1,ypos1,ypos1,ypos1/)
-
-    pres@gsnPanelLabelBar         = True    
-    pres@pmLabelBarHeightF        = 0.05
-    pres@pmLabelBarOrthogonalPosF = -0.01
-    pres@lbTitleString            = "(mm season~S~-1~N~)"
-    pres@lbTitleFontHeightF       = 0.01
-    pres@lbTitlePosition          = "Bottom"      ;position of label bar
-    pres@lbLabelFontHeightF       = 0.01
-
-    ;pres@gsnPanelTop              = pres@gsnPanelBottom
-    pres@gsnPanelBottom           = pres@gsnPanelTop - plot_height
-    pres@gsnPanelYF               = (/ypos2,ypos2,ypos2,ypos2/)
-
-
-    pres@gsnPanelMainString       = "Long title for the second row of plots"
-    pres@gsnPanelMainPosYF        = ytitl2    ; Y position of title
-    gsn_panel(wks,plots,(/2,6/),pres)
-
-
-    pres@gsnPanelTop              = pres@gsnPanelBottom
-    pres@gsnPanelBottom           = 0.0
-    pres@gsnPanelYF               = (/ypos3,ypos3,ypos3,ypos3/)   
-
-    pres@gsnPanelMainString       = "Long title for the third row of plots"
-    pres@gsnPanelMainPosYF        = ytitl3    ; Y position of title
-    gsn_panel(wks,plots2,(/1,6/),pres)
-
-    frame(wks)
+    gsn_panel(wks2,plot,(/1,6/),pres2)
 
     ;dims1 = (/2,6/)
     ;dims2 = (/1,6/)
