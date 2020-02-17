@@ -1,6 +1,6 @@
 ;===>> h=1 dia, 2 dias, 3 dias #####
 ;===>> file_wrf   #####
-load "./panel_two_sets.ncl"
+load "./home/usuario/Documentos/ticse/Tesis-Maestria/SALIDAS/scripts/Script/NCL/panel_two_sets.ncl"
 
 ;============== %%%% SHAPES %%%% ==============
 dirP    = "/data/users/jticse/Tesis-Maestria/PREDATA/shapes/" ;--> ruta principal
