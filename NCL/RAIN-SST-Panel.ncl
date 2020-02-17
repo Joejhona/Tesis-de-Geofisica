@@ -186,8 +186,8 @@ begin
     pres1@gsnMaximize        = True
     pres1@gsnPanelRowSpec    = True  ;====================
     pres1@gsnPanelLabelBar   = True                ; add common colorbar
-    pres1@lbOrientation      = "vertical"
-    pres1@vpHeightF          = 0.6
+    ;pres1@lbOrientation      = "vertical"
+    ;pres1@vpHeightF          = 0.6
     pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
     pres1@gsnPanelLeft       = 0.04
     pres1@gsnPanelBottom     = 0.08
@@ -196,13 +196,13 @@ begin
     pres1@lbTitleString      = "mm/dia"
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
-    pres1@pmLabelBarHeightF  = 0.6
+    ;pres1@pmLabelBarHeightF  = 0.4
     pres1@gsnPanelMainString = "Influencia SST "+fecha
     pres2 = True
     pres2@gsnMaximize        = True
     pres2@gsnPanelLabelBar   = True                ; add common colorbar
-    pres2@lbOrientation      = "vertical"
-    pres2@vpHeightF          = 0.6
+    ;pres2@lbOrientation      = "vertical"
+    ;pres2@vpHeightF          = 0.6
     pres2@lbLabelFontHeightF = 0.01               ; make labels smaller
     pres2@gsnPanelLeft       = 0.04
     pres2@gsnPanelBottom     = 0.08
@@ -211,7 +211,7 @@ begin
     ;pres2@lbTitleString      = "mm/dia"
     pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
     pres2@lbTitleFontHeightF = 0.01
-    pres2@pmLabelBarHeightF   = 0.3
+    ;pres2@pmLabelBarHeightF   = 0.2
 	;pres2@gsnPanelMainString = "Anomalia lluvia WRF - PISCO"
     pres  = True
     pres@gsnPanelTop         = 0.95
