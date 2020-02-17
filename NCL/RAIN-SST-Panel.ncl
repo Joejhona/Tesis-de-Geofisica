@@ -45,7 +45,8 @@ levels = (/0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
     9.,10.,15.,20.,25.,30.,35.,40.,\
     45.,50.,55.,60.,65.,70.,75.,\
     80.,85.,90.,95.,100./)
-color_paleta = "WhBlGrYeRe"
+color_paleta = "GMT_drywet"
+;color_paleta = "WhBlGrYeRe"
 
 levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
         -9.,-8.,-7.,-6,-5,-4.,-3.,-2.,-1.,-0.9,-0.8,-0.7,-0.6,\
@@ -69,8 +70,8 @@ begin
     type    = "png"
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
-    type@wkWidth     = 7000
-    type@wkHeight    = 8000             
+    type@wkWidth     = 1000 ;7000
+    type@wkHeight    = 1000 ;8000             
     wks     = gsn_open_wks(type,dirS+"rain_sst_"+fecha+"_"+t*24+"_hrs")   
     plot    = new(dimsizes(sst)+2,graphic)
     plot2   = new(dimsizes(sst),graphic)
@@ -79,8 +80,8 @@ begin
     res                     = True      ;--> activa los detalles
     res@gsnDraw             = False     ;--> don't draw the plot yet
     res@gsnFrame            = False     ;--> 
-    res@mpFillOn            = False
-    ;res@gsnMaximize         = True
+    res@mpFillOn            = True
+    res@gsnMaximize         = False
     ;res@gsnLeftString       = "mm/dia"
     res@gsnLeftString      = ""
     res@mpLimitMode         = "Corners" ;--> Activa limites modo corners
@@ -88,12 +89,13 @@ begin
     res@mpRightCornerLatF   = max_lat_n ;--> n=Norte
     res@mpLeftCornerLonF    = min_lon_n
     res@mpRightCornerLonF   = max_lon_n
+    res@mpFillDrawOrder     = "PostDraw"
     ;res@tiMainString        = "Prueba"
     ;res@lbOrientation       = "Vertical"
 
     ;---Limites Nacionales---;
-    res@tmYLLabelsOn                = False         ; turn off lat labels
-    res@tmXBLabelsOn                = False         ; turn off lon labels
+    ;res@tmYLLabelsOn                = False         ; turn off lat labels
+    ;res@tmXBLabelsOn                = False         ; turn off lon labels
     ;res@tmYROn                      = False
     ;res@tmYLOn                      = False
     ;res@tmXTOn                      = False
@@ -109,8 +111,6 @@ begin
     res@cnLevels            = levels
 
     res@gsnCenterStringFontHeightF = 0.04
-
-
 
     file_1  = addfile(file_wrf,"r")
     lat_w  := wrf_user_getvar(file_1,"XLAT",0)
@@ -168,7 +168,7 @@ begin
         resi1@gsnCenterString   := sst(i) 
         plot(i+2) = gsn_csm_contour_map(wks,pd_wrf_i,resi1)
 
-        dif_i  := pd_wrf_1-pd_wrf_i
+        dif_i  := pd_wrf_i-pd_wrf_2
         dif_i@lat2d := lat_w
         dif_i@lon2d := lon_w  
         printVarSummary(dif_i)
@@ -179,45 +179,93 @@ begin
         plot2(i) = gsn_csm_contour_map(wks,dif_i,resi2)
     end do
 
-    dims1 = (/2,6/)
-    dims2 = (/1,6/)
+    ypos1  = 0.962     ; top row
+    ypos2  = 0.667     ; middle row
+    ypos3  = 0.317     ; bottom row
 
-    pres1 = True
-    pres1@gsnMaximize        = True
-    pres1@gsnPanelRowSpec    = True  ;====================
-    pres1@gsnPanelLabelBar   = True                ; add common colorbar
-    pres1@lbOrientation      = "horizontal"
-    ;pres1@vpHeightF          = 0.6
-    pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
-    pres1@gsnPanelLeft       = 0.1
-    pres1@gsnPanelBottom     = 0.08
-    pres1@gsnPanelSave       = True
-    pres1@lbTitleOn          = True                  ; turn on title
-    pres1@lbTitleString      = "mm/dia"
-    pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
-    pres1@lbTitleFontHeightF = 0.01
-    ;pres1@pmLabelBarHeightF  = 0.2
-    pres1@gsnPanelMainString = "Influencia SST "+fecha
-    pres2 = True
-    pres2@gsnMaximize        = True
-    pres2@gsnPanelLabelBar   = True                ; add common colorbar
-    pres2@lbOrientation      = "horizontal"
-    ;pres2@vpHeightF          = 0.6
-    pres2@lbLabelFontHeightF = 0.01               ; make labels smaller
-    pres2@gsnPanelLeft       = 0.1
-    pres2@gsnPanelBottom     = 0.08
-    pres2@gsnPanelSave       = True
-    ;pres2@lbTitleOn          = True                  ; turn on title
-    ;pres2@lbTitleString      = "mm/dia"
-    pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
-    pres2@lbTitleFontHeightF = 0.01
-    ;pres2@pmLabelBarHeightF   = 0.2
-    pres  = True
-    pres@gsnPanelTop         = 0.95
-    agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
-    agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
-    agregando_shapefile3      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
-    agregando_shapefile4      = gsn_add_shapefile_polylines(wks,plot2,shp2,shpres2)
-    panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)
+    dist_from_title_to_plot = 0.013
+    ytitl1 = ypos1 + dist_from_title_to_plot
+    ytitl2 = ypos2 + dist_from_title_to_plot
+    ytitl3 = ypos3 + dist_from_title_to_plot
+
+    nrows       = 3   
+    plot_height = 1./tofloat(nrows)
+
+    pres                          = True
+    pres@gsnFrame                 = False
+    pres@gsnMaximize              = True
+
+    pres@gsnPanelRowSpec          = True  ;====================
+
+    pres@gsnPanelTop              = 1.0
+    ;pres@gsnPanelBottom           = pres@gsnPanelTop - plot_height
+    ;pres@gsnPanelYF               = (/ypos1,ypos1,ypos1,ypos1/)
+
+    pres@gsnPanelLabelBar         = True    
+    pres@pmLabelBarHeightF        = 0.05
+    pres@pmLabelBarOrthogonalPosF = -0.01
+    pres@lbTitleString            = "(mm season~S~-1~N~)"
+    pres@lbTitleFontHeightF       = 0.01
+    pres@lbTitlePosition          = "Bottom"      ;position of label bar
+    pres@lbLabelFontHeightF       = 0.01
+
+    ;pres@gsnPanelTop              = pres@gsnPanelBottom
+    pres@gsnPanelBottom           = pres@gsnPanelTop - plot_height
+    pres@gsnPanelYF               = (/ypos2,ypos2,ypos2,ypos2/)
+
+
+    pres@gsnPanelMainString       = "Long title for the second row of plots"
+    pres@gsnPanelMainPosYF        = ytitl2    ; Y position of title
+    gsn_panel(wks,plots,(/2,6/),pres)
+
+
+    pres@gsnPanelTop              = pres@gsnPanelBottom
+    pres@gsnPanelBottom           = 0.0
+    pres@gsnPanelYF               = (/ypos3,ypos3,ypos3,ypos3/)   
+
+    pres@gsnPanelMainString       = "Long title for the third row of plots"
+    pres@gsnPanelMainPosYF        = ytitl3    ; Y position of title
+    gsn_panel(wks,plots2,(/1,6/),pres)
+
+    frame(wks)
+
+    ;dims1 = (/2,6/)
+    ;dims2 = (/1,6/)
+
+    ;pres1 = True
+    ;pres1@gsnMaximize        = True
+    ;pres1@gsnPanelRowSpec    = True  ;====================
+    ;pres1@gsnPanelLabelBar   = True                ; add common colorbar
+    ;;pres1@vpHeightF          = 0.6
+    ;pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
+    ;pres1@gsnPanelLeft       = 0.1
+    ;pres1@gsnPanelBottom     = 0.08
+    ;pres1@gsnPanelSave       = True
+    ;pres1@lbTitleOn          = True                  ; turn on title
+    ;pres1@lbTitleString      = "mm/dia"
+    ;pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
+    ;pres1@lbTitleFontHeightF = 0.01
+    ;;pres1@pmLabelBarHeightF  = 0.2
+    ;pres1@gsnPanelMainString = "Influencia SST "+fecha
+    ;pres2 = True
+    ;pres2@gsnMaximize        = True
+    ;pres2@gsnPanelLabelBar   = True                ; add common colorbar
+    ;;pres2@vpHeightF          = 0.6
+    ;pres2@lbLabelFontHeightF = 0.01               ; make labels smaller
+    ;pres2@gsnPanelLeft       = 0.1
+    ;pres2@gsnPanelBottom     = 0.08
+    ;pres2@gsnPanelSave       = True
+    ;;pres2@lbTitleOn          = True                  ; turn on title
+    ;;pres2@lbTitleString      = "mm/dia"
+    ;pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
+    ;pres2@lbTitleFontHeightF = 0.01
+    ;;pres2@pmLabelBarHeightF   = 0.2
+    ;pres  = True
+    ;pres@gsnPanelTop         = 0.95
+    ;agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
+    ;agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
+    ;agregando_shapefile3      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
+    ;agregando_shapefile4      = gsn_add_shapefile_polylines(wks,plot2,shp2,shpres2)
+    ;panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)
 
 end
