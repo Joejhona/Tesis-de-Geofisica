@@ -152,8 +152,8 @@ begin
         printVarSummary(dif_i)
         resi2                   := res
         resi2@gsnCenterString   := "dif "+sst(i) 
-        resi2@cnFillPalette      = color_paleta2
-        resi2@cnLevels           = levels2
+        resi2@cnFillPalette     := color_paleta2
+        resi2@cnLevels          := levels2
         plot(i+5) = gsn_csm_contour_map(wks,dif_i,resi2)
     end do
     pres                 = True
