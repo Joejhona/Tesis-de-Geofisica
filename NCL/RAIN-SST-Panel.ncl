@@ -201,7 +201,7 @@ begin
     ;agregando_shapefile2 = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
 
     ;gsn_panel(wks,plot,(/2,4,4/),pres)
-
+    pres1 = True
     pres1@gsnMaximize        = True
     pres1@gsnPanelRowSpec    = True  ;====================
     pres1@gsnPanelLabelBar   = True                ; add common colorbar
