@@ -70,7 +70,8 @@ begin
     type@wkWidth     = 7000
     type@wkHeight    = 8000             
     wks     = gsn_open_wks(type,dirS+"rain_sst_"+fecha+"_"+t*24+"_hrs")   
-    plot    = new(10,graphic)
+    plot    = new(6,graphic)
+    plot2   = new(4,graphic)
     
 ;----- agregando detalles al mapa -----;
     res                     = True      ;--> activa los detalles
@@ -173,22 +174,70 @@ begin
         resi2@gsnCenterString   := "dif "+sst(i) 
         resi2@cnFillPalette     := color_paleta2
         resi2@cnLevels          := levels2
-        plot(i+6) = gsn_csm_contour_map(wks,dif_i,resi2)
+        plot2(i) = gsn_csm_contour_map(wks,dif_i,resi2)
     end do
-    pres                 = True
-    pres@gsnPanelRowSpec = True  
-    ;pres@gsnPanelCenter  = False
-    pres@gsnMaximize        = True
-    pres@gsnPanelLabelBar   = True                ; add common colorbar
-    pres@lbOrientation      = "vertical"
-    pres@gsnPanelLeft       = 0.04
-    pres@gsnPanelBottom     = 0.08
-    pres@lbTitleOn          = True                  ; turn on title
-    pres@lbTitleString      = "mm/dia"
-    pres@lbBoxEndCapStyle   = "TriangleHighEnd"
-    pres@pmLabelBarHeightF  = 0.8
-    pres@gsnPanelMainString = "Influencia SST "+fecha
-    agregando_shapefile1 = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
-    agregando_shapefile2 = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
-    gsn_panel(wks,plot,(/2,4,4/),pres)
+
+    dims1 = (/2,4/)
+    dims2 = (/1,4/)
+
+
+    ;pres                 = True
+    ;pres@gsnPanelRowSpec = True  
+    ;;pres@gsnPanelCenter  = False
+    ;pres@gsnMaximize        = True
+    ;pres@gsnPanelLabelBar   = True                ; add common colorbar
+    ;pres@lbOrientation      = "vertical"
+    ;pres@lbLabelFontHeightF = 0.01
+    ;pres@gsnPanelLeft       = 0.04
+    ;pres@gsnPanelBottom     = 0.08
+    ;pres@lbTitleOn          = True                  ; turn on title
+    ;pres@lbTitleString      = "mm/dia"
+    ;pres@lbBoxEndCapStyle   = "TriangleHighEnd"
+    ;pres@pmLabelBarHeightF  = 0.8
+    ;pres@gsnPanelMainString = "Influencia SST "+fecha
+    ;agregando_shapefile1 = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
+    ;agregando_shapefile2 = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
+
+    ;gsn_panel(wks,plot,(/2,4,4/),pres)
+
+    pres1@gsnMaximize        = True
+    pres1@gsnPanelRowSpec    = True  ;====================
+    pres1@gsnPanelLabelBar   = True                ; add common colorbar
+    pres1@lbOrientation      = "vertical"
+    pres1@vpHeightF          = 0.6
+    pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
+    pres1@gsnPanelLeft       = 0.04
+    pres1@gsnPanelBottom     = 0.08
+    pres1@gsnPanelSave       = True
+    pres1@lbTitleOn          = True                  ; turn on title
+    pres1@lbTitleString      = "mm/dia"
+    pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
+    pres1@lbTitleFontHeightF = 0.01
+    pres1@pmLabelBarHeightF  = 0.6
+    pres1@gsnPanelMainString = "Influencia SST "+fecha
+    pres2 = True
+    pres2@gsnMaximize        = True
+    pres2@gsnPanelLabelBar   = True                ; add common colorbar
+    pres2@lbOrientation      = "vertical"
+    pres2@vpHeightF          = 0.6
+    pres2@lbLabelFontHeightF = 0.01               ; make labels smaller
+    pres2@gsnPanelLeft       = 0.04
+    pres2@gsnPanelBottom     = 0.08
+    pres2@gsnPanelSave       = True
+    ;pres2@lbTitleOn          = True                  ; turn on title
+    ;pres2@lbTitleString      = "mm/dia"
+    pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
+    pres2@lbTitleFontHeightF = 0.01
+    pres2@pmLabelBarHeightF   = 0.3
+	;pres2@gsnPanelMainString = "Anomalia lluvia WRF - PISCO"
+    pres  = True
+    pres@gsnPanelTop         = 0.95
+    ;pres1@lbLabelFontHeightF = 0.01     ; make labels slightly larger
+    ;pres2@lbLabelFontHeightF = 0.01
+    agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
+    agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
+    agregando_shapefile3      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
+    agregando_shapefile4      = gsn_add_shapefile_polylines(wks,plot2,shp2,shpres2)
+    panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)
+
 end
