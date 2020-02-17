@@ -71,10 +71,12 @@ begin
     ;type    = "x11"
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 7000
-    type@wkHeight    = 5000             
-    wks     = gsn_open_wks(type,dirS+"rain_sst_"+fecha+"_"+t*24+"_hrs")   
+    type@wkHeight    = 5000
+    title1  = dirS+"rain_sst_"+fecha+"_"+t*24
+    wks     = gsn_open_wks(type,title1)   
     plot    = new(dimsizes(sst)+2,graphic)
-    wks2    = gsn_open_wks(type,dirS+"dif_"+fecha+"_"+t*24+"_hrs")   
+    title2  = dirS+"dif_"+fecha+"_"+t*24
+    wks2    = gsn_open_wks(type,title2)   
     plot2   = new(dimsizes(sst),graphic)
     
 ;----- agregando detalles al mapa -----;
@@ -202,9 +204,9 @@ begin
     gsn_panel(wks,plot,(/2,6/),pres1)
 
     pres2 = True
-    pres2@gsnPanelMainString = "Diferencia"
+    pres2@lbTitleOn          = False                  ; turn on title
+    ;pres2@gsnPanelMainString = "Diferencia"
     pres2@gsnPanelLabelBar   = True
-    ;pres2@pmLabelBarHeightF = 0.01     
     pres2@lbLabelFontHeightF = 0.007
     
     agregando_shapefile3      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
@@ -212,43 +214,11 @@ begin
 
     gsn_panel(wks2,plot2,(/1,6/),pres2)
 
-    ;dims1 = (/2,6/)
-    ;dims2 = (/1,6/)
-
-    ;pres1 = True
-    ;pres1@gsnMaximize        = True
-    ;pres1@gsnPanelRowSpec    = True  ;====================
-    ;pres1@gsnPanelLabelBar   = True                ; add common colorbar
-    ;;pres1@vpHeightF          = 0.6
-    ;pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
-    ;pres1@gsnPanelLeft       = 0.1
-    ;pres1@gsnPanelBottom     = 0.08
-    ;pres1@gsnPanelSave       = True
-    ;pres1@lbTitleOn          = True                  ; turn on title
-    ;pres1@lbTitleString      = "mm/dia"
-    ;pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
-    ;pres1@lbTitleFontHeightF = 0.01
-    ;;pres1@pmLabelBarHeightF  = 0.2
-    ;pres1@gsnPanelMainString = "Influencia SST "+fecha
-    ;pres2 = True
-    ;pres2@gsnMaximize        = True
-    ;pres2@gsnPanelLabelBar   = True                ; add common colorbar
-    ;;pres2@vpHeightF          = 0.6
-    ;pres2@lbLabelFontHeightF = 0.01               ; make labels smaller
-    ;pres2@gsnPanelLeft       = 0.1
-    ;pres2@gsnPanelBottom     = 0.08
-    ;pres2@gsnPanelSave       = True
-    ;;pres2@lbTitleOn          = True                  ; turn on title
-    ;;pres2@lbTitleString      = "mm/dia"
-    ;pres2@lbBoxEndCapStyle   = "TriangleBothEnds"
-    ;pres2@lbTitleFontHeightF = 0.01
-    ;;pres2@pmLabelBarHeightF   = 0.2
-    ;pres  = True
-    ;pres@gsnPanelTop         = 0.95
-    ;agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
-    ;agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
-    ;agregando_shapefile3      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
-    ;agregando_shapefile4      = gsn_add_shapefile_polylines(wks,plot2,shp2,shpres2)
-    ;panel_two_sets(wks,plot,plot2,dims1,dims2,pres1,pres2,pres)
+    cmd1 = "convert "+title1+".png -crop `convert "+title1+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title1+".png"
+    system(cmd1)
+    cmd2 = "convert "+title2+".png -crop `convert "+title2+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title2+".png"
+    system(cmd2)
+    "convert "+title1+".png "+title2+".png -append "+dirS+"rain_sst_dif_"+fecha+"_"+t*24+"_hrs.png"
+    system(cmd3)
 
 end
