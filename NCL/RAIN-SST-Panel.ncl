@@ -45,11 +45,14 @@ levels = (/0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
     9.,10.,15.,20.,25.,30.,35.,40.,\
     45.,50.,55.,60.,65.,70.,75.,\
     80.,85.,90.,95.,100./)
-color1  = read_colormap_file("MPL_YlGnBu")
-color2  = read_colormap_file("MPL_autumn")
-;color2 := color2(5:,:)
-;color2 := color2(::-1,:)
-color1(0:47,:) = color2(32:79,:)
+color1  = read_colormap_file("GMT_drywet")
+color2  = read_colormap_file("perc2_9lev")
+:color2 := color2(6:,:)
+:color2 := color2(::-1,:)
+;color1(0:3,:) = color2
+color1(0,:) = color2(9,:)
+color1(1,:) = color2(6,:)
+;color1(0:47,:) = color2(48:95,:)
 color_paleta  = color1
 ;color_paleta  = "GMT_drywet"
 ;color_paleta = "WhBlGrYeRe"
@@ -60,7 +63,9 @@ levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
         0.8,0.9,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,18,\
         20.,25.,30.,40.,50/) 
 color3  = read_colormap_file("MPL_BrBG")
-color3(0:47,:) = color2(32:79,:)
+color4  = read_colormap_file("MPL_autumn")
+color3(0:31,:) = color4(64:95,:)
+;color3(0:47,:) = color2(48:95,:)
 color_paleta2 = color3
 ;color_paleta2 = "precip_diff_12lev";--> paleta 12 colores
 ;color_paleta2 = "WhBlReWh"
