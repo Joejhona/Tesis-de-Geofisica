@@ -47,8 +47,8 @@ levels = (/0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
     80.,85.,90.,95.,100./)
 color1  = read_colormap_file("GMT_drywet")
 color2  = read_colormap_file("perc2_9lev")
-:color2 := color2(6:,:)
-:color2 := color2(::-1,:)
+;color2 := color2(6:,:)
+;color2 := color2(::-1,:)
 ;color1(0:3,:) = color2
 color1(0,:) = color2(9,:)
 color1(1,:) = color2(6,:)
