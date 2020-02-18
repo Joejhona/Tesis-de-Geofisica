@@ -45,7 +45,13 @@ levels = (/0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
     9.,10.,15.,20.,25.,30.,35.,40.,\
     45.,50.,55.,60.,65.,70.,75.,\
     80.,85.,90.,95.,100./)
-color_paleta = "GMT_drywet"
+color1  = read_colormap_file("GMT_drywet")
+color2  = read_colormap_file("perc2_9lev")
+color2 := color2(5:,:)
+color2 := color2(::-1,:)
+color1(0:4,:) = color2
+color_paleta  = color1
+;color_paleta  = "GMT_drywet"
 ;color_paleta = "WhBlGrYeRe"
 
 levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
@@ -53,10 +59,14 @@ levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
         -0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
         0.8,0.9,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,18,\
         20.,25.,30.,40.,50/) 
+color3  = read_colormap_file("MPL_BrBG")
+color3(0:4,:) = color2
+color_paleta2 = color3
 ;color_paleta2 = "precip_diff_12lev";--> paleta 12 colores
 ;color_paleta2 = "WhBlReWh"
 ;color_paleta2 = "ViBlGrWhYeOrRe"
-color_paleta2 = "MPL_BrBG"
+;color_paleta2 = "MPL_BrBG"
+
 
 begin 
     sst     = (/"-3sst","-2sst","-1sst","+1sst","+2sst","+3sst"/)
