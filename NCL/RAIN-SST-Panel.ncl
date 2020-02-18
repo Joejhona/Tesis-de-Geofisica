@@ -196,7 +196,7 @@ begin
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.06
-    pres1@gsnPanelMainString = "Influencia SST "+fecha
+    pres1@gsnPanelMainString = "Influencia de SST en la lluvia WRF"+fecha
 
     agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
@@ -218,7 +218,7 @@ begin
     system(cmd1)
     cmd2 = "convert "+title2+".png -crop `convert "+title2+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title2+".png"
     system(cmd2)
-    "convert "+title1+".png "+title2+".png -append "+dirS+"rain_sst_dif_"+fecha+"_"+t*24+"_hrs.png"
+    cmd3 = "convert "+title1+".png "+title2+".png -append "+dirS+"rain_sst_dif_"+fecha+"_"+t*24+"_hrs.png"
     system(cmd3)
 
 end
