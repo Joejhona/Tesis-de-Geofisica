@@ -168,13 +168,13 @@ begin
 
     fecha_sst = str_sub_str(fecha,"-","_")
     file_3   := addfile("rtg_sst_"+fecha_sst+".grb","r")
-    sst      := file_3->TMP_P0_L1_GLL0
-    sst      := sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
+    rtg_sst  := file_3->TMP_P0_L1_GLL0
+    rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
     res3                   := res
     res3@gsnCenterString   := "RTG SST "+fecha
     res3@cnFillPalette     := color_paleta3
     res3@cnLevels          := levels3
-    plot(1) = gsn_csm_contour_map(wks,pd_wrf_2,res3)
+    plot(1) = gsn_csm_contour_map(wks,rtg_sst,res3)
 
     do i=0,dimsizes(sst)-1
         file_i   := addfile(file_wrf+sst(i),"r")
