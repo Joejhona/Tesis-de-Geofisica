@@ -175,7 +175,7 @@ begin
     rtg_sst!1 = "lon"
     rtg_sst&lat   = lat                 ; assign lat cv
     rtg_sst&lon   = lon
-    ;rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
+    rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
     res3                   := res
     res3@gsnCenterString   := "RTG SST "+fecha
     res3@cnFillPalette     := color_paleta3
