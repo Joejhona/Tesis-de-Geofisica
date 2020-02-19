@@ -168,8 +168,14 @@ begin
 
     fecha_sst = str_sub_str(fecha,"-","_")
     file_3   := addfile("rtg_sst_"+fecha_sst+".grb","r")
-    rtg_sst  := file_3->TMP_P0_L1_GLL0
-    rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
+    rtg_sst   = file_3->TMP_P0_L1_GLL0
+    lat       = file_3->lat_0
+    lon       = file_3->lon_0
+    rtg_sst!0 = "lat"               ; name dimensions
+    rtg_sst!1 = "lon"
+    rtg_sst&lat   = lat                 ; assign lat cv
+    rtg_sst&lon   = lon
+    ;rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
     res3                   := res
     res3@gsnCenterString   := "RTG SST "+fecha
     res3@cnFillPalette     := color_paleta3
