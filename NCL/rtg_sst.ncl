@@ -26,7 +26,8 @@ begin
     res@mpRightCornerLatF   = max_lat_n ;--> n=Norte
     res@mpLeftCornerLonF    = min_lon_n
     res@mpRightCornerLonF   = max_lon_n
-    res@mpFillDrawOrder     = "PostDraw"
+    res@cnFillDrawOrder      = "Predraw"
+    ;res@mpFillDrawOrder     = "PostDraw"
     ;res@tiMainString        = "Prueba"
     ;res@lbOrientation       = "Vertical"
 
@@ -38,7 +39,7 @@ begin
     ;res@tmXTOn                      = False
     ;res@tmXBOn                      = False
 
-    res@gsnAddCyclic        = True
+    res@gsnAddCyclic        = False
     res@lbLabelBarOn        = False             ;---> turn off individual cb's
     res@cnFillOn            = True
     res@cnFillPalette       = "NCV_bright"
@@ -46,6 +47,13 @@ begin
     res@cnLineLabelsOn      = False
     ;res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
     ;res@cnLevels            = levels
+
+    res@mpFillBoundarySets    = "NoBoundaries"
+    res@mpFillAreaSpecifiers  = (/"water","land"/)
+    res@mpSpecifiedFillColors = (/7,2/)
+
+    res@mpAreaMaskingOn       = 1
+    res@mpMaskAreaSpecifiers  = (/"peru","ecuador"/)
 
     file_3   := addfile(file_rtg,"r")
     rtg_sst   = file_3->TMP_P0_L1_GLL0
@@ -55,12 +63,8 @@ begin
     rtg_sst!1 = "lon"
     rtg_sst&lat   = lat                 ; assign lat cv
     rtg_sst&lon   = lon
-    rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
-    res3                   := res
-    res3@gsnCenterString   := "RTG SST "+fecha
-    res3@cnFillPalette     := color_paleta3
-    res3@cnLevels          := levels3
-    plot(1) = gsn_csm_contour_map(wks,rtg_sst,res3)
+    rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360.:max_lon_n+360.})
+    plot(0) = gsn_csm_contour_map(wks,rtg_sst,res)
 
     pres1 = True
     pres1@gsnMaximize        = True
