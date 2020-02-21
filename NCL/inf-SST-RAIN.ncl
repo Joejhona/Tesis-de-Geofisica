@@ -176,7 +176,16 @@ begin
     rtg_sst&lat   = lat                 ; assign lat cv
     rtg_sst&lon   = lon
     rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
+    rtg_sst   = rtg_sst-273.15  
     res3                   := res
+    
+    res3@cnFillOn           = True     ; turn on color fill
+    res3@cnLinesOn          = False    ; turn off contour lines
+    res3@lbLabelStride      = 4        ; every 4th label
+    res3@cnLevelSpacingF    = 3        ; interval
+    res3@cnFillDrawOrder    = "Predraw"  ; draw contours first
+    res3@gsnAddCyclic       = False
+    
     res3@gsnCenterString   := "RTG SST "+fecha
     res3@cnFillPalette     := color_paleta3
     res3@cnLevels          := levels3
