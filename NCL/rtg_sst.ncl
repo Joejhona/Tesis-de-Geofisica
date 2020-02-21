@@ -5,8 +5,7 @@ begin
     shp3    = dirP+shp3
 
     shpres3                  = True
-    ;shpres@gsLineColor      = "red" ;--> color de linea
-    shpres3@gsLineColor      = "black" ;--> color de linea
+    shpres3@gsColor          = "black" ;--> color de linea
     shpres3@gsLineThicknessF = 4.     ;3.0   ;--> grosor de linea
     
     ;---Limites norte---;
@@ -55,8 +54,8 @@ begin
     res@cnFillPalette       = "NCV_bright"
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
     res@cnLineLabelsOn      = False
-    ;res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
-    ;res@cnLevels            = levels
+    res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
+    res@cnLevels            = ispan(13,31,1)
 
     file_3   := addfile(file_rtg,"r")
     rtg_sst   = file_3->TMP_P0_L1_GLL0
@@ -67,7 +66,7 @@ begin
     rtg_sst&lat   = lat                 ; assign lat cv
     rtg_sst&lon   = lon
     rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360.:max_lon_n+360.})
-    rtg_sst   = rtg_sst+273.15  
+    rtg_sst   = rtg_sst-273.15  
     plot(0) = gsn_csm_contour_map(wks,rtg_sst,res)
 
     pres1 = True
