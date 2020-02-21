@@ -176,8 +176,10 @@ begin
     rtg_sst&lat   = lat                 ; assign lat cv
     rtg_sst&lon   = lon
     rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
-    rtg_sst   = rtg_sst-273.15  
-    res3                   := res
+    rtg_sst   = rtg_sst-273.15 
+
+
+    res3                    = True
     
     res3@cnFillOn           = True     ; turn on color fill
     res3@cnLinesOn          = False    ; turn off contour lines
@@ -185,7 +187,17 @@ begin
     res3@cnLevelSpacingF    = 3        ; interval
     res3@cnFillDrawOrder    = "Predraw"  ; draw contours first
     res3@gsnAddCyclic       = False
-    
+    res3@lbLabelBarOn       = False             ;---> turn off individual cb's
+
+    res3@gsnDraw            = False     ;--> don't draw the plot yet
+    res3@gsnFrame           = False     ;-->
+    res3@mpLimitMode        = "Corners" ;--> Activa limites modo corners
+    res3@mpLeftCornerLatF   = min_lat_n ;--> limites.ncl r=rimac p=Perú   
+    res3@mpRightCornerLatF  = max_lat_n ;--> n=Norte
+    res3@mpLeftCornerLonF   = min_lon_n
+    res3@mpRightCornerLonF  = max_lon_n
+
+
     res3@gsnCenterString   := "RTG SST "+fecha
     res3@cnFillPalette     := color_paleta3
     res3@cnLevels          := levels3
