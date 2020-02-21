@@ -86,7 +86,7 @@ begin
     wks2    = gsn_open_wks(type,title2)   
     plot2   = new(dimsizes(sst),graphic)
     title3  = dirS+"sst_"+fecha+"_"+t*24
-    wks3    = gsn_open_wks(type,title2)   
+    wks3    = gsn_open_wks(type,title3)   
     plot3   = new(dimsizes(sst),graphic)
     
 ;----- agregando detalles al mapa -----;
@@ -196,11 +196,13 @@ begin
     res3@mpLeftCornerLonF   = min_lon_n
     res3@mpRightCornerLonF  = max_lon_n
 
-    res3@gsnCenterString   := "RTG SST "+fecha
+    res3@gsnCenterString   := "RTG SST"
     res3@cnFillPalette     := color_paleta3
+    res3@cnLevelSelectionMode= "ExplicitLevels"
     res3@cnLevels          := levels3
     res3@gsnCenterStringFontHeightF = 0.04
     res3@gsnLeftString      = ""
+    res3@gsnRightString     = "C"
 
     plot(2) = gsn_csm_contour_map(wks,rtg_sst,res3)
 
@@ -259,7 +261,7 @@ begin
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.06
-    pres1@gsnPanelMainString = "Influencia de SST en la lluvia WRF"+fecha
+    pres1@gsnPanelMainString = "Influencia de SST en la lluvia WRF "+fecha
 
     agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
@@ -278,7 +280,12 @@ begin
     gsn_panel(wks2,plot2,(/1,6/),pres2)
 
     pres3 = pres2
-    
+    pres3@lbTitleOn          = True                  ; turn on title
+    pres3@lbLabelFontHeightF = 0.01
+    pres3@lbTitleString      = "Temp C"
+    pres3@lbTitleFontHeightF = 0.01
+    ;pres3@pmLabelBarHeightF  = 0.06
+   
     agregando_shapefile5      = gsn_add_shapefile_polylines(wks3,plot3,shp1,shpres)
     agregando_shapefile6      = gsn_add_shapefile_polylines(wks3,plot3,shp2,shpres2)
 
