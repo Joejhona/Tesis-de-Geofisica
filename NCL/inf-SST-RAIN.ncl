@@ -85,9 +85,9 @@ begin
     title2  = dirS+"diff_"+fecha+"_"+t*24
     wks2    = gsn_open_wks(type,title2)   
     plot2   = new(dimsizes(sst),graphic)
-    ;title3  = dirS+"sst_"+fecha+"_"+t*24
-    ;wks3    = gsn_open_wks(type,title2)   
-    ;plot3   = new(dimsizes(sst),graphic)
+    title3  = dirS+"sst_"+fecha+"_"+t*24
+    wks3    = gsn_open_wks(type,title2)   
+    plot3   = new(dimsizes(sst),graphic)
     
 ;----- agregando detalles al mapa -----;
     res                     = True      ;--> activa los detalles
@@ -199,6 +199,9 @@ begin
     res3@gsnCenterString   := "RTG SST "+fecha
     res3@cnFillPalette     := color_paleta3
     res3@cnLevels          := levels3
+    res3@gsnCenterStringFontHeightF = 0.04
+    res3@gsnLeftString      = ""
+
     plot(2) = gsn_csm_contour_map(wks,rtg_sst,res3)
 
     do i=0,dimsizes(sst)-1
@@ -226,6 +229,19 @@ begin
         resi2@cnFillPalette     := color_paleta2
         resi2@cnLevels          := levels2
         plot2(i) = gsn_csm_contour_map(wks2,dif_i,resi2)
+
+        file_sst := addfile("rtg_sst_"+fecha_sst+sst(i)+".grb","r")
+        rtg_sst  := file_sst->TMP_P0_L1_GLL0
+        rtg_sst!0 = "lat"               ; name dimensions
+        rtg_sst!1 = "lon"
+        rtg_sst&lat   = lat                 ; assign lat cv
+        rtg_sst&lon   = lon
+        rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
+        rtg_sst   = rtg_sst-273.15 
+        resi3                   := res3
+        resi3@gsnCenterString   := "RTG SST "+sst(i)
+        plot3(i) = gsn_csm_contour_map(wks,rtg_sst,resi3)
+
     end do
 
     pres1 = True
@@ -247,7 +263,7 @@ begin
     agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
 
-    gsn_panel(wks,plot,(/2,6/),pres1)
+    gsn_panel(wks,plot,(/3,6/),pres1)
 
     pres2 = True
     pres2@lbTitleOn          = False                  ; turn on title
@@ -260,11 +276,21 @@ begin
 
     gsn_panel(wks2,plot2,(/1,6/),pres2)
 
+    pres3 = pres2
+    
+    agregando_shapefile5      = gsn_add_shapefile_polylines(wks,plot3,shp1,shpres)
+    agregando_shapefile6      = gsn_add_shapefile_polylines(wks,plot3,shp2,shpres2)
+
+    gsn_panel(wks2,plot3,(/1,6/),pres3)
+
+
     cmd1 = "convert "+title1+".png -crop `convert "+title1+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title1+".png"
     system(cmd1)
     cmd2 = "convert "+title2+".png -crop `convert "+title2+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title2+".png"
     system(cmd2)
-    cmd3 = "convert "+title1+".png "+title2+".png -append "+dirS+"inf_rain_sst_"+fecha+"_"+t*24+"_hrs.png"
+    cmd3 = "convert "+title3+".png -crop `convert "+title3+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title3+".png"
     system(cmd3)
+    cmd4 = "convert "+title1+".png "+title2+".png "+title3+".png -append "+dirS+"inf_rain_dif_sst_"+fecha+"_"+t*24+"_hrs.png"
+    system(cmd4)
 
 end
