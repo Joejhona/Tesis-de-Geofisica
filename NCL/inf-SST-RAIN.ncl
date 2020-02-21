@@ -254,9 +254,10 @@ begin
     ;pres1@vpHeightF          = 0.6
     pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
     ;pres1@gsnPanelLeft       = 0.1
-    pres1@gsnPanelBottom     = 0.08
+    pres1@gsnPanelBottom     = 0.2
     pres1@gsnPanelSave       = True
     pres1@lbTitleOn          = True                  ; turn on title
+    pres1@lbTitlePosition    = "Bottom"
     pres1@lbTitleString      = "mm/dia"
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
@@ -280,10 +281,12 @@ begin
     gsn_panel(wks2,plot2,(/1,6/),pres2)
 
     pres3 = pres2
+    pres3@gsnPanelBottom     = 0.5
     pres3@lbTitleOn          = True                  ; turn on title
     pres3@lbLabelFontHeightF = 0.01
     pres3@lbTitleString      = "Temp C"
     pres3@lbTitleFontHeightF = 0.01
+    pres3@lbTitlePosition    = "Bottom"
     ;pres3@pmLabelBarHeightF  = 0.06
    
     agregando_shapefile5      = gsn_add_shapefile_polylines(wks3,plot3,shp1,shpres)
