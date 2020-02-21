@@ -7,7 +7,15 @@ begin
     shpres3                  = True
     shpres3@gsColor          = "black" ;--> color de linea
     shpres3@gsLineThicknessF = 4.     ;3.0   ;--> grosor de linea
+
+    dirNCL  = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/NCL/"
+    load dirNCL+"shapefile_utils.ncl"
+
+    opt             = True
+    opt@return_mask = True
+
     
+
     ;---Limites norte---;
     min_lat_n = -13.
     max_lat_n = -1.
@@ -67,7 +75,14 @@ begin
     rtg_sst&lon   = lon
     rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360.:max_lon_n+360.})
     rtg_sst   = rtg_sst-273.15  
-    plot(0) = gsn_csm_contour_map(wks,rtg_sst,res)
+    
+    land_mask = shapefile_mask_data(rtg_sst,shp3,opt)
+
+    rtg_sst_land_mask  = where(land_mask.eq.1,rtg_sst,rtg_sst@_FillValue)
+    copy_VarMeta(rtg_sst,rtg_sst_land_mask)
+    
+    
+    plot(0) = gsn_csm_contour_map(wks,rtg_sst_land_mask,res)
 
     pres1 = True
     pres1@gsnMaximize        = True
@@ -84,6 +99,6 @@ begin
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.06
     pres1@gsnPanelMainString = "RTG SST JOEL"
-    agregando_shapefile3     = gsn_add_shapefile_polygons(wks,plot,shp3,shpres3)
+    ;agregando_shapefile3     = gsn_add_shapefile_polygons(wks,plot,shp3,shpres3)
     gsn_panel(wks,plot,(/1/),pres1)
 end
