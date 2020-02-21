@@ -232,6 +232,7 @@ begin
 
         file_sst := addfile("rtg_sst_"+fecha_sst+sst(i)+".grb","r")
         sst_i    := file_sst->TMP_P0_L1_GLL0
+        printVarSummary(sst_i)
         sst_i!0   = "lat"               ; name dimensions
         sst_i!1   = "lon"
         sst_i&lat   = lat                 ; assign lat cv
@@ -271,15 +272,15 @@ begin
     pres2@gsnPanelLabelBar   = True
     pres2@lbLabelFontHeightF = 0.007
     
-    agregando_shapefile3      = gsn_add_shapefile_polylines(wks,plot2,shp1,shpres)
-    agregando_shapefile4      = gsn_add_shapefile_polylines(wks,plot2,shp2,shpres2)
+    agregando_shapefile3      = gsn_add_shapefile_polylines(wks2,plot2,shp1,shpres)
+    agregando_shapefile4      = gsn_add_shapefile_polylines(wks2,plot2,shp2,shpres2)
 
     gsn_panel(wks2,plot2,(/1,6/),pres2)
 
     pres3 = pres2
     
-    agregando_shapefile5      = gsn_add_shapefile_polylines(wks,plot3,shp1,shpres)
-    agregando_shapefile6      = gsn_add_shapefile_polylines(wks,plot3,shp2,shpres2)
+    agregando_shapefile5      = gsn_add_shapefile_polylines(wks3,plot3,shp1,shpres)
+    agregando_shapefile6      = gsn_add_shapefile_polylines(wks3,plot3,shp2,shpres2)
 
     gsn_panel(wks3,plot3,(/1,6/),pres3)
 
