@@ -81,7 +81,7 @@ begin
     type@wkHeight    = 5000
     title1  = dirS+"rain_"+fecha+"_"+t*24
     wks     = gsn_open_wks(type,title1)   
-    plot    = new(dimsizes(sst)+2,graphic)
+    plot    = new(dimsizes(sst)+3,graphic)
     title2  = dirS+"diff_"+fecha+"_"+t*24
     wks2    = gsn_open_wks(type,title2)   
     plot2   = new(dimsizes(sst),graphic)
@@ -161,9 +161,9 @@ begin
     pd_wrf_2@lat2d := lat_w
     pd_wrf_2@lon2d := lon_w 
     printVarSummary(pd_wrf_2)
-    ;res2                   := res
-    ;res2@gsnCenterString   := t*24+" hrs add RTG SST" 
-    ;plot(1) = gsn_csm_contour_map(wks,pd_wrf_2,res2)
+    res2                   := res
+    res2@gsnCenterString   := t*24+" hrs add RTG SST" 
+    plot(1) = gsn_csm_contour_map(wks,pd_wrf_2,res2)
 
     fecha_sst = str_sub_str(fecha,"-","_")
     file_3   := addfile("rtg_sst_"+fecha_sst+".grb","r")
@@ -196,11 +196,10 @@ begin
     res3@mpLeftCornerLonF   = min_lon_n
     res3@mpRightCornerLonF  = max_lon_n
 
-
     res3@gsnCenterString   := "RTG SST "+fecha
     res3@cnFillPalette     := color_paleta3
     res3@cnLevels          := levels3
-    plot(1) = gsn_csm_contour_map(wks,rtg_sst,res3)
+    plot(2) = gsn_csm_contour_map(wks,rtg_sst,res3)
 
     do i=0,dimsizes(sst)-1
         file_i   := addfile(file_wrf+sst(i),"r")
@@ -216,7 +215,7 @@ begin
         printVarSummary(pd_wrf_i)
         resi1                   := res
         resi1@gsnCenterString   := sst(i) 
-        plot(i+2) = gsn_csm_contour_map(wks,pd_wrf_i,resi1)
+        plot(i+3) = gsn_csm_contour_map(wks,pd_wrf_i,resi1)
 
         dif_i  := pd_wrf_i-pd_wrf_2
         dif_i@lat2d := lat_w
