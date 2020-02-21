@@ -231,17 +231,16 @@ begin
         plot2(i) = gsn_csm_contour_map(wks2,dif_i,resi2)
 
         file_sst := addfile("rtg_sst_"+fecha_sst+sst(i)+".grb","r")
-        rtg_sst  := file_sst->TMP_P0_L1_GLL0
-        rtg_sst!0 = "lat"               ; name dimensions
-        rtg_sst!1 = "lon"
-        rtg_sst&lat   = lat                 ; assign lat cv
-        rtg_sst&lon   = lon
-        rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
-        rtg_sst   = rtg_sst-273.15 
+        sst_i    := file_sst->TMP_P0_L1_GLL0
+        sst_i!0   = "lat"               ; name dimensions
+        sst_i!1   = "lon"
+        sst_i&lat   = lat                 ; assign lat cv
+        sst_i&lon   = lon
+        sst_i    := sst_i({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
+        sst_i     = sst_i-273.15 
         resi3                   := res3
-	resi3@gsnAddCyclic       = False
         resi3@gsnCenterString   := "RTG SST "+sst(i)
-        plot3(i) = gsn_csm_contour_map(wks3,rtg_sst,resi3)
+        plot3(i) = gsn_csm_contour_map(wks3,sst_i,resi3)
 
     end do
 
@@ -282,7 +281,7 @@ begin
     agregando_shapefile5      = gsn_add_shapefile_polylines(wks,plot3,shp1,shpres)
     agregando_shapefile6      = gsn_add_shapefile_polylines(wks,plot3,shp2,shpres2)
 
-    gsn_panel(wks2,plot3,(/1,6/),pres3)
+    gsn_panel(wks3,plot3,(/1,6/),pres3)
 
 
     cmd1 = "convert "+title1+".png -crop `convert "+title1+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title1+".png"
