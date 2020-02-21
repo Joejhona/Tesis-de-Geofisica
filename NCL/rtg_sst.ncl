@@ -9,7 +9,7 @@ begin
     shpres3@gsLineThicknessF = 4.     ;3.0   ;--> grosor de linea
 
     dirNCL  = "/data/users/jticse/Tesis-Maestria/SALIDAS/scripts/Tesis-de-Geofisica/NCL/"
-    load dirNCL+"shapefile_utils.ncl"
+    ;load dirNCL+"shapefile_utils.ncl"
 
     opt             = True
     opt@return_mask = True
@@ -45,8 +45,8 @@ begin
 
 
     ;res                     = True      ;--> activa los detalles
-    ;res@gsnDraw             = False     ;--> don't draw the plot yet
-    ;res@gsnFrame            = False     ;--> 
+    res@gsnDraw             = False     ;--> don't draw the plot yet
+    res@gsnFrame            = False     ;--> 
     ;res@mpFillOn            = False
     ;;res@gsnMaximize         = True
     ;;res@gsnLeftString       = "mm/dia"
@@ -69,14 +69,14 @@ begin
     ;;res@tmXTOn                      = False
     ;;res@tmXBOn                      = False
 ;
-    ;res@gsnAddCyclic        = False
-    ;res@lbLabelBarOn        = False             ;---> turn off individual cb's
+    res@gsnAddCyclic        = False
+    res@lbLabelBarOn        = False             ;---> turn off individual cb's
     ;res@cnFillOn            = True
     res@cnFillPalette       = "NCV_bright"
     ;res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
     ;res@cnLineLabelsOn      = False
-    ;res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
-    ;res@cnLevels            = ispan(13,31,1)
+    res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
+    res@cnLevels            = ispan(13,31,1)
 
     file_3   := addfile(file_rtg,"r")
     rtg_sst   = file_3->TMP_P0_L1_GLL0
