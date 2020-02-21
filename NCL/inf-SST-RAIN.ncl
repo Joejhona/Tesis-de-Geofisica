@@ -239,8 +239,9 @@ begin
         rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360:max_lon_n+360})
         rtg_sst   = rtg_sst-273.15 
         resi3                   := res3
+	resi3@gsnAddCyclic       = False
         resi3@gsnCenterString   := "RTG SST "+sst(i)
-        plot3(i) = gsn_csm_contour_map(wks,rtg_sst,resi3)
+        plot3(i) = gsn_csm_contour_map(wks3,rtg_sst,resi3)
 
     end do
 
