@@ -31,39 +31,52 @@ begin
     wks     = gsn_open_wks(type,title1)   
     plot    = new(1,graphic)
 
-    res                     = True      ;--> activa los detalles
-    res@gsnDraw             = False     ;--> don't draw the plot yet
-    res@gsnFrame            = False     ;--> 
-    res@mpFillOn            = False
-    ;res@gsnMaximize         = True
-    ;res@gsnLeftString       = "mm/dia"
-    res@gsnLeftString      = ""
+    res                      = True     ; plot mods desired
+    res@cnFillOn             = True     ; turn on color fill
+    res@cnLinesOn            = False    ; turn off contour lines
+    res@lbLabelStride        = 4        ; every 4th label
+    ;res@cnFillPalette        = cmap(10:96,:)
+
+    res@cnLevelSpacingF      = 3        ; interval
+
+    res@tiMainString         = "Draw land ON TOP of contours"      ; title
+
+    res@cnFillDrawOrder      = "Predraw"  ; draw contours first
+
+
+    ;res                     = True      ;--> activa los detalles
+    ;res@gsnDraw             = False     ;--> don't draw the plot yet
+    ;res@gsnFrame            = False     ;--> 
+    ;res@mpFillOn            = False
+    ;;res@gsnMaximize         = True
+    ;;res@gsnLeftString       = "mm/dia"
+    ;res@gsnLeftString      = ""
     res@mpLimitMode         = "Corners" ;--> Activa limites modo corners
     res@mpLeftCornerLatF    = min_lat_n ;--> limites.ncl r=rimac p=Perú   
     res@mpRightCornerLatF   = max_lat_n ;--> n=Norte
     res@mpLeftCornerLonF    = min_lon_n
     res@mpRightCornerLonF   = max_lon_n
-    res@cnFillDrawOrder      = "Predraw"
-    ;res@mpFillDrawOrder     = "PostDraw"
-    ;res@tiMainString        = "Prueba"
-    ;res@lbOrientation       = "Vertical"
-
-    ;---Limites Nacionales---;
-    ;res@tmYLLabelsOn                = False         ; turn off lat labels
-    ;res@tmXBLabelsOn                = False         ; turn off lon labels
-    ;res@tmYROn                      = False
-    ;res@tmYLOn                      = False
-    ;res@tmXTOn                      = False
-    ;res@tmXBOn                      = False
-
-    res@gsnAddCyclic        = False
-    res@lbLabelBarOn        = False             ;---> turn off individual cb's
-    res@cnFillOn            = True
+    ;res@cnFillDrawOrder      = "Predraw"
+    ;;res@mpFillDrawOrder     = "PostDraw"
+    ;;res@tiMainString        = "Prueba"
+    ;;res@lbOrientation       = "Vertical"
+;
+    ;;---Limites Nacionales---;
+    ;;res@tmYLLabelsOn                = False         ; turn off lat labels
+    ;;res@tmXBLabelsOn                = False         ; turn off lon labels
+    ;;res@tmYROn                      = False
+    ;;res@tmYLOn                      = False
+    ;;res@tmXTOn                      = False
+    ;;res@tmXBOn                      = False
+;
+    ;res@gsnAddCyclic        = False
+    ;res@lbLabelBarOn        = False             ;---> turn off individual cb's
+    ;res@cnFillOn            = True
     res@cnFillPalette       = "NCV_bright"
-    res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
-    res@cnLineLabelsOn      = False
-    res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
-    res@cnLevels            = ispan(13,31,1)
+    ;res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
+    ;res@cnLineLabelsOn      = False
+    ;res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
+    ;res@cnLevels            = ispan(13,31,1)
 
     file_3   := addfile(file_rtg,"r")
     rtg_sst   = file_3->TMP_P0_L1_GLL0
@@ -76,13 +89,12 @@ begin
     rtg_sst  := rtg_sst({min_lat_n:max_lat_n},{min_lon_n+360.:max_lon_n+360.})
     rtg_sst   = rtg_sst-273.15  
     
-    land_mask = shapefile_mask_data(rtg_sst,shp3,opt)
+    ;land_mask = shapefile_mask_data(rtg_sst,shp3,opt)
 
-    rtg_sst_land_mask  = where(land_mask.eq.1,rtg_sst,rtg_sst@_FillValue)
-    copy_VarMeta(rtg_sst,rtg_sst_land_mask)
+    ;rtg_sst_land_mask  = where(land_mask.eq.1,rtg_sst,rtg_sst@_FillValue)
+    ;copy_VarMeta(rtg_sst,rtg_sst_land_mask)
     
-    
-    plot(0) = gsn_csm_contour_map(wks,rtg_sst_land_mask,res)
+    plot(0) = gsn_csm_contour_map(wks,rtg_sst,res)
 
     pres1 = True
     pres1@gsnMaximize        = True
