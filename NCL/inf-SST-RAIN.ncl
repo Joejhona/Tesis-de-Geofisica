@@ -62,7 +62,6 @@ color4  = read_colormap_file("MPL_autumn")
 color3(0:31,:)  = color4(64:95,:)
 color_paleta2   = color3
 
-
 levels3         = ispan(13,31,1)
 color_paleta3   = "NCV_bright"
 
