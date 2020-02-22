@@ -262,7 +262,7 @@ begin
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.06
-    pres1@gsnPanelMainString = "Influencia de SST en la lluvia WRF "+fecha
+    pres1@gsnPanelMainString = "Influencia de SST en la lluvia WRF "+fecha+" "+t*24+" hrs"
 
     agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
