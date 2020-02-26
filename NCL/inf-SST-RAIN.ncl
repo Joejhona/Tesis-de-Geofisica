@@ -134,7 +134,7 @@ begin
     un_wrf  = t_wrf@units
     rcv     = wrf_user_getvar(file_1,"RAINC",-1)
     rncv    = wrf_user_getvar(file_1,"RAINNC",-1)
-    it_wrf := cd_inv_calendar(year,mes,dia,12,0,0,un_wrf,0)   ;---->> hora de inicio de lluvia
+    it_wrf := cd_inv_calendar(year,mes,dia+t-1,12,0,0,un_wrf,0)   ;---->> hora de inicio de lluvia
     ft_wrf := cd_inv_calendar(year,mes,dia+t,12,0,0,un_wrf,0) ;---->> hora de inicio de lluvia
     id_tiw := get1Dindex(t_wrf,it_wrf)
     id_tfw := get1Dindex(t_wrf,ft_wrf)
@@ -262,7 +262,7 @@ begin
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.06
-    pres1@gsnPanelMainString = "Influencia de SST en la lluvia WRF "+fecha
+    pres1@gsnPanelMainString = "Influencia de SST en la lluvia WRF "+fecha+" "+t*24+" hrs"
 
     agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
