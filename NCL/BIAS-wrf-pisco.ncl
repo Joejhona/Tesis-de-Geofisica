@@ -8,12 +8,17 @@ begin
         "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25",\
         "2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
         "2018-03-05","2018-03-17","2018-03-22"/)
+    periodos_2017 = periodos(:9)
+    periodos_2018 = periodos(10:)
+    periodos := periodos_2017
     horas = (/"24 hrs","48 hrs","72 hrs"/)
-    ;dom = (/"-d01","_d01_","d01"/)
-    dom = (/"-d02","_d02_","d02"/)
+    dom = (/"-d01","_d01_","d01"/)
+    ;dom = (/"-d02","_d02_","d02"/)
     ;----------- WRF
-    dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/primera_corrida/"
-    f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodos(0)+"_00:00:00.nc", "r")
+    ;dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/primera_corrida/"
+    dirWRF  = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/wrf/septima_corrida/"
+    ;f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodos(0)+"_00:00:00.nc", "r")
+    f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodos(0)+"_00:00:00", "r")
     dim_wrf = wrf_user_getvar(f_wrf,"RAINC",-1)
     dim_wrf:= dimsizes(dim_wrf)
     lat_w  := wrf_user_getvar(f_wrf,"XLAT",0)
@@ -34,7 +39,8 @@ begin
         dia     = stringtoint(str_get_cols(periodo,8,9))
         ;¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
         ;-----Extraendo y procesando datos wrf
-        f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
+        ;f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00.nc", "r")
+        f_wrf  := addfile(dirWRF+"wrfout"+dom(1)+periodo+"_00:00:00"+sst, "r")
         t_wrf  := wrf_user_list_times(f_wrf)
         format  = "%Y-%N-%D_%H:%M:%S"
         t_wrf  := cd_inv_string(t_wrf, format)
@@ -78,7 +84,7 @@ begin
 
     ;---Open a new NetCDF file to write to
     dir_fout    = "/data/users/jticse/Tesis-Maestria/SALIDAS/netcdf/"
-    fout_name   = "bias-wrf"+dom(2)+"-pisco.nc"
+    fout_name   = "RAIN-TOTAL-wrf"+dom(2)+"-pisco-2017"+sst+".nc"
     system("rm -f "+dir_fout+fout_name)
     fout        = addfile(dir_fout+fout_name,"c")
 
