@@ -182,6 +182,7 @@ begin
     
     res3@cnFillOn           = True     ; turn on color fill
     res3@cnLinesOn          = False    ; turn off contour lines
+    res3@cnLineLabelsOn     = False
     res3@lbLabelStride      = 4        ; every 4th label
     res3@cnLevelSpacingF    = 3        ; interval
     res3@cnFillDrawOrder    = "Predraw"  ; draw contours first
