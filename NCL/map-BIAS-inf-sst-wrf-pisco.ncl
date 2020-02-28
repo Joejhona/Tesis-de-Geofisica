@@ -62,6 +62,24 @@ color4  = read_colormap_file("MPL_autumn")
 color3(0:31,:)  = color4(64:95,:)
 color_paleta2   = color3
 
+levels_rmse = (/1.,2.,3.,4.,5.,6.,7.,\
+    8.,9.,10.,11.,12.,13.,14.,\
+    15.,16.,17.,18.,19.,20.,\
+    25.,30.,35.,40.,45.,50.,55.,60.,65.,\
+    70.,75.,80.,85.,90.,95.,100.,125.,\
+    150.,175.,200.,225.,250.,300.,400.,\
+    500.,600.,700./)
+paleta_rmse = "MPL_rainbow"
+
+levels_bias := levels2
+paleta_bias = "MPL_sstanom"
+
+levels_mae = levels_rmse
+paleta_mae = paleta_rmse
+
+levels_nmae = levels
+paleta_nmae = "MPL_YlGnBu"
+
 begin 
     sst     = (/"-3sst","-2sst","-1sst","+1sst","+2sst","+3sst"/)
     ;hora    = (/"24 hrs","48 hrs","72 hrs"/)
@@ -72,10 +90,10 @@ begin
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 7000
     type@wkHeight    = 5000
-    title1  = dirS+"prom_rain_"+t
+    title1  = dirS+stat+"_rain_"+t
     wks     = gsn_open_wks(type,title1)   
-    plot    = new(dimsizes(sst)+3,graphic)
-    title2  = dirS+"prom_dif_"+t
+    plot    = new(dimsizes(sst)+2,graphic)
+    title2  = dirS+stat+"_dif_"+t
     wks2    = gsn_open_wks(type,title2)   
     plot2   = new(dimsizes(sst),graphic)
     
@@ -107,34 +125,67 @@ begin
     res@gsnAddCyclic        = False
     res@lbLabelBarOn        = False             ;---> turn off individual cb's
     res@cnFillOn            = True
-    res@cnFillPalette       = color_paleta
+    ;res@cnFillPalette       = color_paleta
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
     res@cnLineLabelsOn      = False
     res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
-    res@cnLevels            = levels
+    ;res@cnLevels            = levels
 
     res@gsnCenterStringFontHeightF = 0.04
 
     file_1  = addfile(file_wrf,"r")
 
     wrf    := file_1->var01
+    pisco  := file_1->var02
     lat    := file_1->lat
     lon    := file_1->lon
     time   := file_1->time
     limite := cd_inv_calendar(2017,12,31,0,0,0,time@units,0)
 
-    pp_wrf_1      = dim_avg_n(wrf({:limite},:,:,{t}),0)
-    pp_wrf_1!0    = lat@long_name
-    pp_wrf_1&latitude  = lat
-    pp_wrf_1&latitude@units = lat@units
-    pp_wrf_1!1    = lon@long_name
-    pp_wrf_1&longitude  = lon
-    pp_wrf_1&longitude@units = lon@units
+    if stat.eq."bias" then
+        stat_wp_1    = (wrf({:limite},:,:,{t})-pisco({:limite},:,:,{t}))
+        stat_wp_1   := dim_sum_n(stat_wp_1,0)/dimsizes(time({:limite}))
+    else if stat.eq."mae" then
+        stat_wp_1   := abs(wrf({:limite},:,:,{t})-pisco({:limite},:,:,{t}))
+        stat_wp_1   := dim_sum_n(stat_wp_1,0)/dimsizes(time({:limite}))
+    else if stat.eq."nmae" then
+        stat_wp_1   := (abs(wrf({:limite},:,:,{t})-pisco({:limite},:,:,{t})))/pisco({:limite},:,:,{t})
+        stat_wp_1   := dim_sum_n(stat_wp_1,0)/dimsizes(time({:limite}))
+    else if stat.eq."rmse" then
+        stat_wp_1   := (wrf({:limite},:,:,{t})-pisco({:limite},:,:,{t}))^2
+        stat_wp_1   := dim_sum_n(stat_wp_1,0)/dimsizes(time({:limite}))
+        stat_wp_1   := sqrt(stat_wp_1)
+    end if
+    end if
+    end if
+    end if
+    stat_wp_1!0    = lat@long_name
+    stat_wp_1&latitude  = lat
+    stat_wp_1&latitude@units = lat@units
+    stat_wp_1!1    = lon@long_name
+    stat_wp_1&longitude  = lon
+    stat_wp_1&longitude@units = lon@units
 
-    printVarSummary(pp_wrf_1)
+    printVarSummary(stat_wp_1)
     res1                   := res
-    res1@gsnCenterString   := t+" hrs Normal" 
-    plot(0) = gsn_csm_contour_map(wks,pp_wrf_1,res1)
+    if stat.eq."bias" then
+        res1@cnFillPalette   = paleta_bias
+        res1@cnLevels        = levels_bias
+    else if stat.eq."mae" then
+        res1@cnFillPalette   = paleta_mae
+        res1@cnLevels        = levels_mae
+    else if stat.eq."nmae" then
+        res1@cnFillPalette   = paleta_nmae
+        res1@cnLevels        = levels_nmae
+    else if stat.eq."rmse" then
+        res1@cnFillPalette   = paleta_rmse
+        res1@cnLevels        = levels_rmse
+    end if
+    end if
+    end if
+    end if
+    res1@gsnCenterString   := str_upper(stat)+" "+t+" hrs Normal" 
+    plot(0) = gsn_csm_contour_map(wks,stat_wp_1,res1)
 
     file_2   := addfile(file_wrf+"_sst","r")
 
@@ -142,53 +193,74 @@ begin
     pisco  := file_2->var02
     lat    := file_2->lat
     lon    := file_2->lon
+    time   := file_2->time
 
-    pp_wrf_2     := dim_avg_n(wrf(:,:,:,{t}),0)
-    pp_wrf_2!0    = lat@long_name
-    pp_wrf_2&latitude  = lat
-    pp_wrf_2&latitude@units = lat@units
-    pp_wrf_2!1    = lon@long_name
-    pp_wrf_2&longitude  = lon
-    pp_wrf_2&longitude@units = lon@units
+    if stat.eq."bias" then
+        stat_wp_2    = (wrf(:,:,:,{t})-pisco(:,:,:,{t}))
+        stat_wp_2   := dim_sum_n(stat_wp_2,0)/dimsizes(time)
+    else if stat.eq."mae" then
+        stat_wp_2   := abs(wrf(:,:,:,{t})-pisco(:,:,:,{t}))
+        stat_wp_2   := dim_sum_n(stat_wp_2,0)/dimsizes(time)
+    else if stat.eq."nmae" then
+        stat_wp_2   := (abs(wrf(:,:,:,{t})-pisco(:,:,:,{t})))/pisco(:,:,:,{t})
+        stat_wp_2   := dim_sum_n(stat_wp_2,0)/dimsizes(time)
+    else if stat.eq."rmse" then
+        stat_wp_2   := (wrf(:,:,:,{t})-pisco(:,:,:,{t}))^2
+        stat_wp_2   := dim_sum_n(stat_wp_2,0)/dimsizes(time)
+        stat_wp_2   := sqrt(stat_wp_2)
+    end if
+    end if
+    end if
+    end if
+    stat_wp_2!0    = lat@long_name
+    stat_wp_2&latitude  = lat
+    stat_wp_2&latitude@units = lat@units
+    stat_wp_2!1    = lon@long_name
+    stat_wp_2&longitude  = lon
+    stat_wp_2&longitude@units = lon@units
 
-    printVarSummary(pp_wrf_2)
-    res2                   := res
-    res2@gsnCenterString   := t+" hrs add RTG SST" 
-    plot(1) = gsn_csm_contour_map(wks,pp_wrf_2,res2)
-
-    pp_pi     := dim_avg_n(pisco(:,:,:,{t}),0)
-    pp_pi!0    = lat@long_name
-    pp_pi&latitude  = lat
-    pp_pi&latitude@units = lat@units
-    pp_pi!1    = lon@long_name
-    pp_pi&longitude  = lon
-    pp_pi&longitude@units = lon@units
-
-    printVarSummary(pp_pi)
-    res3                   := res
-    res3@gsnCenterString   := "PISCO" 
-
-    plot(2) = gsn_csm_contour_map(wks,pp_pi,res3)
+    printVarSummary(bias_wp_2)
+    res2                   := res1
+    res2@gsnCenterString   := str_upper(stat)+" "+t+" hrs add RTG SST" 
+    plot(1) = gsn_csm_contour_map(wks,bias_wp_2,res2)
 
     do i=0,dimsizes(sst)-1
         file_i   := addfile(file_wrf+sst(i),"r")
         wrf      := file_i->var01
+        pisco    := file_i->var02
         lat      := file_i->lat
         lon      := file_i->lon
+        time     := file_i->time
 
-        pp_wrf_i     := dim_avg_n(wrf(:,:,:,{t}),0)
-        pp_wrf_i!0    = lat@long_name
-        pp_wrf_i&latitude  = lat
-        pp_wrf_i&latitude@units = lat@units
-        pp_wrf_i!1    = lon@long_name
-        pp_wrf_i&longitude  = lon
-        pp_wrf_i&longitude@units = lon@units
-        printVarSummary(pp_wrf_i)
-        resi1                   := res
+        if stat.eq."bias" then
+            stat_wp_i    = (wrf(:,:,:,{t})-pisco(:,:,:,{t}))
+            stat_wp_i   := dim_sum_n(stat_wp_i,0)/dimsizes(time)
+        else if stat.eq."mae" then
+            stat_wp_i   := abs(wrf(:,:,:,{t})-pisco(:,:,:,{t}))
+            stat_wp_i   := dim_sum_n(stat_wp_i,0)/dimsizes(time)
+        else if stat.eq."nmae" then
+            stat_wp_i   := (abs(wrf(:,:,:,{t})-pisco(:,:,:,{t})))/pisco(:,:,:,{t})
+            stat_wp_i   := dim_sum_n(stat_wp_i,0)/dimsizes(time)
+        else if stat.eq."rmse" then
+            stat_wp_i   := (wrf(:,:,:,{t})-pisco(:,:,:,{t}))^2
+            stat_wp_i   := dim_sum_n(stat_wp_i,0)/dimsizes(time)
+            stat_wp_i   := sqrt(stat_wp_i)
+        end if
+        end if
+        end if
+        end if
+        stat_wp_i!0    = lat@long_name
+        stat_wp_i&latitude  = lat
+        stat_wp_i&latitude@units = lat@units
+        stat_wp_i!1    = lon@long_name
+        stat_wp_i&longitude  = lon
+        stat_wp_i&longitude@units = lon@units
+        printVarSummary(stat_wp_i)
+        resi1                   := res1
         resi1@gsnCenterString   := sst(i) 
-        plot(i+3) = gsn_csm_contour_map(wks,pp_wrf_i,resi1)
+        plot(i+2) = gsn_csm_contour_map(wks,stat_wp_i,resi1)
 
-        dif_i    := pp_wrf_i-pp_wrf_2
+        dif_i    := stat_wp_i-stat_wp_2
 	    dif_i!0   = lat@long_name
 	    dif_i&latitude  = lat
         dif_i&latitude@units = lat@units
@@ -219,12 +291,12 @@ begin
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.06
-    pres1@gsnPanelMainString = "Promedio de la influencia SST en la lluvia WRF 2017 "+t+" hrs"
+    pres1@gsnPanelMainString = str_upper(stat)+" de la influencia SST en la lluvia 2017, WRF "+t+" hrs vs PISCO"
 
     agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
 
-    gsn_panel(wks,plot,(/3,6/),pres1)
+    gsn_panel(wks,plot,(/2,6/),pres1)
 
     pres2 = True
     pres2@lbTitleOn          = False                  ; turn on title
@@ -241,7 +313,7 @@ begin
     system(cmd1)
     cmd2 = "convert "+title2+".png -crop `convert "+title2+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title2+".png"
     system(cmd2)
-    cmd4 = "convert "+title1+".png "+title2+".png -append "+dirS+"prom_inf_rain_dif_sst_"+t+"_hrs.png"
+    cmd4 = "convert "+title1+".png "+title2+".png -append "+dirS+stat+"_rain_dif_sst_wp"+t+"_hrs.png"
     system(cmd4)
 
 end
