@@ -1,5 +1,5 @@
 ;============== %%%% AYUDA %%%% ==============
-;===>> t=1 dia, 2 dias, 3 dias #####
+;===>> t=24, 48, 72 hrs #####
 ;===>> file_wrf   #####
 ;===>> file_wrf   #####
 
@@ -72,10 +72,10 @@ begin
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 7000
     type@wkHeight    = 5000
-    title1  = dirS+"prom_rain_"+t*24
+    title1  = dirS+"prom_rain_"+t
     wks     = gsn_open_wks(type,title1)   
-    plot    = new(dimsizes(sst)+2,graphic)
-    title2  = dirS+"prom_dif_"+t*24
+    plot    = new(dimsizes(sst)+3,graphic)
+    title2  = dirS+"prom_dif_"+t
     wks2    = gsn_open_wks(type,title2)   
     plot2   = new(dimsizes(sst),graphic)
     
@@ -124,7 +124,7 @@ begin
     time   := file_1->time
     limite := cd_inv_calendar(2017,12,31,0,0,0,time@units,0)
 
-    pp_wrf_1      = dim_avg_n(wrf({:limite},:,:,{t)}),0)
+    pp_wrf_1      = dim_avg_n(wrf({:limite},:,:,{t}),0)
     pp_wrf_1!0    = lat@long_name
     pp_wrf_1&latitude  = lat
     pp_wrf_1&latitude@units = lat@units
@@ -134,7 +134,7 @@ begin
 
     printVarSummary(pp_wrf_1)
     res1                   := res
-    res1@gsnCenterString   := t*24+" hrs Normal" 
+    res1@gsnCenterString   := t+" hrs Normal" 
     plot(0) = gsn_csm_contour_map(wks,pp_wrf_1,res1)
 
     file_2   := addfile(file_wrf+"_sst","r")
@@ -144,7 +144,7 @@ begin
     lat    := file_2->lat
     lon    := file_2->lon
 
-    pp_wrf_2      = dim_avg_n(wrf(:,:,:,{t)}),0)
+    pp_wrf_2     := dim_avg_n(wrf(:,:,:,{t}),0)
     pp_wrf_2!0    = lat@long_name
     pp_wrf_2&latitude  = lat
     pp_wrf_2&latitude@units = lat@units
@@ -154,10 +154,10 @@ begin
 
     printVarSummary(pp_wrf_2)
     res2                   := res
-    res2@gsnCenterString   := t*24+" hrs add RTG SST" 
+    res2@gsnCenterString   := t+" hrs add RTG SST" 
     plot(1) = gsn_csm_contour_map(wks,pp_wrf_2,res2)
 
-    pp_pi      = dim_avg_n(pisco(:,:,:,{t)}),0)
+    pp_pi     := dim_avg_n(pisco(:,:,:,{t}),0)
     pp_pi!0    = lat@long_name
     pp_pi&latitude  = lat
     pp_pi&latitude@units = lat@units
@@ -177,7 +177,7 @@ begin
         lat      := file_i->lat
         lon      := file_i->lon
 
-        pp_wrf_i      = dim_avg_n(wrf(:,:,:,{t)}),0)
+        pp_wrf_i     := dim_avg_n(wrf(:,:,:,{t}),0)
         pp_wrf_i!0    = lat@long_name
         pp_wrf_i&latitude  = lat
         pp_wrf_i&latitude@units = lat@units
@@ -190,8 +190,14 @@ begin
         plot(i+3) = gsn_csm_contour_map(wks,pp_wrf_i,resi1)
 
         dif_i  := pp_wrf_i-pp_wrf_2
-        dif_i@lat := lat
-        dif_i@lon := lon  
+        
+	dif_i!0    = lat@long_name
+	dif_i&latitude  = lat
+        dif_i&latitude@units = lat@units
+        dif_i!1    = lon@long_name
+        dif_i&longitude  = lon
+        dif_i&longitude@units = lon@units
+ 
         printVarSummary(dif_i)
         resi2                   := res
         resi2@gsnCenterString   := "dif "+sst(i) 
@@ -215,7 +221,7 @@ begin
     pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.06
-    pres1@gsnPanelMainString = "Promedio de la influencia SST en la lluvia WRF 2017"+t*24+" hrs"
+    pres1@gsnPanelMainString = "Promedio de la influencia SST en la lluvia WRF 2017 "+t+" hrs"
 
     agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
@@ -237,7 +243,7 @@ begin
     system(cmd1)
     cmd2 = "convert "+title2+".png -crop `convert "+title2+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title2+".png"
     system(cmd2)
-    cmd4 = "convert "+title1+".png "+title2+".png -append "+dirS+"prom_inf_rain_dif_sst_"+t*24+"_hrs.png"
+    cmd4 = "convert "+title1+".png "+title2+".png -append "+dirS+"prom_inf_rain_dif_sst_"+t+"_hrs.png"
     system(cmd4)
 
 end
