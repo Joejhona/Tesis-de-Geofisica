@@ -1,7 +1,7 @@
 ;============== %%%% AYUDA %%%% ==============
 ;===>> t=24, 48, 72 hrs #####
-;===>> file_wrf   #####
-;===>> file_wrf   #####
+;===>> file_wrf=archivo wrf con +/- de sst   #####
+;===>> stat=bias, mae, nmae, rmse   #####
 
 ;============== %%%% SHAPES %%%% ==============
 dirP    = "/data/users/jticse/Tesis-Maestria/PREDATA/shapes/" ;--> ruta principal
@@ -219,10 +219,10 @@ begin
     stat_wp_2&longitude  = lon
     stat_wp_2&longitude@units = lon@units
 
-    printVarSummary(bias_wp_2)
+    printVarSummary(stat_wp_2)
     res2                   := res1
     res2@gsnCenterString   := str_upper(stat)+" "+t+" hrs add RTG SST" 
-    plot(1) = gsn_csm_contour_map(wks,bias_wp_2,res2)
+    plot(1) = gsn_csm_contour_map(wks,stat_wp_2,res2)
 
     do i=0,dimsizes(sst)-1
         file_i   := addfile(file_wrf+sst(i),"r")
@@ -233,7 +233,7 @@ begin
         time     := file_i->time
 
         if stat.eq."bias" then
-            stat_wp_i    = (wrf(:,:,:,{t})-pisco(:,:,:,{t}))
+            stat_wp_i   := (wrf(:,:,:,{t})-pisco(:,:,:,{t}))
             stat_wp_i   := dim_sum_n(stat_wp_i,0)/dimsizes(time)
         else if stat.eq."mae" then
             stat_wp_i   := abs(wrf(:,:,:,{t})-pisco(:,:,:,{t}))
@@ -288,7 +288,7 @@ begin
     pres1@lbTitleOn          = True                  ; turn on title
     pres1@lbTitlePosition    = "Bottom"
     pres1@lbTitleString      = "mm/dia"
-    pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
+    ;pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.06
     pres1@gsnPanelMainString = str_upper(stat)+" de la influencia SST en la lluvia 2017, WRF "+t+" hrs vs PISCO"
@@ -313,7 +313,7 @@ begin
     system(cmd1)
     cmd2 = "convert "+title2+".png -crop `convert "+title2+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title2+".png"
     system(cmd2)
-    cmd4 = "convert "+title1+".png "+title2+".png -append "+dirS+stat+"_rain_dif_sst_wp"+t+"_hrs.png"
+    cmd4 = "convert "+title1+".png "+title2+".png -append "+dirS+stat+"_rain_dif_sst_wp_"+t+"_hrs.png"
     system(cmd4)
 
 end
