@@ -62,17 +62,17 @@ color4  = read_colormap_file("MPL_autumn")
 color3(0:31,:)  = color4(64:95,:)
 color_paleta2   = color3
 
-levels_rmse = (/1.,2.,3.,4.,5.,6.,7.,\
-    8.,9.,10.,11.,12.,13.,14.,\
-    15.,16.,17.,18.,19.,20.,\
-    25.,30.,35.,40.,45.,50.,55.,60.,65.,\
-    70.,75.,80.,85.,90.,95.,100.,125.,\
-    150.,175.,200.,225.,250.,300.,400.,\
-    500.,600.,700./)
-paleta_rmse = "MPL_rainbow"
+levels_rmse = (/0.2,0.4,0.6,0.8,1.0,1.2,1.4,\
+    1.6,1.8,2.,4.,6.,8.,10.,\
+    12.,14.,16.,18.,20.,22.,\
+    24.,26.,28.,30.,32.,34.,36.,38.,40.,\
+    42.,44.,46.,48.,50.,52.,54.,56.,\
+    58.,60.,62.,64.,68.,70.,72.,\
+    74.,76.,78./)
+paleta_rmse = color_paleta  ;"MPL_rainbow"
 
 levels_bias := levels2
-paleta_bias = "MPL_sstanom"
+paleta_bias  = color_paleta2
 
 levels_mae = levels_rmse
 paleta_mae = paleta_rmse
@@ -281,7 +281,7 @@ begin
     pres1@gsnPanelRowSpec    = True  ;====================
     pres1@gsnPanelLabelBar   = True                ; add common colorbar
     ;pres1@vpHeightF          = 0.6
-    pres1@lbLabelFontHeightF = 0.01               ; make labels smaller
+    pres1@lbLabelFontHeightF = 0.008               ; make labels smaller
     ;pres1@gsnPanelLeft       = 0.1
     pres1@gsnPanelBottom     = 0.2
     pres1@gsnPanelSave       = True
@@ -302,7 +302,7 @@ begin
     pres2@lbTitleOn          = False                  ; turn on title
     ;pres2@gsnPanelMainString = "Diferencia"
     pres2@gsnPanelLabelBar   = True
-    pres2@lbLabelFontHeightF = 0.007
+    pres2@lbLabelFontHeightF = 0.008
     
     agregando_shapefile3      = gsn_add_shapefile_polylines(wks2,plot2,shp1,shpres)
     agregando_shapefile4      = gsn_add_shapefile_polylines(wks2,plot2,shp2,shpres2)
