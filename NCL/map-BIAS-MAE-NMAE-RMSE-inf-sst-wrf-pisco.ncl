@@ -90,12 +90,9 @@ begin
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 7000
     type@wkHeight    = 5000
-    title1  = dirS+stat+"_rain_"+t
+    title1  = dirS+stat+"_rain_var_sst_"+t
     wks     = gsn_open_wks(type,title1)   
-    plot    = new(dimsizes(sst)+2,graphic)
-    title2  = dirS+stat+"_dif_"+t
-    wks2    = gsn_open_wks(type,title2)   
-    plot2   = new(dimsizes(sst),graphic)
+    plot    = new(dimsizes(sst)+1,graphic)
     
 ;----- agregando detalles al mapa -----;
     res                     = True      ;--> activa los detalles
@@ -133,60 +130,6 @@ begin
 
     res@gsnCenterStringFontHeightF = 0.04
 
-    file_1  = addfile(file_wrf,"r")
-
-    wrf    := file_1->var01
-    pisco  := file_1->var02
-    lat    := file_1->lat
-    lon    := file_1->lon
-    time   := file_1->time
-    limite := cd_inv_calendar(2017,12,31,0,0,0,time@units,0)
-
-    if stat.eq."bias" then
-        stat_wp_1    = (wrf({:limite},:,:,{t})-pisco({:limite},:,:,{t}))
-        stat_wp_1   := dim_sum_n(stat_wp_1,0)/dimsizes(time({:limite}))
-    else if stat.eq."mae" then
-        stat_wp_1   := abs(wrf({:limite},:,:,{t})-pisco({:limite},:,:,{t}))
-        stat_wp_1   := dim_sum_n(stat_wp_1,0)/dimsizes(time({:limite}))
-    else if stat.eq."nmae" then
-        stat_wp_1   := (abs(wrf({:limite},:,:,{t})-pisco({:limite},:,:,{t})))/pisco({:limite},:,:,{t})
-        stat_wp_1   := dim_sum_n(stat_wp_1,0)/dimsizes(time({:limite}))
-    else if stat.eq."rmse" then
-        stat_wp_1   := (wrf({:limite},:,:,{t})-pisco({:limite},:,:,{t}))^2
-        stat_wp_1   := dim_sum_n(stat_wp_1,0)/dimsizes(time({:limite}))
-        stat_wp_1   := sqrt(stat_wp_1)
-    end if
-    end if
-    end if
-    end if
-    stat_wp_1!0    = lat@long_name
-    stat_wp_1&latitude  = lat
-    stat_wp_1&latitude@units = lat@units
-    stat_wp_1!1    = lon@long_name
-    stat_wp_1&longitude  = lon
-    stat_wp_1&longitude@units = lon@units
-
-    printVarSummary(stat_wp_1)
-    res1                   := res
-    if stat.eq."bias" then
-        res1@cnFillPalette   = paleta_bias
-        res1@cnLevels        = levels_bias
-    else if stat.eq."mae" then
-        res1@cnFillPalette   = paleta_mae
-        res1@cnLevels        = levels_mae
-    else if stat.eq."nmae" then
-        res1@cnFillPalette   = paleta_nmae
-        res1@cnLevels        = levels_nmae
-    else if stat.eq."rmse" then
-        res1@cnFillPalette   = paleta_rmse
-        res1@cnLevels        = levels_rmse
-    end if
-    end if
-    end if
-    end if
-    res1@gsnCenterString   := str_upper(stat)+" "+t+" hrs Normal" 
-    plot(0) = gsn_csm_contour_map(wks,stat_wp_1,res1)
-
     file_2   := addfile(file_wrf+"_sst","r")
 
     wrf    := file_2->var01
@@ -196,7 +139,7 @@ begin
     time   := file_2->time
 
     if stat.eq."bias" then
-        stat_wp_2    = (wrf(:,:,:,{t})-pisco(:,:,:,{t}))
+        stat_wp_2   := (wrf(:,:,:,{t})-pisco(:,:,:,{t}))
         stat_wp_2   := dim_sum_n(stat_wp_2,0)/dimsizes(time)
     else if stat.eq."mae" then
         stat_wp_2   := abs(wrf(:,:,:,{t})-pisco(:,:,:,{t}))
@@ -220,9 +163,25 @@ begin
     stat_wp_2&longitude@units = lon@units
 
     printVarSummary(stat_wp_2)
-    res2                   := res1
+    res2                   := res
+    if stat.eq."bias" then
+        res2@cnFillPalette   = paleta_bias
+        res2@cnLevels        = levels_bias
+    else if stat.eq."mae" then
+        res2@cnFillPalette   = paleta_mae
+        res2@cnLevels        = levels_mae
+    else if stat.eq."nmae" then
+        res2@cnFillPalette   = paleta_nmae
+        res2@cnLevels        = levels_nmae
+    else if stat.eq."rmse" then
+        res2@cnFillPalette   = paleta_rmse
+        res2@cnLevels        = levels_rmse
+    end if
+    end if
+    end if
+    end if
     res2@gsnCenterString   := str_upper(stat)+" "+t+" hrs add RTG SST" 
-    plot(1) = gsn_csm_contour_map(wks,stat_wp_2,res2)
+    plot(0) = gsn_csm_contour_map(wks,stat_wp_2,res2)
 
     do i=0,dimsizes(sst)-1
         file_i   := addfile(file_wrf+sst(i),"r")
@@ -258,22 +217,7 @@ begin
         printVarSummary(stat_wp_i)
         resi1                   := res1
         resi1@gsnCenterString   := sst(i) 
-        plot(i+2) = gsn_csm_contour_map(wks,stat_wp_i,resi1)
-
-        dif_i    := stat_wp_i-stat_wp_2
-	    dif_i!0   = lat@long_name
-	    dif_i&latitude  = lat
-        dif_i&latitude@units = lat@units
-        dif_i!1   = lon@long_name
-        dif_i&longitude  = lon
-        dif_i&longitude@units = lon@units
- 
-        printVarSummary(dif_i)
-        resi2                   := res
-        resi2@gsnCenterString   := "dif "+sst(i) 
-        resi2@cnFillPalette     := color_paleta2
-        resi2@cnLevels          := levels2
-        plot2(i) = gsn_csm_contour_map(wks2,dif_i,resi2)
+        plot(i+1) = gsn_csm_contour_map(wks,stat_wp_i,resi1)
     end do
 
     pres1 = True
@@ -291,29 +235,14 @@ begin
     ;pres1@lbBoxEndCapStyle   = "TriangleHighEnd"
     pres1@lbTitleFontHeightF = 0.01
     pres1@pmLabelBarHeightF  = 0.06
-    pres1@gsnPanelMainString = str_upper(stat)+" de la influencia SST en la lluvia 2017, WRF "+t+" hrs vs PISCO"
+    pres1@gsnPanelMainString = str_upper(stat)+" de lluvia 2017, WRF "+t+" hrs vs PISCO y la influencia de la SST"
 
     agregando_shapefile1      = gsn_add_shapefile_polylines(wks,plot,shp1,shpres)
     agregando_shapefile2      = gsn_add_shapefile_polylines(wks,plot,shp2,shpres2)
 
-    gsn_panel(wks,plot,(/2,6/),pres1)
-
-    pres2 = True
-    pres2@lbTitleOn          = False                  ; turn on title
-    ;pres2@gsnPanelMainString = "Diferencia"
-    pres2@gsnPanelLabelBar   = True
-    pres2@lbLabelFontHeightF = 0.008
-    
-    agregando_shapefile3      = gsn_add_shapefile_polylines(wks2,plot2,shp1,shpres)
-    agregando_shapefile4      = gsn_add_shapefile_polylines(wks2,plot2,shp2,shpres2)
-
-    gsn_panel(wks2,plot2,(/1,6/),pres2)
+    gsn_panel(wks,plot,(/1,6/),pres1)
 
     cmd1 = "convert "+title1+".png -crop `convert "+title1+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title1+".png"
     system(cmd1)
-    cmd2 = "convert "+title2+".png -crop `convert "+title2+".png -virtual-pixel edge -blur 0x15 -fuzz -15% -trim -format '%wx%h%O' info:` +repage "+title2+".png"
-    system(cmd2)
-    cmd4 = "convert "+title1+".png "+title2+".png -append "+dirS+stat+"_rain_dif_sst_wp_"+t+"_hrs.png"
-    system(cmd4)
 
 end
