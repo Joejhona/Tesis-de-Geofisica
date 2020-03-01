@@ -52,11 +52,12 @@ color1(0,:)     = color2(9,:)
 color1(1,:)     = color2(6,:)
 color_paleta    = color1
 
-levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
-        -9.,-8.,-7.,-6,-5,-4.,-3.,-2.,-1.,-0.9,-0.8,-0.7,-0.6,\
-        -0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
-        0.8,0.9,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,18,\
-        20.,25.,30.,40.,50/) 
+;levels2 := (/-50.,-40.,-30.,-25.,-20.,-18.,-16.,-14.,-12.,-10.,\
+;        -9.,-8.,-7.,-6,-5,-4.,-3.,-2.,-1.,-0.9,-0.8,-0.7,-0.6,\
+;        -0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
+;        0.8,0.9,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,18,\
+;        20.,25.,30.,40.,50/) 
+levels2         = ispan(-40,40,1)
 color3  = read_colormap_file("MPL_BrBG")
 color4  = read_colormap_file("MPL_autumn")
 color3(0:31,:)  = color4(64:95,:)
@@ -125,7 +126,7 @@ begin
     ;res@cnFillPalette       = color_paleta
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
     res@cnLineLabelsOn      = False
-    res@cnLevelSelectionMode= "AutomaticLevels"  ;"ExplicitLevels"  ;---> Solo usa los indicados en levels
+    res@cnLevelSelectionMode= "ExplicitLevels"  ;"AutomaticLevels";---> Solo usa los indicados en levels
     ;res@cnLevels            = levels
 
     res@gsnCenterStringFontHeightF = 0.04
@@ -166,7 +167,7 @@ begin
     res2                   := res
     if stat.eq."bias" then
         res2@cnFillPalette   = paleta_bias
-        ;res2@cnLevels        = levels_bias
+        res2@cnLevels        = levels_bias
     else if stat.eq."mae" then
         res2@cnFillPalette   = paleta_mae
         res2@cnLevels        = levels_mae
@@ -186,7 +187,7 @@ begin
     do i=0,dimsizes(sst)-1
         file_i   := addfile(file_wrf+sst(i),"r")
         wrf      := file_i->var01
-        pisco    := file_i->var02
+        ;pisco    := file_i->var02
         lat      := file_i->lat
         lon      := file_i->lon
         time     := file_i->time
