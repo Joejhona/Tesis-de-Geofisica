@@ -90,7 +90,7 @@ begin
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 7000
     type@wkHeight    = 5000
-    title1  = dirS+stat+"_rain_var_sst_"+t
+    title1  = dirS+stat+"_wp_rain_var_sst_"+t
     wks     = gsn_open_wks(type,title1)   
     plot    = new(dimsizes(sst)+1,graphic)
     
@@ -125,7 +125,7 @@ begin
     ;res@cnFillPalette       = color_paleta
     res@cnLinesOn           = False             ;---> Contorno de linea (falso = no)
     res@cnLineLabelsOn      = False
-    res@cnLevelSelectionMode= "ExplicitLevels"  ;---> Solo usa los indicados en levels
+    res@cnLevelSelectionMode= "AutomaticLevels"  ;"ExplicitLevels"  ;---> Solo usa los indicados en levels
     ;res@cnLevels            = levels
 
     res@gsnCenterStringFontHeightF = 0.04
@@ -166,7 +166,7 @@ begin
     res2                   := res
     if stat.eq."bias" then
         res2@cnFillPalette   = paleta_bias
-        res2@cnLevels        = levels_bias
+        ;res2@cnLevels        = levels_bias
     else if stat.eq."mae" then
         res2@cnFillPalette   = paleta_mae
         res2@cnLevels        = levels_mae
@@ -215,7 +215,7 @@ begin
         stat_wp_i&longitude  = lon
         stat_wp_i&longitude@units = lon@units
         printVarSummary(stat_wp_i)
-        resi1                   := res1
+        resi1                   := res2
         resi1@gsnCenterString   := sst(i) 
         plot(i+1) = gsn_csm_contour_map(wks,stat_wp_i,resi1)
     end do
