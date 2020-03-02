@@ -57,7 +57,7 @@ color_paleta    = color1
 ;        -0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
 ;        0.8,0.9,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,18,\
 ;        20.,25.,30.,40.,50/) 
-levels2         = ispan(-40,40,1)
+levels2         = ispan(-60,60,1)*0.5
 color3  = read_colormap_file("MPL_BrBG")
 color4  = read_colormap_file("MPL_autumn")
 color3(0:31,:)  = color4(64:95,:)
