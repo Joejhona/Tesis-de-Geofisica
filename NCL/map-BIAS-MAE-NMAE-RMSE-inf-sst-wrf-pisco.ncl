@@ -57,9 +57,9 @@ color_paleta    = color1
 ;        -0.5,-0.4,-0.3,-0.2,-0.1,0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,\
 ;        0.8,0.9,1.,2.,3.,4.,5.,6.,7.,8.,9.,10.,12.,14.,16.,18,\
 ;        20.,25.,30.,40.,50/) 
-levels2         = ispan(-60,60,1)*0.5
-color3  = read_colormap_file("MPL_BrBG")
-color4  = read_colormap_file("MPL_autumn")
+levels2   = ispan(-60,60,1)*0.5
+color3    = read_colormap_file("MPL_BrBG")
+color4    = read_colormap_file("MPL_autumn")
 color3(0:31,:)  = color4(64:95,:)
 color_paleta2   = color3
 
@@ -91,7 +91,11 @@ begin
     dirS    = "/data/users/jticse/Tesis-Maestria/SALIDAS/figuras/"
     type@wkWidth     = 7000
     type@wkHeight    = 5000
-    title1  = dirS+stat+"_wp_rain_var_sst_"+t
+    exclude = ""
+    if ex.ge.0 then
+        exclude = " exclude "+tostring(ex+1)
+    end if
+    title1  = dirS+stat+"_wp_rain_var_sst_"+t+exclude
     wks     = gsn_open_wks(type,title1)   
     plot    = new(dimsizes(sst)+1,graphic)
     
@@ -139,17 +143,22 @@ begin
     lon    := file_2->lon
     time   := file_2->time
 
+    if ex.ge.0 then
+        time_id:= get1Dindex_Collapse(time,time(ex))
+        time   := time(time_id)
+    end if
+
     if stat.eq."bias" then
-        stat_wp_2   := (wrf(:,:,:,{t})-pisco(:,:,:,{t}))
+        stat_wp_2   := (wrf({time},:,:,{t})-pisco({time},:,:,{t}))
         stat_wp_2   := dim_sum_n(stat_wp_2,0)/dimsizes(time)
     else if stat.eq."mae" then
-        stat_wp_2   := abs(wrf(:,:,:,{t})-pisco(:,:,:,{t}))
+        stat_wp_2   := abs(wrf({time},:,:,{t})-pisco({time},:,:,{t}))
         stat_wp_2   := dim_sum_n(stat_wp_2,0)/dimsizes(time)
     else if stat.eq."nmae" then
-        stat_wp_2   := (abs(wrf(:,:,:,{t})-pisco(:,:,:,{t})))/pisco(:,:,:,{t})
+        stat_wp_2   := (abs(wrf({time},:,:,{t})-pisco({time},:,:,{t})))/pisco({time},:,:,{t})
         stat_wp_2   := dim_sum_n(stat_wp_2,0)/dimsizes(time)
     else if stat.eq."rmse" then
-        stat_wp_2   := (wrf(:,:,:,{t})-pisco(:,:,:,{t}))^2
+        stat_wp_2   := (wrf({time},:,:,{t})-pisco({time},:,:,{t}))^2
         stat_wp_2   := dim_sum_n(stat_wp_2,0)/dimsizes(time)
         stat_wp_2   := sqrt(stat_wp_2)
     end if
@@ -190,19 +199,19 @@ begin
         ;pisco    := file_i->var02
         lat      := file_i->lat
         lon      := file_i->lon
-        time     := file_i->time
+        ;time     := file_i->time
 
         if stat.eq."bias" then
-            stat_wp_i   := (wrf(:,:,:,{t})-pisco(:,:,:,{t}))
+            stat_wp_i   := (wrf({time},:,:,{t})-pisco({time},:,:,{t}))
             stat_wp_i   := dim_sum_n(stat_wp_i,0)/dimsizes(time)
         else if stat.eq."mae" then
-            stat_wp_i   := abs(wrf(:,:,:,{t})-pisco(:,:,:,{t}))
+            stat_wp_i   := abs(wrf({time},:,:,{t})-pisco({time},:,:,{t}))
             stat_wp_i   := dim_sum_n(stat_wp_i,0)/dimsizes(time)
         else if stat.eq."nmae" then
-            stat_wp_i   := (abs(wrf(:,:,:,{t})-pisco(:,:,:,{t})))/pisco(:,:,:,{t})
+            stat_wp_i   := (abs(wrf({time},:,:,{t})-pisco({time},:,:,{t})))/pisco({time},:,:,{t})
             stat_wp_i   := dim_sum_n(stat_wp_i,0)/dimsizes(time)
         else if stat.eq."rmse" then
-            stat_wp_i   := (wrf(:,:,:,{t})-pisco(:,:,:,{t}))^2
+            stat_wp_i   := (wrf({time},:,:,{t})-pisco({time},:,:,{t}))^2
             stat_wp_i   := dim_sum_n(stat_wp_i,0)/dimsizes(time)
             stat_wp_i   := sqrt(stat_wp_i)
         end if
