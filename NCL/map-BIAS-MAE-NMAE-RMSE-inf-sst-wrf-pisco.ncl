@@ -93,7 +93,7 @@ begin
     type@wkHeight    = 5000
     exclude = ""
     if ex.ge.0 then
-        exclude = " exclude "+tostring(ex+1)
+        exclude = "_ex_"+tostring(ex+1)
     end if
     title1  = dirS+stat+"_wp_rain_var_sst_"+t+exclude
     wks     = gsn_open_wks(type,title1)   
