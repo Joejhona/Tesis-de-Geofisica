@@ -1,15 +1,21 @@
 import os
 from netCDF4 import Dataset
-from wrf import getvar, interpline, CoordPair, xy_to_ll, ll_to_xy
-from wrf import extract_times, ALL_TIMES
+from wrf import getvar, interpline, CoordPair, xy_to_ll, ll_to_xy, extract_times, ALL_TIMES
 import pandas as pd
 
 cwd     = os.getcwd()
 entries = os.listdir(cwd)#+'/wrfout_d01_2017*')
 
+per17   = ["2017-01-14","2017-01-21","2017-01-24","2017-01-30","2017-02-02",\
+        "2017-02-25","2017-03-08","2017-03-13","2017-03-21","2017-03-25"]
+per18   = ["2018-01-10","2018-01-16","2018-01-21","2018-02-14","2018-02-17",\
+        "2018-03-05","2018-03-17","2018-03-22"]
+
 pdf     = pd.read_csv('rain_sen_vnp_DT.csv')
 pdf     = pdf[pdf['mm/d']>0]
 pdf.index = pd.to_datetime(pdf['D'])
+pdf17   = pdf[pdf.index.isin(per17)]
+pdf18   = pdf[pdf.index.isin(per18)]
 cuencas = pdf.drop_duplicates(subset='cuenca')
 for index, row in cuencas.iterrows():
     
