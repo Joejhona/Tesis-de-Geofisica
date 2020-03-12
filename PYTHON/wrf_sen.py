@@ -2,6 +2,8 @@ import os
 from netCDF4 import Dataset
 from wrf import getvar, interpline, CoordPair, xy_to_ll, ll_to_xy, extract_times, ALL_TIMES
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 cwd     = os.getcwd()
 entries = os.listdir(cwd)#+'/wrfout_d01_2017*')
@@ -25,7 +27,7 @@ ncfile  = Dataset("wrfout_d01_2017-03-13_00:00:00")
 x_y     = ll_to_xy(ncfile, pdf.iloc[2,2], pdf.iloc[2,3])
 rainnc  = getvar(ncfile,'RAINNC',timeidx=ALL_TIMES)
 
-rainnc_line = interpline(rainnc, start_point=x_y, end_point=x_y, latlon=True)
+#rainnc_line = interpline(rainnc, start_point=x_y, end_point=x_y, latlon=True)
 times   = extract_times(ncfile,timeidx=ALL_TIMES)
 times   = pd.Series(times)
 times   = times.isin(['2017-03-13 6:00:00','2017-03-14 6:00:00','2017-03-15 6:00:00','2017-03-16 6:00:00'])
